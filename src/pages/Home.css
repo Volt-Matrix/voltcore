@@ -1,0 +1,18 @@
+/* src/pages/Home.css */
+
+.home-container {
+    display: flex;
+    padding-top: 70px;       /* Pushes content below TopBar */
+    margin-left: 200px;      /* Reserves space for Sidebar */
+  }
+  
+  .main-content {
+    flex: 1;
+  
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 70px); /* Adjust height below TopBar */
+    background-color: #f5f5f5;
+    padding: 20px;
+  }
+  
