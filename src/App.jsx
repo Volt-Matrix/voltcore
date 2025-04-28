@@ -77,6 +77,7 @@ function App() {
           <Route path="inbox/announcements" element={<InboxAnnouncementsForm />} />
           <Route path="inbox/messages" element={<InboxMessagesForm />} />
           <Route path="inbox/notifications" element={<InboxNotificationsForm />} />
+          <Route path="attendance/daily" element={<Attendance/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

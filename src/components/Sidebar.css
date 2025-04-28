@@ -43,6 +43,7 @@
   width: 100%;
   cursor: pointer;
   transition: background-color 0.3s;
+  /* position: relative; */
 }
 
 .icon-button span {
@@ -56,19 +57,37 @@
 }
 
 /* Submenu style */
+
+/* Base styles */
 .submenu {
-  position: absolute;
-  top: 0;
-  left: 200px;
-  background-color: #34495e;
-  padding: 10px;
-  width: 180px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
 }
 
+.submenu.open {
+  max-height: 500px; /* Adjust based on submenu content */
+  opacity: 1;
+  width: 100%;
+}
+
+/* Optional: Smooth links */
+.submenu__content {
+  padding: 10px;
+  text-align: center;
+}
+
+.submenu__content a {
+  display: block;
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+
+
+.submenu-link:hover{
+  color: #4CAF50;
+}
 .submenu-link {
   color: white;
   text-decoration: none;
