@@ -1,6 +1,6 @@
 .page-content {
   margin-left: 16rem; /* Width of sidebar */
-  margin-top: 4rem;   /* Height of topbar */
+  margin-top: 4rem; /* Height of topbar */
   padding: 2rem;
   background: #f5f7fa;
   min-height: calc(100vh - 4rem);
@@ -25,7 +25,6 @@
   text-align: center;
   width: 280px;
   position: relative;
-  
 }
 
 .avatar-wrapper {
@@ -111,7 +110,7 @@
 }
 .page-content {
   margin-left: 16rem; /* Sidebar width */
-  margin-top: 4rem;   /* Topbar height */
+  margin-top: 4rem; /* Topbar height */
   padding: 2rem;
   background: #f5f7fa;
   min-height: calc(100vh - 4rem);
@@ -140,8 +139,8 @@
   flex: 0 0 auto; /* Prevent cards from stretching */
 }
 .page-content {
-  margin-top:30px;/* Height of the fixed topbar */
-  margin-left: 30px;/* Width of the fixed sidebar */
+  margin-top: 30px; /* Height of the fixed topbar */
+  margin-left: 30px; /* Width of the fixed sidebar */
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;

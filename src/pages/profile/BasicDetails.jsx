@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
-import "./BasicDetails.css";
+import React, { useState, useEffect } from 'react';
+import './BasicDetails.css';
 
 function BasicDetails({ profileData, onSave }) {
-  const [formData, setFormData] = useState(profileData || {
-    fullName: "",
-    employeeId: "",
-    dob: "",
-    gender: "",
-    email: "",
-    phone: "",
-    altPhone: "",
-    profilePic: null,
-    currentAddress: "",
-    permanentAddress: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    bankName: "",
-    accountNumber: "",
-    ifscCode: "",
-  });
+  const [formData, setFormData] = useState(
+    profileData || {
+      fullName: '',
+      employeeId: '',
+      dob: '',
+      gender: '',
+      email: '',
+      phone: '',
+      altPhone: '',
+      profilePic: null,
+      currentAddress: '',
+      permanentAddress: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+    }
+  );
 
   useEffect(() => {
     if (profileData) setFormData(profileData);
@@ -30,19 +32,17 @@ function BasicDetails({ profileData, onSave }) {
     const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "profilePic" ? files[0] : value,
+      [name]: name === 'profilePic' ? files[0] : value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Profile updated successfully!");
+    alert('Profile updated successfully!');
     onSave(formData);
   };
 
-  const profilePicPreview = formData.profilePic
-    ? URL.createObjectURL(formData.profilePic)
-    : null;
+  const profilePicPreview = formData.profilePic ? URL.createObjectURL(formData.profilePic) : null;
 
   return (
     <div className="basic-details-form">
@@ -78,11 +78,23 @@ function BasicDetails({ profileData, onSave }) {
         <div className="form-row">
           <div className="form-group">
             <label>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="form-group">
             <label>Phone</label>
-            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
 
@@ -103,11 +115,21 @@ function BasicDetails({ profileData, onSave }) {
         <div className="form-row">
           <div className="form-group">
             <label>Current Address</label>
-            <textarea name="currentAddress" value={formData.currentAddress} onChange={handleChange} required />
+            <textarea
+              name="currentAddress"
+              value={formData.currentAddress}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="form-group">
             <label>Permanent Address</label>
-            <textarea name="permanentAddress" value={formData.permanentAddress} onChange={handleChange} required />
+            <textarea
+              name="permanentAddress"
+              value={formData.permanentAddress}
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
 

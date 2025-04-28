@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import "./Inbox.css";
+import React, { useState } from 'react';
+import './Inbox.css';
 
 function InboxMessage() {
-  const [to, setTo] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const [to, setTo] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ to, subject, message });
-    setTo("");
-    setSubject("");
-    setMessage("");
+    setTo('');
+    setSubject('');
+    setMessage('');
   };
 
   return (
@@ -46,7 +46,9 @@ function InboxMessage() {
             required
           ></textarea>
 
-          <button type="submit" className="inbox-submit-button">Send</button>
+          <button type="submit" className="inbox-submit-button">
+            Send
+          </button>
         </form>
       </div>
     </div>

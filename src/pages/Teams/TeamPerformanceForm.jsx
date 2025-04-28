@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import "./Teams.css";
+import React, { useState } from 'react';
+import './Teams.css';
 
 export const TeamPerformanceForm = () => {
   const [formData, setFormData] = useState({
-    employeeId: "EMP002",
-    reviewPeriod: "Q1 2024",
-    score: "8",
-    comments: "Great attention to detail in deliverables.",
+    employeeId: 'EMP002',
+    reviewPeriod: 'Q1 2024',
+    score: '8',
+    comments: 'Great attention to detail in deliverables.',
   });
   const [editMode, setEditMode] = useState(false);
 
@@ -15,7 +15,7 @@ export const TeamPerformanceForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setEditMode(false);
-    alert("Performance review saved!");
+    alert('Performance review saved!');
   };
 
   return (
@@ -27,7 +27,12 @@ export const TeamPerformanceForm = () => {
           <input name="employeeId" value={formData.employeeId} onChange={handleChange} required />
 
           <label>Review Period:</label>
-          <input name="reviewPeriod" value={formData.reviewPeriod} onChange={handleChange} required />
+          <input
+            name="reviewPeriod"
+            value={formData.reviewPeriod}
+            onChange={handleChange}
+            required
+          />
 
           <label>Score (1–10):</label>
           <input
@@ -47,11 +52,21 @@ export const TeamPerformanceForm = () => {
         </form>
       ) : (
         <div className="view-mode">
-          <p><strong>Employee ID:</strong> {formData.employeeId}</p>
-          <p><strong>Review Period:</strong> {formData.reviewPeriod}</p>
-          <p><strong>Score:</strong> {formData.score}</p>
-          <p><strong>Comments:</strong> {formData.comments}</p>
-          <button type="button" onClick={() => setEditMode(true)}>Edit</button>
+          <p>
+            <strong>Employee ID:</strong> {formData.employeeId}
+          </p>
+          <p>
+            <strong>Review Period:</strong> {formData.reviewPeriod}
+          </p>
+          <p>
+            <strong>Score:</strong> {formData.score}
+          </p>
+          <p>
+            <strong>Comments:</strong> {formData.comments}
+          </p>
+          <button type="button" onClick={() => setEditMode(true)}>
+            Edit
+          </button>
         </div>
       )}
     </div>

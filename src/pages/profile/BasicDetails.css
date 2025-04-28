@@ -1,9 +1,8 @@
 .basic-details-form {
   max-width: 1000px;
-  margin:auto;
+  margin: auto;
   padding: 20px;
   margin-top: 80px;
- 
 }
 
 form {
@@ -29,7 +28,7 @@ textarea {
   resize: vertical;
 }
 
-button[type="submit"] {
+button[type='submit'] {
   align-self: flex-start;
   padding: 10px 20px;
   margin-top: 10px;

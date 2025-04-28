@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import {
   Home,
   User,
@@ -11,8 +11,8 @@ import {
   Wallet,
   Plane,
   LogOut,
-} from "lucide-react";
-import "./Sidebar.css";
+} from 'lucide-react';
+import './Sidebar.css';
 
 function Sidebar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -30,112 +30,172 @@ function Sidebar() {
         </NavLink>
 
         {/* Profile */}
-        <div className="icon-button" onClick={() => toggleMenu("profile")}>
+        <div className="icon-button" onClick={() => toggleMenu('profile')}>
           <User size={32} />
           <span>Profile</span>
-          {openMenu === "profile" && (
+          {openMenu === 'profile' && (
             <div className="submenu">
-              <NavLink to="/profile/basic-details" className="submenu-link">Basic Details</NavLink>
-              <NavLink to="/profile/ProfileList" className="submenu-link">ProfileList</NavLink>
-              <NavLink to="/profile/experience" className="submenu-link">Experience</NavLink>
-              <NavLink to="/profile/contracts" className="submenu-link">Contracts</NavLink>
-              <NavLink to="/profile/documents" className="submenu-link">Documents</NavLink>
-              <NavLink to="/profile/reporting" className="submenu-link">Reporting</NavLink>
+              <NavLink to="/profile/basic-details" className="submenu-link">
+                Basic Details
+              </NavLink>
+              <NavLink to="/profile/ProfileList" className="submenu-link">
+                ProfileList
+              </NavLink>
+              <NavLink to="/profile/experience" className="submenu-link">
+                Experience
+              </NavLink>
+              <NavLink to="/profile/contracts" className="submenu-link">
+                Contracts
+              </NavLink>
+              <NavLink to="/profile/documents" className="submenu-link">
+                Documents
+              </NavLink>
+              <NavLink to="/profile/reporting" className="submenu-link">
+                Reporting
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Inbox */}
-        <div className="icon-button" onClick={() => toggleMenu("inbox")}>
+        <div className="icon-button" onClick={() => toggleMenu('inbox')}>
           <Inbox size={32} />
           <span>Inbox</span>
-          {openMenu === "inbox" && (
+          {openMenu === 'inbox' && (
             <div className="submenu">
-              <NavLink to="/inbox/messages" className="submenu-link">Messages</NavLink>
-              <NavLink to="/inbox/notifications" className="submenu-link">Notifications</NavLink>
-              <NavLink to="/inbox/announcements" className="submenu-link">Announcements</NavLink>
+              <NavLink to="/inbox/messages" className="submenu-link">
+                Messages
+              </NavLink>
+              <NavLink to="/inbox/notifications" className="submenu-link">
+                Notifications
+              </NavLink>
+              <NavLink to="/inbox/announcements" className="submenu-link">
+                Announcements
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Teams */}
-        <div className="icon-button" onClick={() => toggleMenu("teams")}>
+        <div className="icon-button" onClick={() => toggleMenu('teams')}>
           <Users size={32} />
           <span>Teams</span>
-          {openMenu === "teams" && (
+          {openMenu === 'teams' && (
             <div className="submenu">
-              <NavLink to="/teams/myteam" className="submenu-link">My Team</NavLink>
-              <NavLink to="/teams/teamrequest" className="submenu-link">Team Requests</NavLink>
-              <NavLink to="/teams/teamperformance" className="submenu-link">Team Performance</NavLink>
-              <NavLink to="/teams/teamhierarchy" className="submenu-link"> Team Hierarchy</NavLink>
-
+              <NavLink to="/teams/myteam" className="submenu-link">
+                My Team
+              </NavLink>
+              <NavLink to="/teams/teamrequest" className="submenu-link">
+                Team Requests
+              </NavLink>
+              <NavLink to="/teams/teamperformance" className="submenu-link">
+                Team Performance
+              </NavLink>
+              <NavLink to="/teams/teamhierarchy" className="submenu-link">
+                {' '}
+                Team Hierarchy
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Organization */}
-        <div className="icon-button" onClick={() => toggleMenu("organization")}>
+        <div className="icon-button" onClick={() => toggleMenu('organization')}>
           <Building size={32} />
           <span>Org</span>
-          {openMenu === "organization" && (
+          {openMenu === 'organization' && (
             <div className="submenu">
-              <NavLink to="/organization/chart" className="submenu-link">Org Chart</NavLink>
-              <NavLink to="/organization/units" className="submenu-link">Business Units</NavLink>
-              <NavLink to="/organization/policies" className="submenu-link">Policies</NavLink>
+              <NavLink to="/organization/chart" className="submenu-link">
+                Org Chart
+              </NavLink>
+              <NavLink to="/organization/units" className="submenu-link">
+                Business Units
+              </NavLink>
+              <NavLink to="/organization/policies" className="submenu-link">
+                Policies
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Performance */}
-        <div className="icon-button" onClick={() => toggleMenu("performance")}>
+        <div className="icon-button" onClick={() => toggleMenu('performance')}>
           <BarChart size={32} />
           <span>Performance</span>
-          {openMenu === "performance" && (
+          {openMenu === 'performance' && (
             <div className="submenu">
-              <NavLink to="/performance/reviews" className="submenu-link">Reviews</NavLink>
-              <NavLink to="/performance/goals" className="submenu-link">Goals</NavLink>
-              <NavLink to="/performance/feedback" className="submenu-link">Feedback</NavLink>
+              <NavLink to="/performance/reviews" className="submenu-link">
+                Reviews
+              </NavLink>
+              <NavLink to="/performance/goals" className="submenu-link">
+                Goals
+              </NavLink>
+              <NavLink to="/performance/feedback" className="submenu-link">
+                Feedback
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Attendance */}
-        <div className="icon-button" onClick={() => toggleMenu("attendance")}>
+        <div className="icon-button" onClick={() => toggleMenu('attendance')}>
           <CalendarDays size={32} />
           <span>Attendance</span>
-          {openMenu === "attendance" && (
+          {openMenu === 'attendance' && (
             <div className="submenu">
-              <NavLink to="/attendance/daily" className="submenu-link">Daily Log</NavLink>
-              <NavLink to="/attendance/summary" className="submenu-link">Monthly Summary</NavLink>
-              <NavLink to="/attendance/requests" className="submenu-link">Attendance Requests</NavLink>
+              <NavLink to="/attendance/daily" className="submenu-link">
+                Daily Log
+              </NavLink>
+              <NavLink to="/attendance/summary" className="submenu-link">
+                Monthly Summary
+              </NavLink>
+              <NavLink to="/attendance/requests" className="submenu-link">
+                Attendance Requests
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Payroll */}
-        <div className="icon-button" onClick={() => toggleMenu("payroll")}>
+        <div className="icon-button" onClick={() => toggleMenu('payroll')}>
           <Wallet size={32} />
           <span>Payroll</span>
-          {openMenu === "payroll" && (
+          {openMenu === 'payroll' && (
             <div className="submenu">
-              <NavLink to="/payroll/payslips" className="submenu-link">Payslips</NavLink>
-              <NavLink to="/payroll/statements" className="submenu-link">Salary Statements</NavLink>
-              <NavLink to="/payroll/benefits" className="submenu-link">Benefits</NavLink>
+              <NavLink to="/payroll/payslips" className="submenu-link">
+                Payslips
+              </NavLink>
+              <NavLink to="/payroll/statements" className="submenu-link">
+                Salary Statements
+              </NavLink>
+              <NavLink to="/payroll/benefits" className="submenu-link">
+                Benefits
+              </NavLink>
             </div>
           )}
         </div>
 
         {/* Leaves */}
-        <div className="icon-button" onClick={() => toggleMenu("leaves")}>
+        <div className="icon-button" onClick={() => toggleMenu('leaves')}>
           <Plane size={32} />
           <span>Leaves</span>
-          {openMenu === "leaves" && (
+          {openMenu === 'leaves' && (
             <div className="submenu">
-              <NavLink to="/leaves/apply" className="submenu-link">Apply Leave</NavLink>
-              <NavLink to="/leaves/history" className="submenu-link">Leave History</NavLink>
-              <NavLink to="/leaves/balance" className="submenu-link">Leave Balance</NavLink>
-              <NavLink to="/leaves/list" className="submenu-link">Leave List</NavLink>
-              <NavLink to="/leaves/data" className="submenu-link">Leave Data</NavLink>
+              <NavLink to="/leaves/apply" className="submenu-link">
+                Apply Leave
+              </NavLink>
+              <NavLink to="/leaves/history" className="submenu-link">
+                Leave History
+              </NavLink>
+              <NavLink to="/leaves/balance" className="submenu-link">
+                Leave Balance
+              </NavLink>
+              <NavLink to="/leaves/list" className="submenu-link">
+                Leave List
+              </NavLink>
+              <NavLink to="/leaves/data" className="submenu-link">
+                Leave Data
+              </NavLink>
             </div>
           )}
         </div>

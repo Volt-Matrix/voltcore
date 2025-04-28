@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "./AddTaskForm.css";
+import React, { useState } from 'react';
+import './AddTaskForm.css';
 
 function AddTaskForm() {
   const [task, setTask] = useState({
-    title: "",
-    description: "",
-    dueDate: "",
+    title: '',
+    description: '',
+    dueDate: '',
   });
 
   const handleChange = (e) => {
@@ -14,8 +14,8 @@ function AddTaskForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Task submitted:", task); // You can replace this with an API call
-    alert("Task Added Successfully!");
+    console.log('Task submitted:', task); // You can replace this with an API call
+    alert('Task Added Successfully!');
   };
 
   return (
@@ -36,13 +36,7 @@ function AddTaskForm() {
         onChange={handleChange}
         required
       />
-      <input
-        type="date"
-        name="dueDate"
-        value={task.dueDate}
-        onChange={handleChange}
-        required
-      />
+      <input type="date" name="dueDate" value={task.dueDate} onChange={handleChange} required />
       <button type="submit">Add Task</button>
     </form>
   );

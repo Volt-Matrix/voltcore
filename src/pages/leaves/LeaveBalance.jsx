@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./Leave.css";
+import React, { useState } from 'react';
+import './Leave.css';
 
 function LeaveBalanceForm() {
   const [formData, setFormData] = useState({
-    employeeId: "",
-    department: "",
+    employeeId: '',
+    department: '',
   });
 
   const handleChange = (e) => {
@@ -14,8 +14,8 @@ function LeaveBalanceForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Checking Leave Balance:", formData);
-    alert("Leave Balance Checked!");
+    console.log('Checking Leave Balance:', formData);
+    alert('Leave Balance Checked!');
   };
 
   return (
@@ -23,19 +23,10 @@ function LeaveBalanceForm() {
       <h2>Check Leave Balance</h2>
       <form onSubmit={handleSubmit}>
         <label>Employee ID:</label>
-        <input
-          name="employeeId"
-          value={formData.employeeId}
-          onChange={handleChange}
-          required
-        />
+        <input name="employeeId" value={formData.employeeId} onChange={handleChange} required />
 
         <label>Department (Optional):</label>
-        <input
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-        />
+        <input name="department" value={formData.department} onChange={handleChange} />
 
         <button type="submit">Check</button>
       </form>

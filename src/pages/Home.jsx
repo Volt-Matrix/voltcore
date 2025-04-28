@@ -1,62 +1,54 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import TopBar from "../components/TopBar";
-import ApplyLeave from "../pages/Leaves/ApplyLeave";
-import InboxNotifications from "../pages/Inbox/InboxNotifications";
-import AddTaskForm from "../pages/Teams/AddTaskForm";
-import Calendar from "react-calendar";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer
-} from "recharts";
-import "react-calendar/dist/Calendar.css";
-import "./Home.css";
+import React, { useEffect, useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import TopBar from '../components/TopBar';
+import ApplyLeave from '../pages/Leaves/ApplyLeave';
+import InboxNotifications from '../pages/Inbox/InboxNotifications';
+import AddTaskForm from '../pages/Teams/AddTaskForm';
+import Calendar from 'react-calendar';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import 'react-calendar/dist/Calendar.css';
+import './Home.css';
 
 function Home() {
   const [time, setTime] = useState(new Date());
-  const username = localStorage.getItem("username") || "User";
+  const username = localStorage.getItem('username') || 'User';
   const [calendarDate, setCalendarDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState("birthday");
+  const [activeTab, setActiveTab] = useState('birthday');
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showAlertModal, setShowAlertModal] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
 
   const moodDates = [
-    { label: "Tue 22", emoji: "😊" },
-    { label: "Wed 23", emoji: "😐" },
-    { label: "Thu 24", emoji: "😄" },
-    { label: "Fri 25", emoji: "😁" },
-    { label: "Sat 26", emoji: "😴" }
+    { label: 'Tue 22', emoji: '😊' },
+    { label: 'Wed 23', emoji: '😐' },
+    { label: 'Thu 24', emoji: '😄' },
+    { label: 'Fri 25', emoji: '😁' },
+    { label: 'Sat 26', emoji: '😴' },
   ];
 
   const holidayDates = [
     { date: new Date(2025, 0, 1), label: "New Year's Day" },
-    { date: new Date(2025, 4, 1), label: "Labour Day" },
-    { date: new Date(2025, 11, 25), label: "Christmas Day" }
+    { date: new Date(2025, 4, 1), label: 'Labour Day' },
+    { date: new Date(2025, 11, 25), label: 'Christmas Day' },
   ];
 
   const birthdayList = [
-    { name: "Anika Sharma", date: "April 25" },
-    { name: "Rahul Verma", date: "May 1" }
+    { name: 'Anika Sharma', date: 'April 25' },
+    { name: 'Rahul Verma', date: 'May 1' },
   ];
 
   const anniversaryList = [
-    { name: "Meera Iyer", date: "April 25" },
-    { name: "Vikram Patel", date: "May 3" }
+    { name: 'Meera Iyer', date: 'April 25' },
+    { name: 'Vikram Patel', date: 'May 3' },
   ];
 
   const data = [
-    { name: "Jan", Leaves: 20 },
-    { name: "Feb", Leaves: 12 },
-    { name: "Mar", Leaves: 18 },
-    { name: "Apr", Leaves: 25 },
-    { name: "May", Leaves: 10 }
+    { name: 'Jan', Leaves: 20 },
+    { name: 'Feb', Leaves: 12 },
+    { name: 'Mar', Leaves: 18 },
+    { name: 'Apr', Leaves: 25 },
+    { name: 'May', Leaves: 10 },
   ];
 
   const taskProgress = 70;
@@ -73,7 +65,7 @@ function Home() {
         date.getMonth() === holiday.date.getMonth() &&
         date.getFullYear() === holiday.date.getFullYear()
     );
-    return isHoliday ? "custom-holiday-highlight" : null;
+    return isHoliday ? 'custom-holiday-highlight' : null;
   };
 
   const getTileContent = ({ date }) => {
@@ -158,16 +150,24 @@ function Home() {
                 <a href="#">View All</a>
               </div>
               <div className="tab-buttons">
-                <button className={activeTab === "birthday" ? "active-tab" : ""} onClick={() => setActiveTab("birthday")}>
+                <button
+                  className={activeTab === 'birthday' ? 'active-tab' : ''}
+                  onClick={() => setActiveTab('birthday')}
+                >
                   Birthday
                 </button>
-                <button className={activeTab === "anniversary" ? "active-tab" : ""} onClick={() => setActiveTab("anniversary")}>
+                <button
+                  className={activeTab === 'anniversary' ? 'active-tab' : ''}
+                  onClick={() => setActiveTab('anniversary')}
+                >
                   Work Anniversary
                 </button>
               </div>
               <ul className="event-list">
-                {(activeTab === "birthday" ? birthdayList : anniversaryList).map((event, index) => (
-                  <li key={index}>📍 {event.name} - {event.date}</li>
+                {(activeTab === 'birthday' ? birthdayList : anniversaryList).map((event, index) => (
+                  <li key={index}>
+                    📍 {event.name} - {event.date}
+                  </li>
                 ))}
               </ul>
 
@@ -184,8 +184,10 @@ function Home() {
                   tileContent={getTileContent}
                 />
                 <div className="holiday-notes">
-                  <p><span className="holiday-dot"></span> Company holiday</p>
-                  <p style={{ color: "red" }}>🚫 Weekends are disabled for leave requests.</p>
+                  <p>
+                    <span className="holiday-dot"></span> Company holiday
+                  </p>
+                  <p style={{ color: 'red' }}>🚫 Weekends are disabled for leave requests.</p>
                 </div>
               </div>
             </div>
@@ -194,39 +196,70 @@ function Home() {
             <div className="leave-column">
               <div className="leave-header">
                 <h3>Leave Balance</h3>
-                <button className="apply-leave" onClick={() => setShowLeaveModal(true)}>Apply For Leave</button>
+                <button className="apply-leave" onClick={() => setShowLeaveModal(true)}>
+                  Apply For Leave
+                </button>
               </div>
               <div className="leave-balance-cards">
-                <div className="leave-card"><span>Casual Leave</span><strong>NA/NA</strong></div>
-                <div className="leave-card"><span>Sick Leave</span><strong>NA/NA</strong></div>
-                <div className="leave-card"><span>Vacation Leave</span><strong>NA/NA</strong></div>
+                <div className="leave-card">
+                  <span>Casual Leave</span>
+                  <strong>NA/NA</strong>
+                </div>
+                <div className="leave-card">
+                  <span>Sick Leave</span>
+                  <strong>NA/NA</strong>
+                </div>
+                <div className="leave-card">
+                  <span>Vacation Leave</span>
+                  <strong>NA/NA</strong>
+                </div>
               </div>
             </div>
 
             {/* Attendance Column */}
             <div className="attendance-column">
               <p>🌈 Every great day starts with a single punch.</p>
-              <p><strong>{time.toDateString()}</strong></p>
-              <p><small>Shift Timing - (09:30 - 17:30)</small></p>
-              <p><strong>Check In</strong><br />{time.toLocaleTimeString()}</p>
-              <p><strong>Check Out</strong><br />--:--</p>
-              <p><strong>Total Hours</strong><br />00h : 00m</p>
+              <p>
+                <strong>{time.toDateString()}</strong>
+              </p>
+              <p>
+                <small>Shift Timing - (09:30 - 17:30)</small>
+              </p>
+              <p>
+                <strong>Check In</strong>
+                <br />
+                {time.toLocaleTimeString()}
+              </p>
+              <p>
+                <strong>Check Out</strong>
+                <br />
+                --:--
+              </p>
+              <p>
+                <strong>Total Hours</strong>
+                <br />
+                00h : 00m
+              </p>
               <button className="check-out-btn">Check Out</button>
 
               {/* Mood Tracker */}
               <div className="mood-section">
                 <h4>How Are You Feeling Today?</h4>
                 <div className="mood-days-wrapper">
-                  <button className="mood-nav-btn" onClick={handlePrev}>&lt;</button>
+                  <button className="mood-nav-btn" onClick={handlePrev}>
+                    &lt;
+                  </button>
                   <div className="mood-days">
                     {moodDates.slice(startIndex, startIndex + 3).map((date, index) => (
                       <div key={index}>
-                        <div style={{ fontSize: "20px" }}>{date.emoji}</div>
+                        <div style={{ fontSize: '20px' }}>{date.emoji}</div>
                         <div>{date.label}</div>
                       </div>
                     ))}
                   </div>
-                  <button className="mood-nav-btn" onClick={handleNext}>&gt;</button>
+                  <button className="mood-nav-btn" onClick={handleNext}>
+                    &gt;
+                  </button>
                 </div>
               </div>
 
@@ -249,7 +282,9 @@ function Home() {
         <div className="modal">
           <div className="modal-content">
             <ApplyLeave />
-            <button className="close-btn" onClick={() => setShowLeaveModal(false)}>Close</button>
+            <button className="close-btn" onClick={() => setShowLeaveModal(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -258,7 +293,9 @@ function Home() {
         <div className="modal">
           <div className="modal-content">
             <AddTaskForm />
-            <button className="close-btn" onClick={() => setShowTaskModal(false)}>Close</button>
+            <button className="close-btn" onClick={() => setShowTaskModal(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -267,7 +304,9 @@ function Home() {
         <div className="modal">
           <div className="modal-content">
             <InboxNotifications />
-            <button className="close-btn" onClick={() => setShowAlertModal(false)}>Close</button>
+            <button className="close-btn" onClick={() => setShowAlertModal(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}

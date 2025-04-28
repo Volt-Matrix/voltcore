@@ -1,28 +1,31 @@
-import React, { useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import leaveRequestsData from "./LeaveData";
-import "./LeaveHistory.css";
+import React, { useState } from 'react';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import leaveRequestsData from './LeaveData';
+import './LeaveHistory.css';
 
 const COLORS = {
-  Approved: "#82ca9d",
-  Pending: "#8884d8",
-  Rejected: "#ff6b6b",
+  Approved: '#82ca9d',
+  Pending: '#8884d8',
+  Rejected: '#ff6b6b',
 };
 
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 function LeaveHistory() {
-  const [selectedMonth, setSelectedMonth] = useState("April");
+  const [selectedMonth, setSelectedMonth] = useState('April');
 
   const getMonthNumber = (monthName) => MONTHS.indexOf(monthName) + 1;
 
@@ -50,16 +53,16 @@ function LeaveHistory() {
   });
 
   const leaveBalances = {
-    "Sick Leave": 10,
-    "Casual Leave": 12,
-    "Earned Leave": 15,
-    "Maternity Leave": 180,
+    'Sick Leave': 10,
+    'Casual Leave': 12,
+    'Earned Leave': 15,
+    'Maternity Leave': 180,
   };
 
   const pieChartData = [
-    { name: "Approved", value: leaveCounts.Approved },
-    { name: "Pending", value: leaveCounts.Pending },
-    { name: "Rejected", value: leaveCounts.Rejected },
+    { name: 'Approved', value: leaveCounts.Approved },
+    { name: 'Pending', value: leaveCounts.Pending },
+    { name: 'Rejected', value: leaveCounts.Rejected },
   ];
 
   return (
@@ -68,10 +71,7 @@ function LeaveHistory() {
 
       <div className="month-filter">
         <label>Select Month:</label>
-        <select
-          value={selectedMonth}
-          onChange={(e) => setSelectedMonth(e.target.value)}
-        >
+        <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
           {MONTHS.map((month) => (
             <option key={month}>{month}</option>
           ))}
@@ -102,7 +102,7 @@ function LeaveHistory() {
               <td>
                 {leaveBalances[type] !== undefined
                   ? leaveBalances[type] - leaveTypeStats[type].taken
-                  : "N/A"}
+                  : 'N/A'}
               </td>
             </tr>
           ))}
@@ -113,13 +113,7 @@ function LeaveHistory() {
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Pie
-              data={pieChartData}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={100}
-              label
-            >
+            <Pie data={pieChartData} dataKey="value" nameKey="name" outerRadius={100} label>
               {pieChartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[entry.name]} />
               ))}

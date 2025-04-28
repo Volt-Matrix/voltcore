@@ -1,13 +1,13 @@
 // src/components/TopBar.jsx
-import React, { useState } from "react";
-import "./TopBar.css";
-import { FaCog, FaBell, FaUserCircle } from "react-icons/fa";
+import React, { useState } from 'react';
+import './TopBar.css';
+import { FaCog, FaBell, FaUserCircle } from 'react-icons/fa';
 
 function TopBar() {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState('');
 
   const handleClick = (item) => {
-    setActive(active === item ? "" : item);
+    setActive(active === item ? '' : item);
   };
 
   return (
@@ -16,17 +16,17 @@ function TopBar() {
         <h2>VoltMatrix HRMS</h2>
       </div>
       <div className="topbar-right">
-        <div className="topbar-icon" onClick={() => handleClick("settings")}>
+        <div className="topbar-icon" onClick={() => handleClick('settings')}>
           <FaCog />
-          {active === "settings" && <span className="topbar-text">Settings</span>}
+          {active === 'settings' && <span className="topbar-text">Settings</span>}
         </div>
-        <div className="topbar-icon" onClick={() => handleClick("notifications")}>
+        <div className="topbar-icon" onClick={() => handleClick('notifications')}>
           <FaBell />
-          {active === "notifications" && <span className="topbar-text">Notifications</span>}
+          {active === 'notifications' && <span className="topbar-text">Notifications</span>}
         </div>
-        <div className="topbar-icon" onClick={() => handleClick("profile")}>
+        <div className="topbar-icon" onClick={() => handleClick('profile')}>
           <FaUserCircle />
-          {active === "profile" && <span className="topbar-text">Profile</span>}
+          {active === 'profile' && <span className="topbar-text">Profile</span>}
         </div>
       </div>
     </div>

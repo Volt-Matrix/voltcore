@@ -133,7 +133,7 @@ button:hover {
 }
 
 .event-list li::before {
-  content: "•";
+  content: '•';
   color: #007bff;
   font-weight: bold;
   display: inline-block;
