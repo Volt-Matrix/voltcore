@@ -13,7 +13,7 @@ import Attendance from "./pages/Attendance";
 import Layout from "./components/Layout";
 import BasicDetails from "./pages/profile/BasicDetails";
 import ProfileList from "./pages/profile/ProfileList";
-import Experience from "./pages/profile/ExperienceForm";
+import Experience from "./pages/profile/Experience";
 import Contracts from "./pages/profile/Contracts";
 import Documents from "./pages/profile/DocumentsForm";
 import Reporting from "./pages/profile/Reporting";
