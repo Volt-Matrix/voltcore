@@ -51,7 +51,7 @@ const TimeSheet = () => {
         <span className="text rpr">Time Sheet</span>
         {!isFormVisible ? <span>open</span> : <span>close</span>}
       </button>
-
+ 
       <div className={`sub-frm ${isFormVisible ? 'visible' : ''}`}>
         <div className="date-inputs">
           <input type="date" name="fromDate" onChange={(e) => handleDateChange(e)} />

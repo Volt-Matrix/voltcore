@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, CirclePlus } from 'lucide-react';
 import { eachDayOfInterval } from 'date-fns';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
+import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -17,38 +18,17 @@ const actionTypes = [
   { name: 'Report', action: '' },
   { name: 'submit', action: '' },
 ];
+const texp = {
+  id: 0,
+  hourSpent: 3,
+  description: 'Doing Research on generative ai',
+};
 function CustomTImeSheet() {
   const [timeSheetData, setTimeSheetData] = useState({
     fromDate: '',
     toDate: '',
     dateRange: [],
-    data: [
-      {
-        checkIn: '9:00',
-        checkOut: '5:00',
-        totalHours: 8,
-      },
-      {
-        checkIn: '9:00',
-        checkOut: '5:00',
-        totalHours: 8,
-      },
-      {
-        checkIn: '9:00',
-        checkOut: '5:00',
-        totalHours: 8,
-      },
-      {
-        checkIn: '9:00',
-        checkOut: '5:00',
-        totalHours: 8,
-      },
-      {
-        checkIn: '9:00',
-        checkOut: '5:00',
-        totalHours: 8,
-      },
-    ],
+    data: [],
   });
 
   const handleDatePick = (e) => {
@@ -65,15 +45,35 @@ function CustomTImeSheet() {
   const handleEditClick = (index) => {
     setOpenRowIndex((prev) => (prev === index ? null : index));
   };
+  const addTimeExpense = (data, rowId, indexOfInput) => {
+    console.log('Add and delete time expense---->', data, rowId);
+  };
+  const addExpenseItem = (addExpenseToDataIndex)=>{
+    console.log("Please Add a expense item",addExpenseToDataIndex)
+    const myData = [...timeSheetData.data]
+    myData[addExpenseToDataIndex].timeExpense.push({
+      hourSpent: 0,
+      description: '',
+    })
+    setTimeSheetData({...timeSheetData,data:[...myData]})
+
+  }
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
     if (fDate && tDate) {
-      const myList = eachDayOfInterval({ start: fDate, end: tDate }).map((item) =>
-        new Date(item).toLocaleDateString()
-      );
+      const myList = eachDayOfInterval({ start: fDate, end: tDate }).map((item, index) => {
+        return {
+          id: index,
+          date: new Date(item).toLocaleDateString(),
+          checkIn: '9:00',
+          checkOut: '5:00',
+          totalHours: 8,
+          timeExpense: [],
+        };
+      });
       console.log('Date Range--->', myList);
-      setTimeSheetData({ ...timeSheetData, dateRange: [...myList] });
+      setTimeSheetData({ ...timeSheetData, data: [...myList] });
     }
   }, [timeSheetData.fromDate, timeSheetData.toDate]);
   return (
@@ -101,35 +101,52 @@ function CustomTImeSheet() {
             </tr>
           </thead>
           <tbody>
-            {timeSheetData.dateRange.map((date, index) => (
-              <tr className="osns">
-                <td>{date}</td>
+            {timeSheetData.data.map((date, index) => (
+              <>
+                <tr className="osns">
+                  <td>{timeSheetData.data[index]?.date && timeSheetData.data[index].date}</td>
+
+                  <td>{timeSheetData.data[index]?.checkIn && timeSheetData.data[index].checkIn}</td>
+                  <td>
+                    {timeSheetData.data[index]?.checkOut && timeSheetData.data[index].checkOut}
+                  </td>
+                  <td>
+                    {timeSheetData.data[index]?.totalHours && timeSheetData.data[index].totalHours}
+                  </td>
+                  <td></td>
+                  <td>
+                    <MoreActionsButton
+                      actionTypes={actionTypes}
+                      onEdit={() => handleEditClick(index)}
+                    />
+                  </td>
+                </tr>
                 {
-                  <>
-                    <td>
-                      {timeSheetData.data[index]?.checkIn && timeSheetData.data[index].checkIn}
+                  <tr className="expand-row">
+                    <td colSpan={6}>
+                      <div
+                        colSpan={2}
+                        className={`collapsible-container ${openRowIndex === index ? 'open' : ''}`}
+                      >
+                        <CirclePlus onClick={()=>{
+                          addExpenseItem(index)
+                        }}/>
+                        {timeSheetData.data[index].timeExpense.map((ele, index) => (
+                          <AddTimeExpense
+                            handleExpenseInput={addTimeExpense}
+                            rowId={index}
+                            data={''}
+                          />
+                        ))}
+                      </div>
                     </td>
-                    <td>
-                      {timeSheetData.data[index]?.checkOut && timeSheetData.data[index].checkOut}
-                    </td>
-                    <td>
-                      {timeSheetData.data[index]?.totalHours &&
-                        timeSheetData.data[index].totalHours}
-                    </td>
-                    <td></td>
-                    <td>
-                      <MoreActionsButton
-                        actionTypes={actionTypes}
-                        onEdit={() => handleEditClick(index)}
-                      />
-                    </td>
-                  </>
+                  </tr>
                 }
-                
-              </tr>
+              </>
             ))}
           </tbody>
         </table>
+        <button className="">Save</button>
       </div>
     </div>
   );

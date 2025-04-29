@@ -1,17 +1,34 @@
-.atten-sheet{
-    width: 100%;
+.atten-sheet {
+  width: 100%;
 }
-.atten-sheet table{
-    width: 100%;
-    text-align: center;
+.atten-sheet table {
+  width: 100%;
+  text-align: center;
 }
-.atten-sheet table tr{
-    display: sticky !important;
-    padding: 1em;
+.atten-sheet table tr {
+  display: sticky !important;
+  padding: 1em;
 }
-.atten-sheet .d-pick{
-    display: flex;
-    gap:1em;
-    padding:1em;
-    max-width: 50%;
+.atten-sheet .d-pick {
+  display: flex;
+  gap: 1em;
+  padding: 1em;
+  max-width: 50%;
+}
+.collapsible-container {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease-in-out;
+  display: flex;
+  gap:1em
+  
+  /* width: 100%; */
+}
+
+.collapsible-container.open {
+  max-height: 500px; /* or any reasonable max height */
+   display: flex; 
+   flex-direction: column;
+   max-height: 300px;
+   overflow: scroll;
 }
