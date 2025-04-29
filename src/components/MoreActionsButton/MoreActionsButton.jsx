@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MoreVertical } from 'lucide-react'; // Optional: for a better-looking icon
 
-const ActionMenu = ({ actionTypes }) => {
+const ActionMenu = ({ actionTypes,onEdit }) => {
   const [showActions, setShowActions] = useState(false);
 
   return (
@@ -21,6 +21,7 @@ const ActionMenu = ({ actionTypes }) => {
             <button
               key={index}
               onClick={() => {
+                onEdit()
                 if (ele.action !== '') {
                   console.log("Called Action");
                 }

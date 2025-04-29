@@ -60,7 +60,7 @@ const AttendanceCalendar = () => {
 
   return (
     <div className="p-8 overflow-visible">
-      <h1 className="text-2xl font-bold mb-4  t-cent">Attendance Calendar</h1>
+      <h1 className="rsh t-cent">Attendance Calendar</h1>
       <div className="overflow-visible relative">
         <Calendar
           onChange={setValue}

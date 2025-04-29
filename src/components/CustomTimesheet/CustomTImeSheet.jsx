@@ -13,8 +13,10 @@ export const timeSheetFields = [
   'actions',
 ];
 const actionTypes = [
-    {name:"Edit",action:''}, {name:"Report",action:''}, {name:"submit",action:''}
-]
+  { name: 'Edit', action: '' },
+  { name: 'Report', action: '' },
+  { name: 'submit', action: '' },
+];
 function CustomTImeSheet() {
   const [timeSheetData, setTimeSheetData] = useState({
     fromDate: '',
@@ -24,27 +26,27 @@ function CustomTImeSheet() {
       {
         checkIn: '9:00',
         checkOut: '5:00',
-        totalHours:8
+        totalHours: 8,
       },
       {
         checkIn: '9:00',
         checkOut: '5:00',
-        totalHours:8
+        totalHours: 8,
       },
       {
         checkIn: '9:00',
         checkOut: '5:00',
-        totalHours:8
+        totalHours: 8,
       },
       {
         checkIn: '9:00',
         checkOut: '5:00',
-        totalHours:8
+        totalHours: 8,
       },
       {
         checkIn: '9:00',
         checkOut: '5:00',
-        totalHours:8,
+        totalHours: 8,
       },
     ],
   });
@@ -57,15 +59,23 @@ function CustomTImeSheet() {
     });
   };
   const navigate = useNavigate();
-    useEffect(() => {
-      const fDate = timeSheetData.fromDate;
-      const tDate = timeSheetData.toDate;
-      if (fDate && tDate) {
-          const myList =eachDayOfInterval({start:fDate,end:tDate}).map((item)=>new Date(item).toLocaleDateString())
-        console.log("Date Range--->",myList)
-        setTimeSheetData({...timeSheetData,dateRange:[...myList]})
-      }
-    }, [timeSheetData.fromDate,timeSheetData.toDate]);
+
+  const [openRowIndex, setOpenRowIndex] = useState(null);
+
+  const handleEditClick = (index) => {
+    setOpenRowIndex((prev) => (prev === index ? null : index));
+  };
+  useEffect(() => {
+    const fDate = timeSheetData.fromDate;
+    const tDate = timeSheetData.toDate;
+    if (fDate && tDate) {
+      const myList = eachDayOfInterval({ start: fDate, end: tDate }).map((item) =>
+        new Date(item).toLocaleDateString()
+      );
+      console.log('Date Range--->', myList);
+      setTimeSheetData({ ...timeSheetData, dateRange: [...myList] });
+    }
+  }, [timeSheetData.fromDate, timeSheetData.toDate]);
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
@@ -96,13 +106,26 @@ function CustomTImeSheet() {
                 <td>{date}</td>
                 {
                   <>
-                    <td>{timeSheetData.data[index]?.checkIn&&timeSheetData.data[index].checkIn}</td>
-                    <td>{timeSheetData.data[index]?.checkOut&&timeSheetData.data[index].checkOut}</td>
-                    <td>{timeSheetData.data[index]?.totalHours&&timeSheetData.data[index].totalHours}</td>
+                    <td>
+                      {timeSheetData.data[index]?.checkIn && timeSheetData.data[index].checkIn}
+                    </td>
+                    <td>
+                      {timeSheetData.data[index]?.checkOut && timeSheetData.data[index].checkOut}
+                    </td>
+                    <td>
+                      {timeSheetData.data[index]?.totalHours &&
+                        timeSheetData.data[index].totalHours}
+                    </td>
                     <td></td>
-                    <td><MoreActionsButton actionTypes={actionTypes}/></td>
+                    <td>
+                      <MoreActionsButton
+                        actionTypes={actionTypes}
+                        onEdit={() => handleEditClick(index)}
+                      />
+                    </td>
                   </>
                 }
+                
               </tr>
             ))}
           </tbody>

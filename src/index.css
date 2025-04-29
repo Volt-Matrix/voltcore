@@ -88,19 +88,19 @@ button {
 
 /*For Headings we use sans and for content inside html we can use Open sans*/
 .rpr {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif;  /*For table Headings,options etc..*/        
   font-weight: 500;
   font-style: normal;
 }
 /* for home content heading*/
-.rsh {
+.rsh {                      /*For Main headings in Page*/                  
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   font-style: normal;
   font-size: 1.5em;
 }
 
-.osns{                                  
+.osns{               /*For Content in Page*/                    
   font-family: "Open Sans", sans-serif;
   font-weight: 500;
   font-style: normal;
