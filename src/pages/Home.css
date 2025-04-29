@@ -5,6 +5,7 @@
   display: flex;
   padding: 70px 1em;
   margin-left: 200px;
+  gap:1em
 }
 
 .main-content {

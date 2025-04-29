@@ -1,0 +1,17 @@
+.atten-sheet{
+    width: 100%;
+}
+.atten-sheet table{
+    width: 100%;
+    text-align: center;
+}
+.atten-sheet table tr{
+    display: sticky !important;
+    padding: 1em;
+}
+.atten-sheet .d-pick{
+    display: flex;
+    gap:1em;
+    padding:1em;
+    max-width: 50%;
+}

@@ -108,12 +108,24 @@ button {
     "wdth" 100;
 }
 
+
 /*title center*/
 .t-cent{ 
   text-align: center;
   padding: 0.3em;
 }
+/* All Button Classes */
+.smbfn{
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border: 1px solid black;
+  text-align: center;
+  max-width:300px;
+}
 
+/* Button Classes end */
 .card-p {
   background: #fff;
   border-radius: 10px;
