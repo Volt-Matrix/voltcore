@@ -1,0 +1,25 @@
+.table-container {
+  max-height: 30vh; /* Fixed height */
+  overflow-y: auto; /* Scroll vertically */
+  border-radius: 8px;
+  text-align: center;
+}
+
+.scrollable-table {
+  width: 100%;
+  border-collapse: collapse;
+ 
+}
+
+.scrollable-table th,
+.scrollable-table td {
+  padding: 1em;
+
+}
+
+.scrollable-table thead th {
+  background-color: #f9f9f9;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

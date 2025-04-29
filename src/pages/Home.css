@@ -3,7 +3,7 @@
 /* Layout Containers */
 .home-container {
   display: flex;
-  padding-top: 70px;
+  padding: 70px 1em;
   margin-left: 200px;
 }
 

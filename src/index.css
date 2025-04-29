@@ -1,4 +1,7 @@
 /* Reset default browser styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
 * {
   margin: 0;
   padding: 0;
@@ -81,3 +84,84 @@ button {
 .login-form button:hover {
   background-color: #1a252f;
 }
+/* Custom Font classes */
+
+/*For Headings we use sans and for content inside html we can use Open sans*/
+.rpr {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+/* for home content heading*/
+.rsh {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.5em;
+}
+
+.osns{                                  
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+/*title center*/
+.t-cent{ 
+  text-align: center;
+  padding: 0.3em;
+}
+
+.card-p {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid #eee; /* subtle border */
+  width: 100%;
+}
+.present-day {
+  background-color: #22c55e; /* green-500 */
+  border-radius: 0.5rem;
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.absent-day {
+  background-color: #ef4444; /* red-500 */
+  border-radius: 0.5rem;
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.react-calendar {
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+.react-calendar__viewContainer {
+  overflow: visible !important;
+}
+
+.react-calendar__month-view__days {
+  overflow: visible !important;
+}
+
+.react-calendar__tile {
+  position: relative;
+  overflow: visible !important;
+}
+ 
