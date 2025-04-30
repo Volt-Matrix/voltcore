@@ -5,6 +5,7 @@ import { ArrowLeft, CirclePlus } from 'lucide-react';
 import { eachDayOfInterval } from 'date-fns';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
+import { ToastContainer,toast,Bounce } from 'react-toastify';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -30,7 +31,19 @@ function CustomTImeSheet() {
     dateRange: [],
     data: [],
   });
-
+const warning = ()=>{
+  toast('Make Sure to save details before exit', {
+    position: 'top-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+    transition: Bounce,
+  });
+}
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
     setTimeSheetData({
@@ -45,7 +58,27 @@ function CustomTImeSheet() {
   const handleEditClick = (index) => {
     setOpenRowIndex((prev) => (prev === index ? null : index));
   };
-  const addTimeExpense = (e, rowId, indexOfInput) => {
+  const addTimeExpense = (e, rowId, indexOfInput, cmd) => {
+    console.log('inoput index', indexOfInput,rowId);
+    if (cmd == 'remove') {
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.filter((timeExp, expInd) => {
+                console.log(`expIndex ${expInd},input INdex ${indexOfInput}`,expInd !== indexOfInput);
+                return expInd !== indexOfInput;
+              }),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+      return;
+    }
     const name = e.target.name;
     const value = e.target.value;
     const myExpenseDetails = {
@@ -109,7 +142,8 @@ function CustomTImeSheet() {
       <div className="flex gap-2 justify-center rsh">
         <ArrowLeft
           onClick={() => {
-            navigate(-1);
+            warning()
+            setTimeout(()=>{navigate(-1)},5000)
           }}
         />
         Time Sheet
@@ -166,7 +200,8 @@ function CustomTImeSheet() {
                             handleExpenseInput={addTimeExpense}
                             rowId={index}
                             expIndex={expindex}
-                            data={''}
+                            data={timeSheetData.data[index].timeExpense[expindex]}
+                            key={expindex}
                           />
                         ))}
                       </div>
@@ -177,8 +212,21 @@ function CustomTImeSheet() {
             ))}
           </tbody>
         </table>
-        <button className="m-2">Save</button>
+        <button className="mrg-tp">Save</button>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        transition={Bounce}
+      />
     </div>
   );
 }

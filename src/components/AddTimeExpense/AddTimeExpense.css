@@ -3,7 +3,8 @@
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
-    gap:1em
+    gap:1em;
+    align-items: center;
 }
 .atexp-con input[type=number]{
     width: 30%;

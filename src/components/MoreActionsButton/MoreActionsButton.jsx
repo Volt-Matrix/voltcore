@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { MoreVertical } from 'lucide-react'; // Optional: for a better-looking icon
 
-const ActionMenu = ({ actionTypes,onEdit }) => {
+const ActionMenu = ({ actionTypes, onEdit }) => {
   const [showActions, setShowActions] = useState(false);
 
   return (
     <div className="relative inline-block text-left">
       {/* 3 Dots Button */}
       <button
-        onClick={() => setShowActions(prev => !prev)}
+        onClick={() => setShowActions((prev) => !prev)}
         className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <MoreVertical className="w-5 h-5 text-white-600" />
@@ -16,14 +16,20 @@ const ActionMenu = ({ actionTypes,onEdit }) => {
 
       {/* Dropdown */}
       {showActions && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 flex gap-1 flex-col" style={{padding:"10px"}} >
+        <div
+          className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 flex gap-1 flex-col"
+          style={{ padding: '10px' }}
+        >
           {actionTypes.map((ele, index) => (
             <button
               key={index}
               onClick={() => {
-                onEdit()
+                if (ele.name == 'Edit') {
+                  onEdit();
+                }
                 if (ele.action !== '') {
-                  console.log("Called Action");
+                  ele.action();
+                  console.log('Called Action');
                 }
                 setShowActions(false);
               }}

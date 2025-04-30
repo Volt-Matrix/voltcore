@@ -86,6 +86,12 @@ button {
 }
 /* Custom Font classes */
 
+/* Margins */
+.mrg-tp{
+  margin-top: 10px;
+}
+/*  */
+
 /*For Headings we use sans and for content inside html we can use Open sans*/
 .rpr {
   font-family: "Roboto", sans-serif;  /*For table Headings,options etc..*/        
@@ -108,6 +114,17 @@ button {
     "wdth" 100;
 }
 
+/* Status Colors */
+.sts-a{
+  color:green
+}
+.sts-p{
+  color:orange
+}
+.sts-r{
+  color:red
+}
+/* -------------- */
 
 /*title center*/
 .t-cent{ 
