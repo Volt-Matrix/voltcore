@@ -5,7 +5,7 @@ import { loggedInUserDetails } from '../lib/placeholder';
 // import components
 import ClockInOut from '../components/ClockInOutBox/ClockInOut';
 import AnnouncementsPreview from '../components/AnnouncementsBox/AnnouncementsPreview';
-
+import AvailableLeaves from '../components/AvailableLeavesBox/AvailableLeaves';
 
 function Home() {
   const [time, setTime] = useState(new Date());
@@ -40,7 +40,7 @@ function Home() {
             </div>
 
             <div className="home_available-leaves">
-
+              <AvailableLeaves />
             </div>
           </div>
 

@@ -48,6 +48,8 @@ export const myDailyAttendance = [
 
 export const loggedInUserDetails = {
     name: 'Mariam',
+    availableEarnedLeaves: 4.5,
+    availableSickLeaves: 5,
 }
 
 export const announcementList = [
