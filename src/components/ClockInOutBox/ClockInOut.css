@@ -1,0 +1,11 @@
+.clockinout_content-wrapper {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.clockinout_duration {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

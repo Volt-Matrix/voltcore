@@ -45,3 +45,7 @@ export const myDailyAttendance = [
         totalHours:8
     }
 ]
+
+export const loggedInUserDetails = {
+    'name': 'Mariam',
+}
