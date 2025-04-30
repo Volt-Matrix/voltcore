@@ -18,11 +18,11 @@ const actionTypes = [
   { name: 'Report', action: '' },
   { name: 'submit', action: '' },
 ];
-const texp = {
-  id: 0,
-  hourSpent: 3,
-  description: 'Doing Research on generative ai',
-};
+// const texp = {
+//   id: 0,
+//   hourSpent: 3,
+//   description: 'Doing Research on generative ai',
+// };
 function CustomTImeSheet() {
   const [timeSheetData, setTimeSheetData] = useState({
     fromDate: '',
@@ -45,19 +45,47 @@ function CustomTImeSheet() {
   const handleEditClick = (index) => {
     setOpenRowIndex((prev) => (prev === index ? null : index));
   };
-  const addTimeExpense = (data, rowId, indexOfInput) => {
-    console.log('Add and delete time expense---->', data, rowId);
+  const addTimeExpense = (e, rowId, indexOfInput) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    const myExpenseDetails = {
+      name,
+      value,
+      rowId,
+      indexOfInput,
+    };
+    console.log('Add and delete time expense---->', myExpenseDetails);
+    setTimeSheetData((prev) => ({
+      ...prev,
+      data: prev.data.map((ele, index) => {
+        if (rowId == index) {
+          return {
+            ...ele,
+            timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+              expInd == indexOfInput
+                ? {
+                    ...timeExp,
+                    [name]: value,
+                  }
+                : timeExp
+            ),
+          };
+        } else {
+          return ele;
+        }
+      }),
+    }));
   };
-  const addExpenseItem = (addExpenseToDataIndex)=>{
-    console.log("Please Add a expense item",addExpenseToDataIndex)
-    const myData = [...timeSheetData.data]
-    myData[addExpenseToDataIndex].timeExpense.push({
+
+  const addExpenseItem = (addExpenseToDataIndex) => {
+    console.log('Please Add a expense item', addExpenseToDataIndex);
+    const myTimeSheetData = [...timeSheetData.data];
+    myTimeSheetData[addExpenseToDataIndex].timeExpense.push({
       hourSpent: 0,
       description: '',
-    })
-    setTimeSheetData({...timeSheetData,data:[...myData]})
-
-  }
+    });
+    setTimeSheetData({ ...timeSheetData, data: [...myTimeSheetData] });
+  };
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
@@ -128,13 +156,16 @@ function CustomTImeSheet() {
                         colSpan={2}
                         className={`collapsible-container ${openRowIndex === index ? 'open' : ''}`}
                       >
-                        <CirclePlus onClick={()=>{
-                          addExpenseItem(index)
-                        }}/>
-                        {timeSheetData.data[index].timeExpense.map((ele, index) => (
+                        <CirclePlus
+                          onClick={() => {
+                            addExpenseItem(index);
+                          }}
+                        />
+                        {timeSheetData.data[index].timeExpense.map((ele, expindex) => (
                           <AddTimeExpense
                             handleExpenseInput={addTimeExpense}
                             rowId={index}
+                            expIndex={expindex}
                             data={''}
                           />
                         ))}
@@ -146,7 +177,7 @@ function CustomTImeSheet() {
             ))}
           </tbody>
         </table>
-        <button className="">Save</button>
+        <button className="m-2">Save</button>
       </div>
     </div>
   );

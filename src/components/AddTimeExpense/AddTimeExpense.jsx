@@ -1,21 +1,21 @@
 import React from 'react';
 import './AddTimeExpense.css';
 import { Check } from 'lucide-react';
-const AddTimeExpense = ({ handleExpenseInput, rowId, data }) => {
+const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex,data }) => {
   return (
     <div className="atexp-con">
       <input
         type="number"
         name="hourSpent"
         onChange={(e) => {
-          handleExpenseInput(e, rowId);
+          handleExpenseInput(e, rowId,expIndex);
         }}
         placeholder="Please Add Hours Spent"
       />
       <textarea
-        name="taskDetails"
+        name="description"
         onChange={(e) => {
-          handleExpenseInput(e, rowId);
+          handleExpenseInput(e, rowId,expIndex);
         }}
         placeholder="Please give task details"
       />
