@@ -108,6 +108,11 @@ button {
     "wdth" 100;
 }
 
+/* for grey subtext color */
+.color-grey {
+  color: #868e96;
+}
+
 /*title center*/
 .t-cent{ 
   text-align: center;
