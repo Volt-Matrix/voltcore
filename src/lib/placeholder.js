@@ -47,5 +47,18 @@ export const myDailyAttendance = [
 ]
 
 export const loggedInUserDetails = {
-    'name': 'Mariam',
+    name: 'Mariam',
 }
+
+export const announcementList = [
+    {
+        title: 'Office Relocation Update - Moving Next Month!',
+        content: 'We will be working from our new office from May 28th. Details about the new location and logistics will be shared soon.'
+
+    },
+
+    {
+        title: 'Reminder: Submit Your Tax Declarations by April 30th',
+        content: 'The deadline for submitting your investment proofs is fast approaching. Upload your documents through the payroll portal to avoid delays.'
+    }
+]

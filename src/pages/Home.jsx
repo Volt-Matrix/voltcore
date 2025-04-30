@@ -4,6 +4,8 @@ import { loggedInUserDetails } from '../lib/placeholder';
 
 // import components
 import ClockInOut from '../components/ClockInOutBox/ClockInOut';
+import AnnouncementsPreview from '../components/AnnouncementsBox/AnnouncementsPreview';
+
 
 function Home() {
   const [time, setTime] = useState(new Date());
@@ -19,7 +21,7 @@ function Home() {
 
         <div className="home_greet-time">
           <div className="home_greet rpr">
-            <p>Welcome back, {loggedInUserDetails.name}</p>
+            <p>Welcome back, {loggedInUserDetails.name}!</p>
           </div>
           <div className="home_time osns">
             <p>{time.toLocaleTimeString()}, {time.toDateString()}</p>
@@ -32,9 +34,11 @@ function Home() {
             <div className="home_clock-in-out">
               <ClockInOut />
             </div>
-            <div className="home_announcements">
 
+            <div className="home_announcements">
+              <AnnouncementsPreview />
             </div>
+
             <div className="home_available-leaves">
 
             </div>

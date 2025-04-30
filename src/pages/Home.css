@@ -12,10 +12,15 @@
   width: 100%;
 }
 
+.home_greet {
+  font-size: 1.2em;
+}
+
 .home_main-content {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  gap: 10px;
 }
 
 .home_first-row {
@@ -23,6 +28,12 @@
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 10px;
+}
+
+.home_announcements {
+  min-width: 400px;
+  width:50%;
 }
 
 .att-container{
