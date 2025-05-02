@@ -26,6 +26,7 @@ import InboxAnnouncementsForm from './pages/inbox/InboxAnnouncements';
 import InboxMessagesForm from './pages/inbox/InboxMessage';
 import InboxNotificationsForm from './pages/inbox/InboxNotifications';
 import DocumentsForm from './pages/profile/DocumentsForm';
+import CustomTImeSheet from './components/CustomTimesheet/CustomTImeSheet';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -78,6 +79,8 @@ function App() {
           <Route path="inbox/messages" element={<InboxMessagesForm />} />
           <Route path="inbox/notifications" element={<InboxNotificationsForm />} />
           <Route path="attendance/daily" element={<Attendance/>}/>
+          {/* Note:Should be changed */}
+          <Route path="attendance/myTimeSheet" element={<CustomTImeSheet/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
