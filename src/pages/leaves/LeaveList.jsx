@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import leaveRequestsData from "./LeaveData";
-import "./LeaveList.css";
+import React, { useState } from 'react';
+import leaveRequestsData from './LeaveData';
+import './LeaveList.css';
 
 function LeaveList() {
   const [leaveRequests, setLeaveRequests] = useState(leaveRequestsData);
@@ -39,10 +39,10 @@ function LeaveList() {
               <td>{leave.reason}</td>
               <td>{leave.status}</td>
               <td>
-                {leave.status === "Pending" && (
+                {leave.status === 'Pending' && (
                   <>
-                    <button onClick={() => handleAction(leave.id, "Approved")}>Approve</button>
-                    <button onClick={() => handleAction(leave.id, "Rejected")}>Reject</button>
+                    <button onClick={() => handleAction(leave.id, 'Approved')}>Approve</button>
+                    <button onClick={() => handleAction(leave.id, 'Rejected')}>Reject</button>
                   </>
                 )}
               </td>

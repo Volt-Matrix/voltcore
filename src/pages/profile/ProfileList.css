@@ -25,7 +25,6 @@
   text-align: center;
   width: 280px;
   position: relative;
-  
 }
 
 .avatar-wrapper {
@@ -110,23 +109,23 @@
   background: #0056b3;
 }
 .page-content {
-  margin-left: 16rem; 
-  margin-top: 4rem;   
+  margin-left: 16rem; /* Sidebar width */
+  margin-top: 4rem; /* Topbar height */
   padding: 2rem;
   background: #f5f7fa;
   min-height: calc(100vh - 4rem);
   box-sizing: border-box;
   overflow-y: auto;
-  overflow-x: hidden; 
-  width: calc(100% - 16rem); 
+  overflow-x: hidden; /* Important to avoid horizontal scrolling */
+  width: calc(100% - 16rem); /* Adjust width considering sidebar */
 }
 
 .profile-list-container {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: center; 
+  flex-wrap: wrap; /* Wrap cards properly */
+  justify-content: center; /* Center the cards */
   gap: 24px;
-  padding: 20px; 
+  padding: 20px; /* Top and bottom padding */
 }
 
 .profile-card {
@@ -135,13 +134,13 @@
   padding: 24px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   text-align: center;
-  width: 260px; 
+  width: 260px; /* Fixed card width */
   position: relative;
-  flex: 0 0 auto; 
+  flex: 0 0 auto; /* Prevent cards from stretching */
 }
 .page-content {
-  margin-top:30px;
-  margin-left: 30px;
+  margin-top: 30px; /* Height of the fixed topbar */
+  margin-left: 30px; /* Width of the fixed sidebar */
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;

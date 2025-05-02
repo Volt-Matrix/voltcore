@@ -1,10 +1,25 @@
-import React from "react";
-import "./Inbox.css";
+import React from 'react';
+import './Inbox.css';
 
 const notifications = [
-  { id: 1, title: "New Policy Update", description: "HR policy updated for 2025", time: "10 mins ago" },
-  { id: 2, title: "Meeting Reminder", description: "Performance review at 3PM", time: "1 hour ago" },
-  { id: 3, title: "Holiday Announcement", description: "Office closed on May 1st", time: "Yesterday" },
+  {
+    id: 1,
+    title: 'New Policy Update',
+    description: 'HR policy updated for 2025',
+    time: '10 mins ago',
+  },
+  {
+    id: 2,
+    title: 'Meeting Reminder',
+    description: 'Performance review at 3PM',
+    time: '1 hour ago',
+  },
+  {
+    id: 3,
+    title: 'Holiday Announcement',
+    description: 'Office closed on May 1st',
+    time: 'Yesterday',
+  },
 ];
 
 function InboxNotificationsForm() {

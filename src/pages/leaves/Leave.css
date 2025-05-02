@@ -1,42 +1,36 @@
 .leave-form {
-  max-width: 600px;
+  max-width: 700px;
   margin: 40px auto;
-  padding: 20px 25px;
+  padding: 30px;
   background-color: #f9f9f9;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .leave-form h2 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   color: #333;
-  font-size: 24px;
 }
 
 .leave-form form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .leave-form label {
+  margin-top: 12px;
   font-weight: 500;
-  margin-bottom: 5px;
-  color: #555;
 }
 
 .leave-form input,
 .leave-form select,
 .leave-form textarea {
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 15px;
-}
-
-.leave-form textarea {
-  resize: vertical;
 }
 
 .leave-form button {
@@ -46,79 +40,11 @@
   color: white;
   font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .leave-form button:hover {
   background-color: #218838;
-}
-
-/* Confirmation Modal */
-.confirm-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  backdrop-filter: blur(4px);
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.confirm-box {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.confirm-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.confirm-cancel,
-.confirm-stay {
-  padding: 10px 20px;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.confirm-cancel {
-  background-color: #ff4d4f;
-  color: white;
-}
-
-.confirm-cancel:hover {
-  background-color: #d93025;
-}
-
-.confirm-stay {
-  background-color: #28a745;
-  color: white;
-}
-
-.confirm-stay:hover {
-  background-color: #218838;
-}
-.error-input {
-  border: 1px solid red;
-}
-
-.error-text {
-  color: red;
-  font-size: 13px;
-  margin-bottom: 10px;
 }

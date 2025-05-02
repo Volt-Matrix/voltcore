@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import "./Experience.css";
+import React, { useState } from 'react';
+import './Experience.css';
 
 function Experience() {
   const [experienceList, setExperienceList] = useState([]);
   const [experience, setExperience] = useState({
-    companyName: "",
-    jobTitle: "",
-    employmentType: "",
-    department: "",
-    location: "",
-    website: "",
-    startDate: "",
-    endDate: "",
+    companyName: '',
+    jobTitle: '',
+    employmentType: '',
+    department: '',
+    location: '',
+    website: '',
+    startDate: '',
+    endDate: '',
     currentlyWorking: false,
-    responsibilities: "",
-    achievements: "",
-    managerName: "",
-    managerContact: "",
-    relievingLetter: "",
-    experienceCertificate: "",
+    responsibilities: '',
+    achievements: '',
+    managerName: '',
+    managerContact: '',
+    relievingLetter: '',
+    experienceCertificate: '',
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    if (type === "checkbox") {
+    if (type === 'checkbox') {
       setExperience({ ...experience, [name]: checked });
-    } else if (type === "file") {
-      setExperience({ ...experience, [name]: files[0]?.name || "" });
+    } else if (type === 'file') {
+      setExperience({ ...experience, [name]: files[0]?.name || '' });
     } else {
       setExperience({ ...experience, [name]: value });
     }
@@ -35,21 +35,21 @@ function Experience() {
   const handleAdd = () => {
     setExperienceList([...experienceList, experience]);
     setExperience({
-      companyName: "",
-      jobTitle: "",
-      employmentType: "",
-      department: "",
-      location: "",
-      website: "",
-      startDate: "",
-      endDate: "",
+      companyName: '',
+      jobTitle: '',
+      employmentType: '',
+      department: '',
+      location: '',
+      website: '',
+      startDate: '',
+      endDate: '',
       currentlyWorking: false,
-      responsibilities: "",
-      achievements: "",
-      managerName: "",
-      managerContact: "",
-      relievingLetter: "",
-      experienceCertificate: "",
+      responsibilities: '',
+      achievements: '',
+      managerName: '',
+      managerContact: '',
+      relievingLetter: '',
+      experienceCertificate: '',
     });
   };
 
@@ -97,7 +97,12 @@ function Experience() {
           </div>
           <div>
             <label>Start Date</label>
-            <input type="date" name="startDate" value={experience.startDate} onChange={handleChange} />
+            <input
+              type="date"
+              name="startDate"
+              value={experience.startDate}
+              onChange={handleChange}
+            />
           </div>
           <div>
             <label>End Date</label>
@@ -111,17 +116,32 @@ function Experience() {
           </div>
           <div className="full-width">
             <label>
-              <input type="checkbox" name="currentlyWorking" checked={experience.currentlyWorking} onChange={handleChange} />
+              <input
+                type="checkbox"
+                name="currentlyWorking"
+                checked={experience.currentlyWorking}
+                onChange={handleChange}
+              />
               Currently Working Here
             </label>
           </div>
           <div className="full-width">
             <label>Roles & Responsibilities</label>
-            <textarea name="responsibilities" value={experience.responsibilities} onChange={handleChange} rows="3" />
+            <textarea
+              name="responsibilities"
+              value={experience.responsibilities}
+              onChange={handleChange}
+              rows="3"
+            />
           </div>
           <div className="full-width">
             <label>Key Achievements / Projects</label>
-            <textarea name="achievements" value={experience.achievements} onChange={handleChange} rows="3" />
+            <textarea
+              name="achievements"
+              value={experience.achievements}
+              onChange={handleChange}
+              rows="3"
+            />
           </div>
           <div>
             <label>Manager Name</label>
@@ -129,7 +149,11 @@ function Experience() {
           </div>
           <div>
             <label>Manager Contact</label>
-            <input name="managerContact" value={experience.managerContact} onChange={handleChange} />
+            <input
+              name="managerContact"
+              value={experience.managerContact}
+              onChange={handleChange}
+            />
           </div>
           <div>
             <label>Relieving Letter</label>
@@ -142,7 +166,9 @@ function Experience() {
         </div>
 
         <div className="buttons">
-          <button type="button" onClick={handleAdd}>➕ Add Experience</button>
+          <button type="button" onClick={handleAdd}>
+            ➕ Add Experience
+          </button>
         </div>
 
         {experienceList.length > 0 && (
@@ -150,8 +176,12 @@ function Experience() {
             <h3>Added Experiences</h3>
             {experienceList.map((exp, idx) => (
               <div key={idx} className="experience-item">
-                <strong>{exp.companyName} - {exp.jobTitle}</strong>
-                <button type="button" onClick={() => handleDelete(idx)}>Delete</button>
+                <strong>
+                  {exp.companyName} - {exp.jobTitle}
+                </strong>
+                <button type="button" onClick={() => handleDelete(idx)}>
+                  Delete
+                </button>
               </div>
             ))}
           </div>

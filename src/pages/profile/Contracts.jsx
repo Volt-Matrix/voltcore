@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import "./BasicDetails.css";
+import React, { useState } from 'react';
+import './BasicDetails.css';
 
 function ContractsForm() {
   const [formData, setFormData] = useState({
-    contractTitle: "",
-    employeeId: "",
-    contractType: "",
-    startDate: "",
-    endDate: "",
-    contractValue: "",
-    terms: "",
+    contractTitle: '',
+    employeeId: '',
+    contractType: '',
+    startDate: '',
+    endDate: '',
+    contractValue: '',
+    terms: '',
     uploadContract: null,
-    status: "",
+    status: '',
   });
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "uploadContract") {
+    if (name === 'uploadContract') {
       setFormData({ ...formData, uploadContract: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -25,8 +25,8 @@ function ContractsForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Contract Data:", formData);
-    alert("Contract Details Saved Successfully!");
+    console.log('Submitted Contract Data:', formData);
+    alert('Contract Details Saved Successfully!');
   };
 
   return (
@@ -34,7 +34,12 @@ function ContractsForm() {
       <h2>Contract Details</h2>
       <form onSubmit={handleSubmit}>
         <label>Contract Title:</label>
-        <input name="contractTitle" value={formData.contractTitle} onChange={handleChange} required />
+        <input
+          name="contractTitle"
+          value={formData.contractTitle}
+          onChange={handleChange}
+          required
+        />
 
         <label>Employee ID:</label>
         <input name="employeeId" value={formData.employeeId} onChange={handleChange} required />
@@ -49,13 +54,31 @@ function ContractsForm() {
         </select>
 
         <label>Start Date:</label>
-        <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
+        <input
+          type="date"
+          name="startDate"
+          value={formData.startDate}
+          onChange={handleChange}
+          required
+        />
 
         <label>End Date:</label>
-        <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
+        <input
+          type="date"
+          name="endDate"
+          value={formData.endDate}
+          onChange={handleChange}
+          required
+        />
 
         <label>Contract Value ($):</label>
-        <input type="number" name="contractValue" value={formData.contractValue} onChange={handleChange} required />
+        <input
+          type="number"
+          name="contractValue"
+          value={formData.contractValue}
+          onChange={handleChange}
+          required
+        />
 
         <label>Terms and Conditions:</label>
         <textarea name="terms" value={formData.terms} onChange={handleChange} rows={4} required />

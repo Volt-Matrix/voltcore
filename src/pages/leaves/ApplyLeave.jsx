@@ -3,12 +3,12 @@ import "./Leave.css"; // Keep your updated Leave.css
 
 function ApplyLeaveForm({ onSuccess }) {
   const [formData, setFormData] = useState({
-    employeeId: "",
-    leaveType: "",
-    fromDate: "",
-    toDate: "",
-    reason: "",
-    contactDuringLeave: "",
+    employeeId: '',
+    leaveType: '',
+    fromDate: '',
+    toDate: '',
+    reason: '',
+    contactDuringLeave: '',
     attachment: null,
   });
 
@@ -17,7 +17,7 @@ function ApplyLeaveForm({ onSuccess }) {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "attachment") {
+    if (name === 'attachment') {
       setFormData({ ...formData, attachment: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
