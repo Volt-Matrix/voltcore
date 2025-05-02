@@ -13,7 +13,7 @@ function TopBar() {
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <h2>Rapid HRMS</h2>
+        <h2>VoltMatrix HRMS</h2>
       </div>
       <div className="topbar-right">
         <div className="topbar-icon" onClick={() => handleClick("settings")}>

@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import "./DocumentsForm.css";
+import {
+  Box,
+  Button,
+  Typography,
+  IconButton,
+  MenuItem,
+  Paper,
+  Grid,
+  Stack,
+  Input,
+} from "@mui/material";
+import { Add, Delete, UploadFile, InsertDriveFile } from "@mui/icons-material";
 
 function DocumentsForm() {
   const [sections, setSections] = useState([{ name: "", type: "", files: [] }]);
@@ -53,12 +64,6 @@ function DocumentsForm() {
     return "other";
   };
 
-  const getIcon = (type) => {
-    if (type === "pdf") return "📄";
-    if (type === "word") return "📝";
-    return "📁";
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted:", sections);
@@ -66,93 +71,157 @@ function DocumentsForm() {
   };
 
   return (
-    <div className="documents-wrapper">
-      <form className="form-panel" onSubmit={handleSubmit}>
-        <h2>Upload Employee Documents</h2>
+    <Box sx={{ display: "flex", padding: "80px 24px 24px 280px", gap: 4 }}>
+      <Box component="form" onSubmit={handleSubmit} sx={{ flex: 3 }}>
+        <Typography variant="h5" mb={2}>
+          Upload Employee Documents
+        </Typography>
+
         {sections.map((section, index) => (
-          <div
-            key={index}
-            className="section"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault();
-              handleDrop(index, e.dataTransfer.files);
-            }}
-          >
-            <div className="section-header">
-              <strong>Document Section {index + 1}</strong>
-              <button type="button" onClick={() => removeSection(index)}>🗑️</button>
-            </div>
-            <input
-              type="text"
+          <Paper key={index} sx={{ p: 3, mb: 3 }} elevation={3}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography variant="subtitle1">
+                Document Section {index + 1}
+              </Typography>
+              <IconButton onClick={() => removeSection(index)}>
+                <Delete color="error" />
+              </IconButton>
+            </Stack>
+
+            <Input
+              fullWidth
               placeholder="Document Name"
               value={section.name}
               onChange={(e) => handleChange(index, "name", e.target.value)}
               required
+              sx={{ mb: 2 }}
             />
-            <select
+
+            <Input
+              fullWidth
+              select
               value={section.type}
               onChange={(e) => handleChange(index, "type", e.target.value)}
               required
+              sx={{ mb: 2 }}
             >
-              <option value="">Select Document Type</option>
-              <option>ID</option>
-              <option>Resume</option>
-              <option>Contract</option>
-            </select>
-            <label className="upload-box">
+              <MenuItem value="">Select Document Type</MenuItem>
+              <MenuItem value="ID">ID</MenuItem>
+              <MenuItem value="Resume">Resume</MenuItem>
+              <MenuItem value="Contract">Contract</MenuItem>
+            </Input>
+
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<UploadFile />}
+              fullWidth
+            >
+              Upload File(s)
               <input
                 type="file"
+                hidden
                 multiple
                 onChange={(e) => handleInputFileChange(index, e.target.files)}
               />
-              <p>📁 Drag or Click to Upload</p>
-              <span>(PDF, DOCX, JPG, PNG)</span>
-            </label>
+            </Button>
 
-            <div className="file-preview">
+            <Stack direction="row" spacing={2} mt={2} flexWrap="wrap">
               {section.files.map((file, idx) => {
                 const type = getFileType(file.name);
                 return (
-                  <div className="file-item" key={idx}>
+                  <Box
+                    key={idx}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      background: "#f3f4f6",
+                      p: 1,
+                      borderRadius: 1,
+                    }}
+                  >
                     {type === "image" ? (
-                      <img src={URL.createObjectURL(file)} alt={file.name} />
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                        style={{ width: 30, height: 30, borderRadius: 4 }}
+                      />
                     ) : (
-                      <span className="file-icon">{getIcon(type)}</span>
+                      <InsertDriveFile sx={{ fontSize: 30 }} />
                     )}
-                    <span className="file-name">{file.name}</span>
-                    <button type="button" onClick={() => removeFileFromSection(index, file.name)}>×</button>
-                  </div>
+                    <Typography variant="body2">{file.name}</Typography>
+                    <IconButton
+                      onClick={() => removeFileFromSection(index, file.name)}
+                      size="small"
+                      color="error"
+                    >
+                      ×
+                    </IconButton>
+                  </Box>
                 );
               })}
-            </div>
-          </div>
+            </Stack>
+          </Paper>
         ))}
-        <button type="button" className="add-section" onClick={addSection}>+ Add More Documents</button>
-        <button type="submit" className="submit-btn">Submit</button>
-      </form>
 
-      <div className="uploaded-sidebar">
-        <h3>Uploaded Files</h3>
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={addSection}
+          sx={{ mr: 2 }}
+        >
+          Add More Documents
+        </Button>
+
+        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 3 }}>
+          Submit
+        </Button>
+      </Box>
+
+      <Box sx={{ flex: 1, background: "#fff", p: 3, borderRadius: 2, boxShadow: 2, height: "fit-content", maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}>
+        <Typography variant="h6" gutterBottom>
+          Uploaded Files
+        </Typography>
         {allFiles.length === 0 ? (
-          <p className="empty-note">No documents uploaded yet.</p>
+          <Typography variant="body2" sx={{ color: "gray" }}>
+            No documents uploaded yet.
+          </Typography>
         ) : (
-          <ul>
+          <Stack spacing={2}>
             {allFiles.map((item, idx) => (
-              <li key={idx}>
+              <Box
+                key={idx}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  background: "#f0f0f0",
+                  p: 1,
+                  borderRadius: 1,
+                }}
+              >
                 {getFileType(item.file.name) === "image" ? (
-                  <img src={URL.createObjectURL(item.file)} alt={item.file.name} className="thumb" />
+                  <img
+                    src={URL.createObjectURL(item.file)}
+                    alt={item.file.name}
+                    style={{ width: 32, height: 32, borderRadius: 4 }}
+                  />
                 ) : (
-                  <span className="icon">{getIcon(getFileType(item.file.name))}</span>
+                  <InsertDriveFile sx={{ fontSize: 28 }} />
                 )}
-                <span className="filename">{item.file.name}</span>
-                <span className="delete-btn" onClick={() => removeFileFromSection(item.sectionIndex, item.file.name)}>×</span>
-              </li>
+                <Typography variant="body2" sx={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {item.file.name}
+                </Typography>
+                <IconButton onClick={() => removeFileFromSection(item.sectionIndex, item.file.name)} size="small" color="error">
+                  ×
+                </IconButton>
+              </Box>
             ))}
-          </ul>
+          </Stack>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

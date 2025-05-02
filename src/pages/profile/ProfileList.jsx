@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaCamera, FaUserEdit, FaIdBadge, FaMapMarkerAlt, FaVenusMars } from 'react-icons/fa';
 import BasicDetails from "./BasicDetails"; 
 import "./ProfileList.css";
 
@@ -11,7 +12,7 @@ const initialProfiles = [
     email: "aarav@example.com",
     phone: "9876543210",
     altPhone: "9123456789",
-    profilePic: "profile1.jpg",
+    profilePic: null,
     currentAddress: "123 Mumbai St.",
     permanentAddress: "456 Delhi Rd.",
     city: "Mumbai",
@@ -27,7 +28,7 @@ const initialProfiles = [
     email: "saanvi@example.com",
     phone: "8765432109",
     altPhone: "9321654789",
-    profilePic: "profile2.jpg",
+    profilePic: null,
     currentAddress: "789 Bangalore St.",
     permanentAddress: "101 Chennai Rd.",
     city: "Bangalore",
@@ -165,37 +166,44 @@ const initialProfiles = [
   },
 
 ];
-function ProfileList() {
+const getInitials = (name) =>
+  name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+
+export default function ProfileList() {
   const [profiles, setProfiles] = useState(initialProfiles);
   const [editingProfile, setEditingProfile] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [cityFilter, setCityFilter] = useState("");
 
-  const handleEdit = (profile) => {
-    setEditingProfile(profile);
-  };
+  const handleEdit = (profile) => setEditingProfile(profile);
 
   const handleSave = (updatedProfile) => {
-    const updatedProfiles = profiles.map((p) =>
-      p.employeeId === updatedProfile.employeeId ? updatedProfile : p
+    setProfiles((prev) =>
+      prev.map((p) =>
+        p.employeeId === updatedProfile.employeeId ? updatedProfile : p
+      )
     );
-    setProfiles(updatedProfiles);
     setEditingProfile(null);
   };
 
-  const filteredProfiles = profiles.filter((profile) => {
-    const matchesSearch =
-      profile.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      profile.employeeId.toLowerCase().includes(searchTerm.toLowerCase());
+  const handleImageUpload = (e, profileId) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const matchesCity = cityFilter
-      ? profile.city.toLowerCase() === cityFilter.toLowerCase()
-      : true;
+    const updatedProfiles = profiles.map((p) => {
+      if (p.employeeId === profileId) {
+        return {
+          ...p,
+          profilePic: URL.createObjectURL(file),
+        };
+      }
+      return p;
+    });
 
-    return matchesSearch && matchesCity;
-  });
-
-  const uniqueCities = [...new Set(profiles.map((p) => p.city))];
+    setProfiles(updatedProfiles);
+  };
 
   if (editingProfile) {
     return <BasicDetails profileData={editingProfile} onSave={handleSave} />;
@@ -203,53 +211,38 @@ function ProfileList() {
 
   return (
     <div className="profile-list-container">
-      <div className="filters">
-        <input
-          type="text"
-          placeholder="Search by name or ID"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)}>
-          <option value="">All Cities</option>
-          {uniqueCities.map((city, i) => (
-            <option key={i} value={city}>{city}</option>
-          ))}
-        </select>
-      </div>
+      {profiles.map((profile, index) => (
+        <div key={index} className="profile-card">
+          <div className="avatar-wrapper">
+            {profile.profilePic ? (
+              <img className="profile-pic" src={profile.profilePic} alt={profile.fullName} />
+            ) : (
+              <div className="profile-initials">{getInitials(profile.fullName)}</div>
+            )}
+            <label className="upload-btn">
+              <FaCamera />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e, profile.employeeId)}
+                hidden
+              />
+            </label>
+          </div>
 
-      <div className="profile-table-wrapper">
-        <table className="profile-table">
-          <thead>
-            <tr>
-              
-              <th>Full Name</th>
-              <th>Employee ID</th>
-              <th>Gender</th>
-              <th>Email</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProfiles.map((profile, index) => (
-              <tr key={index}>
-              
-                  
-          
-                <td>{profile.fullName}</td>
-                <td>{profile.employeeId}</td>
-                <td>{profile.gender}</td>
-                <td>{profile.email}</td>
-                <td>
-                  <button onClick={() => handleEdit(profile)}>Edit</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          <h3 className="profile-name">{profile.fullName}</h3>
+
+          <div className="profile-info">
+            <div><FaIdBadge /> {profile.employeeId}</div>
+            <div><FaVenusMars /> {profile.gender}</div>
+            <div><FaMapMarkerAlt /> {profile.city}</div>
+          </div>
+
+          <button className="edit-btn" onClick={() => handleEdit(profile)}>
+            <FaUserEdit /> Edit
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
-
-export default ProfileList;

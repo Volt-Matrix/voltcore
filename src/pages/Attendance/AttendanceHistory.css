@@ -1,0 +1,128 @@
+.attendance-container {
+    margin-left: 200px;
+    margin-top: 50px;
+    padding-top: 120px;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .attendance-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .attendance-table th,
+  .attendance-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .status {
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  .status.present {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+  }
+  
+  .status.wfh {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+  
+  .status.absent {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  .status.leave {
+    background-color: #fff3e0;
+    color: #ef6c00;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+  .filters input,
+  .filters select,
+  .filters button {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .filters button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .filters button:hover {
+    background-color: #0056b3;
+  }
+
+.react-datepicker {
+    font-family: inherit;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: none;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  .react-datepicker__header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+  }
+  
+  .react-datepicker__current-month,
+  .react-datepicker-time__header,
+  .react-datepicker-year-header {
+    color: white;
+    font-weight: bold;
+  }
+  
+  .react-datepicker__day-name,
+  .react-datepicker__day,
+  .react-datepicker__time-name {
+    color: #333;
+  }
+  
+  .react-datepicker__day--selected,
+  .react-datepicker__day--keyboard-selected {
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+  }
+  
+  .react-datepicker__day--today {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .react-datepicker__day:hover {
+    background-color: #e6f0ff;
+    border-radius: 6px;
+  }
+  

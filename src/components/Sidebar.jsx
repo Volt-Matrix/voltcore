@@ -11,8 +11,11 @@ import {
   Wallet,
   Plane,
   LogOut,
+  Network,
+  BarChart2,
 } from "lucide-react";
 import "./Sidebar.css";
+
 
 function Sidebar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -73,41 +76,26 @@ function Sidebar() {
           )}
         </div>
 
-        {/* Organization */}
-        <div className="icon-button" onClick={() => toggleMenu("organization")}>
-          <Building size={32} />
-          <span>Org</span>
-          {openMenu === "organization" && (
+        
+        {/* Assets */}
+        <div className="icon-button" onClick={() => toggleMenu("assets")}>
+          <BarChart size={32} />
+          <span>Assets</span>
+          {openMenu === "assets" && (
             <div className="submenu">
-              <NavLink to="/organization/chart" className="submenu-link">Org Chart</NavLink>
-              <NavLink to="/organization/units" className="submenu-link">Business Units</NavLink>
-              <NavLink to="/organization/policies" className="submenu-link">Policies</NavLink>
+              <NavLink to="/assets" className="submenu-link">Assets</NavLink>
             </div>
           )}
         </div>
 
-        {/* Performance */}
-        <div className="icon-button" onClick={() => toggleMenu("performance")}>
-          <BarChart size={32} />
-          <span>Performance</span>
-          {openMenu === "performance" && (
-            <div className="submenu">
-              <NavLink to="/performance/reviews" className="submenu-link">Reviews</NavLink>
-              <NavLink to="/performance/goals" className="submenu-link">Goals</NavLink>
-              <NavLink to="/performance/feedback" className="submenu-link">Feedback</NavLink>
-            </div>
-          )}
-        </div>
 
         {/* Attendance */}
-        <div className="icon-button" onClick={() => toggleMenu("attendance")}>
-          <CalendarDays size={32} />
-          <span>Attendance</span>
-          {openMenu === "attendance" && (
+        <div className="icon-button" onClick={() => toggleMenu("Attendance")}>
+          <BarChart2 size={32} />
+          <span>Attendance History</span>
+          {openMenu === "Attendance" && (
             <div className="submenu">
-              <NavLink to="/attendance/daily" className="submenu-link">Daily Log</NavLink>
-              <NavLink to="/attendance/summary" className="submenu-link">Monthly Summary</NavLink>
-              <NavLink to="/attendance/requests" className="submenu-link">Attendance Requests</NavLink>
+              <NavLink to="/Attendance/AttendanceHistory" className="submenu-link">Attendance History</NavLink>
             </div>
           )}
         </div>
@@ -132,15 +120,34 @@ function Sidebar() {
           {openMenu === "leaves" && (
             <div className="submenu">
               <NavLink to="/leaves/apply" className="submenu-link">Apply Leave</NavLink>
-              <NavLink to="/leaves/history" className="submenu-link">Leave History</NavLink>
-              <NavLink to="/leaves/balance" className="submenu-link">Leave Balance</NavLink>
               <NavLink to="/leaves/list" className="submenu-link">Leave List</NavLink>
-              <NavLink to="/leaves/data" className="submenu-link">Leave Data</NavLink>
+              <NavLink to="/leaves/dashboard" className="submenu-link">Leave Dashboard</NavLink>
             </div>
           )}
         </div>
+        {/* LeaveManagement */}
+        <div className="icon-button" onClick={() => toggleMenu("leavemanagement")}>
+          <Plane size={32} />
+          <span>LeaveManagement</span>
+          {openMenu === "leavemanagement" && (
+            <div className="submenu">
+              <NavLink to="/leavemanagement/leavemanagement" className="submenu-link">Leave Management</NavLink>
+            </div>
+          )}
+        </div>
+        {/* Organization */}
+        <div className="icon-button" onClick={() => toggleMenu("Organization")}>
+          <Network size={32} />
+          <span>Organization Hierarchy</span>
+          {openMenu === "Organization" && (
+            <div className="submenu">
+              <NavLink to="/Organization/OrganizationHierarchy" className="submenu-link">OrganizationHierarchy</NavLink>
+            </div>
+          )}
+        </div>
+        
       </div>
-
+      
       {/* Logout */}
       <div className="sidebar-logout">
         <NavLink to="/logout" className="icon-button">
