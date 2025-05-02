@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import { loggedInUserDetails } from '../lib/placeholder';
 
@@ -9,6 +10,17 @@ import AvailableLeaves from '../components/AvailableLeavesBox/AvailableLeaves';
 import AttendanceCalendar from '../components/Calender/AttandanceMarker';
 import UpcomingHolidays from '../components/UpcomingHolidays/UpcomingHolidays';
 import UpcomingBirthdays from '../components/UpcomingBirthdays/UpcomingBirthdays';
+
+// import icons
+import { FaLink } from "react-icons/fa";
+
+// quick links urls
+const quickLinksUrls = [
+  {name: "Leave Request", url: "leaves/apply", cname: "leave-req",bgcolor: "#3bceac"},
+  {name: "Payslips", url: "payroll", cname: "payslips", bgcolor: "#f6bd60"},
+  {name: "Fill Timesheet", url: "attendance", cname: "timesheet", bgcolor: "#8ecae6"},
+  {name: "Suggestions Box", url: "suggestions-box", cname: "suggestions", bgcolor: "#f28482"},
+]
 
 function Home() {
   const [time, setTime] = useState(new Date());
@@ -49,7 +61,7 @@ function Home() {
 
           <div className="home_second-row">
 
-            <div className="home_calendar">
+            <div className="home_calendar card-p">
               <AttendanceCalendar />
             </div>
 
@@ -64,8 +76,13 @@ function Home() {
                 </div>
               </div>
 
-              <div className="home_quick-links">
-
+              <div className="home_quick-links card-p">
+                <h2 className="rpr"><FaLink className='home_link-icon'/> Quick Links</h2>
+                <div className="home_quick-links-content">
+                  {quickLinksUrls.map((qlink, index) => (
+                    <Link key={index} className={`home_${qlink.cname}`} to={qlink.url}>{qlink.name}</Link>
+                  ))}
+                </div>
               </div>
 
             </div>

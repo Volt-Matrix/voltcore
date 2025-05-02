@@ -72,14 +72,21 @@
 }
 
 .home_calendar {
-  flex: 1 1 400px;
+  flex: 1 1 200px;
 }
+
+.home_calendar .react-calendar {
+  border:none;
+}
+
 
 .home_events-quick-links {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
+
+  flex:2 1 600px; 
 }
 
 .home_events {
@@ -87,4 +94,73 @@
   flex-direction: row;
   justify-content: flex-start;
   gap: 10px;
+
+  flex: 1 1 100%;
+
+  flex-wrap: wrap;
+}
+
+.home_holidays, .home_birthdays {
+  flex: 1 1 200px;
+}
+
+.home_holidays {
+  min-width: 400px;
+}
+
+.home_birthdays {
+  min-width: 300px;
+}
+
+.home_quick-links {
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap:10px;
+}
+
+.home_quick-links-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap:10px;
+  flex-wrap: wrap;
+}
+
+.home_quick-links > h2 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.home_link-icon {
+  padding: 0;
+  margin: 0;
+}
+
+.home_leave-req, .home_payslips, .home_timesheet, .home_suggestions {
+  padding:5px;
+  padding-right: 5px;
+  padding-left:5px;
+  border-radius: 7px;
+
+  text-align: center;
+}
+
+.home_leave-req {
+  background: #3bceac;
+}
+
+.home_payslips {
+  background: #f6bd60;
+}
+
+.home_timesheet {
+  background: #8ecae6;
+}
+
+.home_suggestions {
+  background: #f28482;
 }

@@ -1,8 +1,9 @@
 .clockinout_content-wrapper {
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
+    justify-content: space-around;
+    gap: 20px;
+    height: 100%;
 }
 
 .clockinout_duration {
