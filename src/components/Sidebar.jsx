@@ -11,8 +11,10 @@ import {
   Wallet,
   Plane,
   LogOut,
+  Network
 } from 'lucide-react';
 import './Sidebar.css';
+
 
 function Sidebar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -104,6 +106,17 @@ function Sidebar() {
           </div>
         </div>
 
+        
+        {/* Assets */}
+        <div className="icon-button" onClick={() => toggleMenu("assets")}>
+          <BarChart size={32} />
+          <span>Assets</span>
+          
+            <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
+              <NavLink to="/assets" className="submenu-link">Assets</NavLink>
+              </div>
+              </div>
+
         {/* Organization */}
         <div className="icon-button rpr" onClick={() => toggleMenu('organization')}>
           <Building size={32} />
@@ -125,26 +138,7 @@ function Sidebar() {
           }
         </div>
 
-        {/* Performance */}
-        <div className="icon-button rpr" onClick={() => toggleMenu('performance')}>
-          <BarChart size={32} />
-          <span>Performance</span>
-          {
-            <div className={`submenu ${openMenu === 'performance' ? 'open' : ''}`}>
-              <div className="submenu__content">
-                <NavLink to="/performance/reviews" className="submenu-link">
-                  Reviews
-                </NavLink>
-                <NavLink to="/performance/goals" className="submenu-link">
-                  Goals
-                </NavLink>
-                <NavLink to="/performance/feedback" className="submenu-link">
-                  Feedback
-                </NavLink>
-              </div>
-            </div>
-          }
-        </div>
+    
 
         {/* Attendance */}
         <div className="icon-button rpr" onClick={() => toggleMenu('attendance')}>
@@ -162,6 +156,8 @@ function Sidebar() {
                 <NavLink to="/attendance/requests" className="submenu-link">
                   Attendance Requests
                 </NavLink>
+                <NavLink to="/Attendance/AttendanceHistory" className="submenu-link">Attendance History</NavLink>
+
               </div>
             </div>
           }
@@ -192,29 +188,37 @@ function Sidebar() {
         <div className="icon-button rpr" onClick={() => toggleMenu('leaves')}>
           <Plane size={32} />
           <span>Leaves</span>
-          <div className={`submenu ${openMenu === 'leaves' ? 'open' : ''}`}>
-              <div className='submenu__content'>
-              <NavLink to="/leaves/apply" className="submenu-link">
-                Apply Leave
-              </NavLink>
-              <NavLink to="/leaves/history" className="submenu-link">
-                Leave History
-              </NavLink>
-              <NavLink to="/leaves/balance" className="submenu-link">
-                Leave Balance
-              </NavLink>
-              <NavLink to="/leaves/list" className="submenu-link">
-                Leave List
-              </NavLink>
-              <NavLink to="/leaves/data" className="submenu-link">
-                Leave Data
-              </NavLink>
+        
+            <div className={`submenu ${openMenu === 'leaves' ? 'open' : ''}`}>
+              <NavLink to="/leaves/apply" className="submenu-link">Apply Leave</NavLink>
+              <NavLink to="/leaves/list" className="submenu-link">Leave List</NavLink>
+              <NavLink to="/leaves/dashboard" className="submenu-link">Leave Dashboard</NavLink>
             </div>
             </div>
           
+        {/* LeaveManagement */}
+        <div className="icon-button" onClick={() => toggleMenu("leavemanagement")}>
+          <Plane size={32} />
+          <span>Leave management</span>
+          {
+            <div className={`submenu ${openMenu === 'leavemanagement' ? 'open' : ''}`}>
+              <NavLink to="/leavemanagement/leavemanagement" className="submenu-link">Leave Management</NavLink>
+            </div>
+          }
         </div>
+        {/* Organization */}
+        <div className="icon-button" onClick={() => toggleMenu("Organization")}>
+          <Network size={32} />
+          <span>Organization Hierarchy</span>
+          {openMenu === "Organization" && (
+            <div className="submenu">
+              <NavLink to="/Organization/OrganizationHierarchy" className="submenu-link">OrganizationHierarchy</NavLink>
+            </div>
+          )}
+        </div>
+        
       </div>
-
+      
       {/* Logout */}
       <div className="sidebar-logout">
         <NavLink to="/logout" className="icon-button rpr">

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import './AddTaskForm.css';
+import React, { useState } from "react";
+import "./AddTaskForm.css";
 
 function AddTaskForm() {
   const [task, setTask] = useState({
-    title: '',
-    description: '',
-    dueDate: '',
+    title: "",
+    description: "",
+    dueDate: "",
   });
 
   const handleChange = (e) => {

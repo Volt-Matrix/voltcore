@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FaCamera, FaUserEdit, FaIdBadge, FaMapMarkerAlt, FaVenusMars } from 'react-icons/fa';
-import BasicDetails from './BasicDetails';
-import './ProfileList.css';
+import BasicDetails from "./BasicDetails"; 
+import "./ProfileList.css";
 
 const initialProfiles = [
   {
-    fullName: 'Aarav Mehta',
-    employeeId: 'EMP1001',
-    dob: '1990-05-14',
-    gender: 'Male',
-    email: 'aarav@example.com',
-    phone: '9876543210',
-    altPhone: '9123456789',
+    fullName: "Aarav Mehta",
+    employeeId: "EMP1001",
+    dob: "1990-05-14",
+    gender: "Male",
+    email: "aarav@example.com",
+    phone: "9876543210",
+    altPhone: "9123456789",
     profilePic: null,
-    currentAddress: '123 Mumbai St.',
-    permanentAddress: '456 Delhi Rd.',
-    city: 'Mumbai',
-    state: 'Maharashtra',
-    zip: '400001',
-    country: 'India',
+    currentAddress: "123 Mumbai St.",
+    permanentAddress: "456 Delhi Rd.",
+    city: "Mumbai",
+    state: "Maharashtra",
+    zip: "400001",
+    country: "India"
   },
   {
-    fullName: 'Saanvi Sharma',
-    employeeId: 'EMP1002',
-    dob: '1992-08-23',
-    gender: 'Female',
-    email: 'saanvi@example.com',
-    phone: '8765432109',
-    altPhone: '9321654789',
+    fullName: "Saanvi Sharma",
+    employeeId: "EMP1002",
+    dob: "1992-08-23",
+    gender: "Female",
+    email: "saanvi@example.com",
+    phone: "8765432109",
+    altPhone: "9321654789",
     profilePic: null,
-    currentAddress: '789 Bangalore St.',
-    permanentAddress: '101 Chennai Rd.',
-    city: 'Bangalore',
-    state: 'Karnataka',
-    zip: '560001',
-    country: 'India',
+    currentAddress: "789 Bangalore St.",
+    permanentAddress: "101 Chennai Rd.",
+    city: "Bangalore",
+    state: "Karnataka",
+    zip: "560001",
+    country: "India"
   },
   {
     fullName: 'Vihaan Reddy',
@@ -164,12 +164,13 @@ const initialProfiles = [
     zip: '226010',
     country: 'India',
   },
+
 ];
 const getInitials = (name) =>
   name
-    .split(' ')
+    .split(" ")
     .map((n) => n[0])
-    .join('')
+    .join("")
     .toUpperCase();
 
 export default function ProfileList() {
@@ -180,7 +181,9 @@ export default function ProfileList() {
 
   const handleSave = (updatedProfile) => {
     setProfiles((prev) =>
-      prev.map((p) => (p.employeeId === updatedProfile.employeeId ? updatedProfile : p))
+      prev.map((p) =>
+        p.employeeId === updatedProfile.employeeId ? updatedProfile : p
+      )
     );
     setEditingProfile(null);
   };
@@ -230,15 +233,9 @@ export default function ProfileList() {
           <h3 className="profile-name">{profile.fullName}</h3>
 
           <div className="profile-info">
-            <div>
-              <FaIdBadge /> {profile.employeeId}
-            </div>
-            <div>
-              <FaVenusMars /> {profile.gender}
-            </div>
-            <div>
-              <FaMapMarkerAlt /> {profile.city}
-            </div>
+            <div><FaIdBadge /> {profile.employeeId}</div>
+            <div><FaVenusMars /> {profile.gender}</div>
+            <div><FaMapMarkerAlt /> {profile.city}</div>
           </div>
 
           <button className="edit-btn" onClick={() => handleEdit(profile)}>

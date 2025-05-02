@@ -85,6 +85,7 @@
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: 0.3s ease;
 }
@@ -117,6 +118,7 @@
   margin-bottom: 14px;
   transition: 0.3s ease;
 }
+
 
 .upload-box:hover {
   background: #ddecff;

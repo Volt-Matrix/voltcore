@@ -14,6 +14,7 @@ function LeaveList() {
 
   return (
     <div className="leave-list-container">
+      
       <table className="leave-table">
         <thead>
           <tr>
