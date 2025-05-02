@@ -6,6 +6,9 @@ import { loggedInUserDetails } from '../lib/placeholder';
 import ClockInOut from '../components/ClockInOutBox/ClockInOut';
 import AnnouncementsPreview from '../components/AnnouncementsBox/AnnouncementsPreview';
 import AvailableLeaves from '../components/AvailableLeavesBox/AvailableLeaves';
+import AttendanceCalendar from '../components/Calender/AttandanceMarker';
+import UpcomingHolidays from '../components/UpcomingHolidays/UpcomingHolidays';
+import UpcomingBirthdays from '../components/UpcomingBirthdays/UpcomingBirthdays';
 
 function Home() {
   const [time, setTime] = useState(new Date());
@@ -45,19 +48,22 @@ function Home() {
           </div>
 
           <div className="home_second-row">
-            <div className="home_calendar">
 
+            <div className="home_calendar">
+              <AttendanceCalendar />
             </div>
+
             <div className="home_events-quick-links">
+              
               <div className="home_events">
                 <div className="home_holidays">
-
+                  <UpcomingHolidays />
                 </div>
                 <div className="home_birthdays">
-
+                  <UpcomingBirthdays />
                 </div>
-
               </div>
+
               <div className="home_quick-links">
 
               </div>

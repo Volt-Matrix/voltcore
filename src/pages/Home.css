@@ -61,3 +61,30 @@
   width: 100%;
   gap:1em
 }
+
+
+.home_second-row {
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap:10px;
+}
+
+.home_calendar {
+  flex: 1 1 400px;
+}
+
+.home_events-quick-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.home_events {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+}

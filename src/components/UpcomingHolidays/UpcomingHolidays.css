@@ -1,0 +1,14 @@
+.UHD_content-wrapper > h2 {
+    font-size:1.3em;
+    font-weight: 700;
+    text-align: center;
+}
+
+.UHD_main-content > table {
+    border-collapse: separate;
+    border-spacing: 20px 10px;
+}
+
+.UHD_date-col, .UHD_day-col {
+    font-size: 0.8em;
+}
