@@ -13,9 +13,9 @@ import Attendance from './pages/Attendance';
 import Layout from './components/Layout';
 import BasicDetails from './pages/profile/BasicDetails';
 import ProfileList from './pages/profile/ProfileList';
-import Experience from './pages/profile/Experience';
+// import Experience from './pages/profile/Experience';
 import Contracts from './pages/profile/Contracts';
-import Documents from './pages/profile/DocumentsForm';
+// import Documents from './pages/profile/DocumentsForm';
 import Reporting from './pages/profile/Reporting';
 import ApplyLeave from './pages/leaves/ApplyLeave';
 import LeaveHistory from './pages/leaves/LeaveHistory';
@@ -25,11 +25,19 @@ import LeaveData from './pages/leaves/LeaveData';
 import InboxAnnouncementsForm from './pages/inbox/InboxAnnouncements';
 import InboxMessagesForm from './pages/inbox/InboxMessage';
 import InboxNotificationsForm from './pages/inbox/InboxNotifications';
-import DocumentsForm from './pages/profile/DocumentsForm';
+// import DocumentsForm from './pages/profile/DocumentsForm';
 import CustomTImeSheet from './components/CustomTimesheet/CustomTImeSheet';
+import EducationDocuments from './components/Profile/EducationDocuments';
+import Experience from './components/Profile/Experience';
+import BankDetails from './components/Profile/BankDetails';
+import Success from './components/Profile/Success';
+import OnBoarding from './components/Profile/OnBoarding';
+import OnboardingTask from './components/Profile/OnboardingTask';
+
 
 const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const isLoggedIn = 'true';
   return isLoggedIn ? children : <Navigate to="/login" />;
 };
 
@@ -56,10 +64,16 @@ function App() {
 
           {/* Profile routes */}
           <Route path="profile/basic-details" element={<BasicDetails />} />
+          <Route path="/education" element={<EducationDocuments />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/bank" element={<BankDetails />} />
+          <Route path="/on-board" element={<OnBoarding />} />
+          <Route path="/onboard-task" element={<OnboardingTask />} />
+          <Route path="/success" element={<Success />} />
           <Route path="profile/profilelist" element={<ProfileList />} />
-          <Route path="profile/experience" element={<Experience />} />
+          {/* <Route path="profile/experience" element={<Experience />} /> */}
           <Route path="profile/contracts" element={<Contracts />} />
-          <Route path="profile/documents" element={<DocumentsForm />} />
+          {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
           <Route path="profile/reporting" element={<Reporting />} />
 
           {/* Leaves */}
