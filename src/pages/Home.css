@@ -72,11 +72,15 @@
 }
 
 .home_calendar {
-  flex: 1 1 200px;
+  flex: 1 2 150px;
 }
 
 .home_calendar .react-calendar {
   border:none;
+  width: 100% !important;
+  min-width: 200px !important;
+  padding:0 !important;
+  box-shadow: none;
 }
 
 
@@ -86,7 +90,7 @@
   justify-content: flex-start;
   gap: 10px;
 
-  flex:2 1 600px; 
+  flex:2 1 700px;
 }
 
 .home_events {
@@ -100,15 +104,13 @@
   flex-wrap: wrap;
 }
 
-.home_holidays, .home_birthdays {
-  flex: 1 1 200px;
-}
-
 .home_holidays {
+  flex: 1 1 200px;
   min-width: 400px;
 }
 
 .home_birthdays {
+  flex: 1 1 150px;
   min-width: 300px;
 }
 

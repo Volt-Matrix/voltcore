@@ -154,7 +154,6 @@ button {
   padding: 20px;
   transition: all 0.3s ease;
   border: 1px solid #eee; /* subtle border */
-  width: 100%;
 }
 .present-day {
   background-color: #22c55e; /* green-500 */

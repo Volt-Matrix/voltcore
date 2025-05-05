@@ -51,7 +51,7 @@
     margin-bottom: 10px;
   }
   
-  select, input[type="date"] {
+  .leave-management-container select, .leave-management-container input[type="date"] {
     padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -66,29 +66,29 @@
     margin-bottom: 30px;
   }
   
-  .section h2 {
+  .leave-management-container .section h2 {
     font-size: 22px;
     margin-bottom: 15px;
   }
   
-  .table {
+  .leave-management-container .table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fdfdfd;
   }
   
-  .table th, .table td {
+  .leave-management-container.table th, .leave-management-container .table td {
     border: 1px solid #ddd;
     padding: 12px 10px;
     text-align: left;
   }
   
-  .table th {
+  .leave-management-container .table th {
     background-color: #f0f0f0;
     font-weight: 600;
   }
   
-  button {
+  .leave-management-container button {
     margin: 4px 8px 4px 0;
     padding: 6px 12px;
     border: none;
@@ -101,15 +101,15 @@
     transition: background 0.2s ease;
   }
   
-  button:hover {
+  .leave-management-container button:hover {
     background-color: #0056b3;
   }
   
-  button:last-child {
+  .leave-management-container button:last-child {
     background-color: #dc3545;
   }
   
-  button:last-child:hover {
+  .leave-management-container button:last-child:hover {
     background-color: #b52b3a;
   }
   
