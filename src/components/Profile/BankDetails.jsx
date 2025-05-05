@@ -21,7 +21,7 @@ const BankDetails = () => {
   };
 
   return (
-    <div className="edu-documents-form">
+    <div className="employee-profile">
       <div className="navbar">
         <Link to="profile/basic-details" className="nav-link">Profile</Link>
         <Link to="/education" className="nav-link">Educational Documents</Link>

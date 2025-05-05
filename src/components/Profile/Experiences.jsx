@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./documents.css";
 
-const Experience = () => {
+const Experiences = () => {
   const [experiences, setExperiences] = useState([
     { jobTitle: '', company: '', fromDate: '', toDate: '', description: '' },
   ]);
@@ -35,11 +35,11 @@ const Experience = () => {
   };
 
   return (
-    <div className="edu-documents-form">
+    <div className="employee-profile">
       <div className="navbar">
         <Link to="profile/basic-details" className="nav-link">Profile</Link>
         <Link to="/education" className="nav-link">Educational Documents</Link>
-        <Link to="/experience" className="nav-link active">Experience</Link>
+        <Link to="/experiences" className="nav-link active">Experience</Link>
         <Link to="/bank" className="nav-link">Bank Details</Link>
       </div>
 
@@ -134,4 +134,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default Experiences;

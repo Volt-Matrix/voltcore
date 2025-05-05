@@ -31,7 +31,7 @@ import AttendanceHistory from "./pages/Attendance/AttendanceHistory";
 
 import CustomTImeSheet from './components/CustomTimesheet/CustomTImeSheet';
 import EducationDocuments from './components/Profile/EducationDocuments';
-// import Experience from './components/Profile/Experience';
+import Experiences from './components/Profile/Experiences';
 import BankDetails from './components/Profile/BankDetails';
 import Success from './components/Profile/Success';
 import OnBoarding from './components/Profile/OnBoarding';
@@ -66,7 +66,7 @@ function App() {
           {/* Profile routes */}
           <Route path="profile/basic-details" element={<BasicDetails />} />
           <Route path="/education" element={<EducationDocuments />} />
-          <Route path="/experience" element={<Experience />} />
+          <Route path="/experiences" element={<Experiences />} />
           <Route path="/bank" element={<BankDetails />} />
           <Route path="/on-board" element={<OnBoarding />} />
           <Route path="/onboard-task" element={<OnboardingTask />} />

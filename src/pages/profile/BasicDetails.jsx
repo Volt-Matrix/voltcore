@@ -1,21 +1,42 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import "./BasicDetails.css";
+import { Link } from 'react-router-dom';
 
+const BasicDetails = ({ profileData, onSave }) => {
+  const defaultProfileData = {
+    fullName: '',
+    employeeId: '',
+    dob: '',
+    gender: '',
+    email: '',
+    phone: '',
+    altPhone: '',
+    currentAddress: '',
+    permanentAddress: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+    profilePic: 'https://placehold.co/100x100',
+  };
 
-const BasicDetails = () => {
-  const defaultProfileImage = 'https://via.placeholder.com/100'; // Default placeholder image
+  const profile = profileData || defaultProfileData;
 
-  const [profileImage, setProfileImage] = useState(defaultProfileImage);
-  const [isEditing, setIsEditing] = useState(false);
-
+  const [profileImage, setProfileImage] = useState(profile.profilePic);
   const [personalInfo, setPersonalInfo] = useState({
-    GOVID: '',
-    PANNO: '294-38-3535',
-    birthDay: '1984-03-17',
-    nationality: 'Indian',
-    maritalStatus: 'Married',
-    joinedDate: '2005-08-03',
+    fullName: profile.fullName,
+    employeeId: profile.employeeId,
+    dob: profile.dob,
+    gender: profile.gender,
+    email: profile.email,
+    phone: profile.phone,
+    altPhone: profile.altPhone,
+    currentAddress: profile.currentAddress,
+    permanentAddress: profile.permanentAddress,
+    city: profile.city,
+    state: profile.state,
+    zip: profile.zip,
+    country: profile.country,
   });
 
   const handleChange = (e) => {
@@ -23,8 +44,8 @@ const BasicDetails = () => {
     setPersonalInfo({ ...personalInfo, [name]: value });
   };
 
-  const toggleEdit = () => {
-    setIsEditing(!isEditing);
+  const handleSave = () => {
+    onSave(personalInfo);
   };
 
   const handleUploadImage = (e) => {
@@ -35,174 +56,161 @@ const BasicDetails = () => {
     }
   };
 
-  const handleDeleteImage = () => {
-    setProfileImage(defaultProfileImage);
-  };
-
   return (
     <div className="employee-profile">
-
-      {/* Navigation Bar */}
       <div className="navbar">
-        <Link to="profile/basic-details" className="nav-link active">Profile</Link>
+        <Link to="/profile" className="nav-link active">Profile</Link>
         <Link to="/education" className="nav-link">Educational Documents</Link>
-        <Link to="/experience" className="nav-link">Experience</Link>
+        <Link to="/experiences" className="nav-link">Experience</Link>
         <Link to="/bank" className="nav-link">Bank Details</Link>
         <Link to="/on-board" className="nav-link">Onboard</Link>
         <Link to="/onboard-task" className="nav-link">OnBoarding-Tasks</Link>
       </div>
-
-      {/* Profile Header */}
+      
       <div className="profile-header">
-        <img src={profileImage} alt="Profile" className="profile-image" />
-        <div className="profile-info">
-          <h2>Employee Name</h2>
-          <p className="email">ictehrm-admin@web-stalk.com</p>
-          <div className="profile-buttons">
-            <label htmlFor="upload-input" className="upload-btn">Upload Profile Image</label>
-            <input
-              type="file"
-              id="upload-input"
-              style={{ display: 'none' }}
-              accept="image/*"
-              onChange={handleUploadImage}
-            />
-            <button className="delete-btn" onClick={handleDeleteImage}>Delete Profile Image</button>
-          </div>
-        </div>
-      </div>
+  <img src={profileImage} alt="Profile" className="profile-image" />
+  <div className="profile-info">
+    <div className="name-and-upload">
+      <h2 className="employee-name">{personalInfo.fullName}</h2>
+      <label htmlFor="upload-input" className="upload-btns">
+        Upload
+      </label>
+      <input
+        type="file"
+        id="upload-input"
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleUploadImage}
+      />
+    </div>
+  </div>
+</div>
 
-      {/* Employee Details */}
+
       <div className="profile-details">
-        <div className="employee-numbers">
-          <div><strong>Employee Number:</strong> EMP001</div>
-        </div>
-
-        <div className="tabs">
-          <button className="tab active">Basic Information</button>
-        </div>
-
         <div className="personal-info">
-
-          {/* Personal Info Title + Edit Button */}
           <div className="personal-info-header">
             <h3>Personal Information</h3>
-            <button className="edit-icon-btn" onClick={toggleEdit}>
-              {isEditing ? 'Cancel' : 'Edit'}
+          </div>
+
+          <div className="info-grid">
+            <div>
+              <label><strong>Full Name</strong></label>
+              <input
+                type="text"
+                name="fullName"
+                value={personalInfo.fullName}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Employee ID</strong></label>
+              <input
+                type="text"
+                name="employeeId"
+                value={personalInfo.employeeId}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Date of Birth</strong></label>
+              <input
+                type="date"
+                name="dob"
+                value={personalInfo.dob}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Email</strong></label>
+              <input
+                type="email"
+                name="email"
+                value={personalInfo.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Phone</strong></label>
+              <input
+                type="text"
+                name="phone"
+                value={personalInfo.phone}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Alt Phone</strong></label>
+              <input
+                type="text"
+                name="altPhone"
+                value={personalInfo.altPhone}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Current Address</strong></label>
+              <input
+                type="text"
+                name="currentAddress"
+                value={personalInfo.currentAddress}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Permanent Address</strong></label>
+              <input
+                type="text"
+                name="permanentAddress"
+                value={personalInfo.permanentAddress}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>City</strong></label>
+              <input
+                type="text"
+                name="city"
+                value={personalInfo.city}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>State</strong></label>
+              <input
+                type="text"
+                name="state"
+                value={personalInfo.state}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Zip</strong></label>
+              <input
+                type="text"
+                name="zip"
+                value={personalInfo.zip}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label><strong>Country</strong></label>
+              <input
+                type="text"
+                name="country"
+                value={personalInfo.country}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="save-btn-container">
+            <button className="save-btn" onClick={handleSave}>
+              Save Changes
             </button>
           </div>
-
-          {/* Information Grid */}
-          <div className="info-grid">
-
-            {/* Driver's License */}
-            <div>
-              <label><strong>GOV-ID Number</strong></label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="govidnumber"
-                  value={personalInfo.driversLicense}
-                  onChange={handleChange}
-                  placeholder="Enter number"
-                />
-              ) : (
-                <p>{personalInfo.driversLicense || '-'}</p>
-              )}
-            </div>
-
-            {/* Other ID */}
-            <div>
-              <label><strong>PAN No</strong></label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="PANNo"
-                  value={personalInfo.otherId}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{personalInfo.otherId}</p>
-              )}
-            </div>
-
-            {/* Birthday */}
-            <div>
-              <label><strong>Birth Day</strong></label>
-              {isEditing ? (
-                <input
-                  type="date"
-                  name="birthDay"
-                  value={personalInfo.birthDay}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{new Date(personalInfo.birthDay).toDateString()}</p>
-              )}
-            </div>
-
-            {/* Nationality */}
-            <div>
-              <label><strong>Nationality</strong></label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="nationality"
-                  value={personalInfo.nationality}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{personalInfo.nationality}</p>
-              )}
-            </div>
-
-            {/* Marital Status */}
-            <div>
-              <label><strong>Marital Status</strong></label>
-              {isEditing ? (
-                <select
-                  name="maritalStatus"
-                  value={personalInfo.maritalStatus}
-                  onChange={handleChange}
-                >
-                  <option value="Married">Married</option>
-                  <option value="Single">Single</option>
-                  <option value="Divorced">Divorced</option>
-                </select>
-              ) : (
-                <p>{personalInfo.maritalStatus}</p>
-              )}
-            </div>
-
-            {/* Joined Date */}
-            <div>
-              <label><strong>Joined Date</strong></label>
-              {isEditing ? (
-                <input
-                  type="date"
-                  name="joinedDate"
-                  value={personalInfo.joinedDate}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{new Date(personalInfo.joinedDate).toDateString()}</p>
-              )}
-            </div>
-
-          </div>
-
-          {/* Save Changes */}
-          {isEditing && (
-            <div className="save-btn-container">
-              <button className="save-btn" onClick={() => setIsEditing(false)}>
-                Save Changes
-              </button>
-            </div>
-          )}
-
         </div>
       </div>
-
     </div>
   );
 };

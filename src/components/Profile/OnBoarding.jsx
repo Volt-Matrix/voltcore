@@ -90,7 +90,7 @@ const OnBoarding = () => {
               </div>
             </div>
             <div>
-              <button type="submit" className="submit-btns">Submit</button>
+              <button type="submit" className="submit-btns">OnBoard</button>
             </div>
           </form>
         </div>
