@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: flex-start;
     gap:10px;
+    height: 100%;
 }
 
 .avl-leaves_content {
