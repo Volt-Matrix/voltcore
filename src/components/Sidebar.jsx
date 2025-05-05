@@ -27,10 +27,11 @@ function Sidebar() {
       <div className="sidebar-scroll">
         <div className="icon-button rpr">
           <div className="navbtns">
-            <Home size={32} />
-            <span>Home</span>
+            <NavLink to="/home" className="navbtns">
+              <Home size={32} />
+              <span>Home</span>
+            </NavLink>
           </div>
-          <NavLink to="/home" />
         </div>
 
         {/* Profile */}
@@ -61,15 +62,13 @@ function Sidebar() {
                   Reporting
                 </NavLink>
                 <NavLink to="/teams/teamhierarchy" className="submenu-link">
-                {' '}
-                Team Hierarchy
-              </NavLink>
+                  {' '}
+                  Team Hierarchy
+                </NavLink>
               </div>
             </div>
           }
         </div>
-
-
 
         {/* Assets */}
         <div className="icon-button" onClick={() => toggleMenu('assets')}>
@@ -169,7 +168,6 @@ function Sidebar() {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Logout */}
