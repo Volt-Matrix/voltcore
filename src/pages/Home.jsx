@@ -61,8 +61,10 @@ function Home() {
 
           <div className="home_second-row">
 
-            <div className="home_calendar card-p">
+            <div className="home_calendar">
+              <div className="card-p">
               <AttendanceCalendar />
+              </div>
             </div>
 
             <div className="home_events-quick-links">
