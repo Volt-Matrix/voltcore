@@ -1,201 +1,156 @@
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #4CAF50;
+  padding: 10px 20px;
+  color: white;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
 .employee-profile {
   max-width: 1200px;
-  margin: 20px auto;
+  margin: 40px auto;
+  background-color: #ffffff;
   padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #cddafc;
-  border: 1px solid #0e0d0d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 
 .profile-header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
-}
-.profile-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.upload-btn, .delete-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-}
-
-.upload-btn:hover, .delete-btn:hover {
-  opacity: 0.8;
+  margin-bottom: 20px;
 }
 
 .profile-image {
-  width: 150px;
-  margin-left: 20px;
-  height: 150px;
-  /* border-radius: 50%; */
-  margin-right: 30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
 }
 
 .profile-info h2 {
   margin: 0;
-}
-
-.profile-info .email {
-  color: #777;
-  font-size: 14px;
+  font-size: 24px;
+  color: #333;
 }
 
 .profile-buttons {
+  display: flex;
+  align-items: center;
   margin-top: 10px;
 }
-
-.profile-buttons button {
-  margin-right: 10px;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.name-and-upload {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.edit-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.upload-btn {
-  background-color: #17a2b8;
-  color: white;
-}
-
-.delete-btn {
-  background-color: #fd7e14;
-  color: white;
-}
-
-.profile-details {
+.employee-name {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
   margin-top: 20px;
 }
 
-.employee-numbers {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.tabs {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.tab {
-  padding: 10px 20px;
-  background-color: #eee;
-  border: none;
+.upload-btns {
+  background-color: #c2d8ec;
+  color: rgb(29, 20, 20);
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px;
-  border-radius: 4px 4px 0 0;
+  /* margin-left: -20px; */
 }
 
-.tab.active {
-  background-color: #fff;
-  border-bottom: 2px solid #007bff;
+.upload-btn:hover {
+  background-color: #45a049;
+}
+
+.profile-details {
+  margin-top: 30px;
+}
+
+.personal-info-header {
+  background-color: #f0f0f0;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 20px;
   font-weight: bold;
-}
-
-.personal-info h3 {
-  margin-bottom: 15px;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 8px;
 }
 
 .info-grid div {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
 }
 
-.info-grid strong {
-  display: block;
-  margin-bottom: 5px;
+.info-grid label {
+  font-weight: bold;
   color: #555;
 }
-.navbar {
-  display: flex;
-  gap: 20px;
-  background-color: #cddbe9;
-  padding: 15px 20px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
-  border-radius: 30px;
-  flex-wrap: wrap;
-}
 
-.nav-link {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  padding: 8px 12px;
+.info-grid input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-}
-
-.nav-link:hover {
-  background-color: #e2e6ea;
-}
-
-.nav-link.active {
-  background-color: #007bff;
-  color: white;
-}
-  
-.personal-info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.edit-icon-btn {
-  background-color: transparent;
-  color: #f8f6f6;
-  border-bottom: 1px solid #ddd;
-  background-color: rgb(102, 100, 100);
   font-size: 16px;
-  cursor: pointer;
+  outline: none;
+  transition: border 0.3s ease;
 }
 
-.edit-icon-btn:hover {
-  text-decoration: underline;
+.info-grid input:focus {
+  border-color: #4CAF50;
 }
 
 .save-btn-container {
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
-  text-align: right;
 }
 
 .save-btn {
-  background-color: #28a745;
+  padding: 12px 24px;
+  background-color: #4CAF50;
   color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
   font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .save-btn:hover {
-  background-color: #218838;
+  background-color: #45a049;
+}
+
+.save-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

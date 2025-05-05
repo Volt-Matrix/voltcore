@@ -196,4 +196,40 @@ button {
   position: relative;
   overflow: visible !important;
 }
- 
+.employee-profile {
+  max-width: 1200px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Nav bar */
+
+.navbar {
+  display: flex;
+  gap: 20px;
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.nav-link:hover {
+  background-color: #e2e6ea;
+}
+
+.nav-link.active {
+  background-color: #007bff;
+  color: white;
+}

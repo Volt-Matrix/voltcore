@@ -35,11 +35,11 @@ const EducationalDocuments = () => {
   };
 
   return (
-    <div className="edu-documents-form">
+    <div className="employee-profile">
       <div className="navbar">
         <Link to="profile/basic-details" className="nav-link">Profile</Link>
         <Link to="/education" className="nav-link active">Educational Documents</Link>
-        <Link to="/experience" className="nav-link">Experience</Link>
+        <Link to="/experiences" className="nav-link">Experience</Link>
         <Link to="/bank" className="nav-link">Bank Details</Link>
       </div>
       <h2>Upload Educational Documents</h2>
