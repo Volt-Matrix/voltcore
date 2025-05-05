@@ -17,7 +17,7 @@ function Attendance() {
           <AttandanceMarker />
         </div>
       </div>
-      <div className='card-p'>
+      <div className='card-p w-[100%] overflow-scroll'>
         <SubmittedTimeSheetList />
       </div>
     </div>

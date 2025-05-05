@@ -35,11 +35,18 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap:1em
+  gap:1em;
+  /* flex-wrap: wrap; */
+}
+.att-s2 > div{
+  flex:0 0 50%;
 }
 @media screen and (max-width:768px) {
   .att-s2{
     display: flex;
     flex-wrap: wrap;
+  }
+  .att-s2 > div{
+    flex:0 0 100%;
   }
 }

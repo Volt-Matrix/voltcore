@@ -36,20 +36,22 @@
 .icon-button {
   display: flex;
   flex-direction: column;
-  align-items: center;
   text-decoration: none;
   color: white;
-  padding: 12px 0;
+  padding: 12px ;
   width: 100%;
   cursor: pointer;
-  transition: background-color 0.3s;
-  /* position: relative; */
 }
-
+.navbtns{
+  display: flex;
+  gap:1em;
+  align-items: center;
+}
 .icon-button span {
   margin-top: 8px;
   font-size: 14px;
   text-align: center;
+
 }
 
 .icon-button:hover {

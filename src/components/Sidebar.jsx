@@ -11,10 +11,9 @@ import {
   Wallet,
   Plane,
   LogOut,
-  Network
+  Network,
 } from 'lucide-react';
 import './Sidebar.css';
-
 
 function Sidebar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -26,15 +25,21 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-scroll">
-        <NavLink to="/home" className="icon-button rpr">
-          <Home size={32} />
-          <span>Home</span>
-        </NavLink>
+        <div className="icon-button rpr">
+          <div className="navbtns">
+            <NavLink to="/home" className="navbtns">
+              <Home size={32} />
+              <span>Home</span>
+            </NavLink>
+          </div>
+        </div>
 
         {/* Profile */}
         <div className="icon-button rpr" onClick={() => toggleMenu('profile')}>
-          <User size={32} />
-          <span>Profile</span>
+          <div className="navbtns">
+            <User size={32} />
+            <span>Profile</span>
+          </div>
           {
             <div className={`submenu ${openMenu === 'profile' ? 'open' : ''}`}>
               <div className="submenu__content ">
@@ -56,108 +61,61 @@ function Sidebar() {
                 <NavLink to="/profile/reporting" className="submenu-link">
                   Reporting
                 </NavLink>
-              </div>
-            </div>
-          }
-        </div>
-
-        {/* Inbox */}
-        <div className="icon-button rpr" onClick={() => toggleMenu('inbox')}>
-          <Inbox size={32} />
-          <span>Inbox</span>
-          {
-            <div className={`submenu ${openMenu === 'inbox' ? 'open' : ''}`}>
-              <div className="submenu__content">
-                <NavLink to="/inbox/messages" className="submenu-link">
-                  Messages
-                </NavLink>
-                <NavLink to="/inbox/notifications" className="submenu-link">
-                  Notifications
-                </NavLink>
-                <NavLink to="/inbox/announcements" className="submenu-link">
-                  Announcements
+                <NavLink to="/teams/teamhierarchy" className="submenu-link">
+                  {' '}
+                  Team Hierarchy
                 </NavLink>
               </div>
             </div>
           }
         </div>
 
-        {/* Teams */}
-        <div className="icon-button rpr" onClick={() => toggleMenu('teams')}>
-          <Users size={32} />
-          <span>Teams</span>
+        {/* Assets */}
+        <div className="icon-button" onClick={() => toggleMenu('assets')}>
+          <div className="navbtns">
+            <BarChart />
+            <span>Assets</span>
+          </div>
 
-          <div className={`submenu ${openMenu === 'teams' ? 'open' : ''}`}>
-            <div className="submenu__content">
-              <NavLink to="/teams/myteam" className="submenu-link">
-                My Team
-              </NavLink>
-              <NavLink to="/teams/teamrequest" className="submenu-link">
-                Team Requests
-              </NavLink>
-              <NavLink to="/teams/teamperformance" className="submenu-link">
-                Team Performance
-              </NavLink>
-              <NavLink to="/teams/teamhierarchy" className="submenu-link">
-                {' '}
-                Team Hierarchy
-              </NavLink>
-            </div>
+          <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
+            <NavLink to="/assets" className="submenu-link">
+              Assets
+            </NavLink>
           </div>
         </div>
 
-        
-        {/* Assets */}
-        <div className="icon-button" onClick={() => toggleMenu("assets")}>
-          <BarChart size={32} />
-          <span>Assets</span>
-          
-            <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
-              <NavLink to="/assets" className="submenu-link">Assets</NavLink>
-              </div>
-              </div>
-
         {/* Organization */}
         <div className="icon-button rpr" onClick={() => toggleMenu('organization')}>
-          <Building size={32} />
-          <span>Org</span>
+          <div className="navbtns">
+            <Building size={32} />
+            <span>Org</span>
+          </div>
           {
             <div className={`submenu ${openMenu === 'organization' ? 'open' : ''}`}>
               <div className="submenu__content">
                 <NavLink to="/organization/chart" className="submenu-link">
                   Org Chart
                 </NavLink>
-                <NavLink to="/organization/units" className="submenu-link">
-                  Business Units
-                </NavLink>
-                <NavLink to="/organization/policies" className="submenu-link">
-                  Policies
-                </NavLink>
               </div>
             </div>
           }
         </div>
 
-    
-
         {/* Attendance */}
         <div className="icon-button rpr" onClick={() => toggleMenu('attendance')}>
-          <CalendarDays size={32} />
-          <span>Attendance</span>
+          <div className="navbtns">
+            <CalendarDays size={32} />
+            <span>Attendance</span>
+          </div>
           {
             <div className={`submenu ${openMenu === 'attendance' ? 'open' : ''}`}>
               <div className="submenu__content">
                 <NavLink to="/attendance/daily" className="submenu-link">
                   Daily Log
                 </NavLink>
-                <NavLink to="/attendance/summary" className="submenu-link">
-                  Monthly Summary
+                <NavLink to="/Attendance/AttendanceHistory" className="submenu-link">
+                  Attendance History
                 </NavLink>
-                <NavLink to="/attendance/requests" className="submenu-link">
-                  Attendance Requests
-                </NavLink>
-                <NavLink to="/Attendance/AttendanceHistory" className="submenu-link">Attendance History</NavLink>
-
               </div>
             </div>
           }
@@ -165,11 +123,13 @@ function Sidebar() {
 
         {/* Payroll */}
         <div className="icon-button rpr" onClick={() => toggleMenu('payroll')}>
-          <Wallet size={32} />
-          <span>Payroll</span>
+          <div className="navbtns">
+            <Wallet size={32} />
+            <span>Payroll</span>
+          </div>
           {
             <div className={`submenu ${openMenu === 'payroll' ? 'open' : ''}`}>
-              <div className='submenu__content'>
+              <div className="submenu__content">
                 <NavLink to="/payroll/payslips" className="submenu-link">
                   Payslips
                 </NavLink>
@@ -186,39 +146,30 @@ function Sidebar() {
 
         {/* Leaves */}
         <div className="icon-button rpr" onClick={() => toggleMenu('leaves')}>
-          <Plane size={32} />
-          <span>Leaves</span>
-        
-            <div className={`submenu ${openMenu === 'leaves' ? 'open' : ''}`}>
-              <NavLink to="/leaves/apply" className="submenu-link">Apply Leave</NavLink>
-              <NavLink to="/leaves/list" className="submenu-link">Leave List</NavLink>
-              <NavLink to="/leaves/dashboard" className="submenu-link">Leave Dashboard</NavLink>
+          <div className="navbtns">
+            <Plane />
+            <span>Leaves</span>
+          </div>
+
+          <div className={`submenu ${openMenu === 'leaves' ? 'open' : ''}`}>
+            <div className="submenu__content">
+              <NavLink to="/leaves/apply" className="submenu-link">
+                Apply Leave
+              </NavLink>
+              <NavLink to="/leaves/list" className="submenu-link">
+                Leave List
+              </NavLink>
+              <NavLink to="/leaves/dashboard" className="submenu-link">
+                Leave Dashboard
+              </NavLink>
+              <NavLink to="/leavemanagement/leavemanagement" className="submenu-link">
+                Leave Management
+              </NavLink>
             </div>
-            </div>
-          
-        {/* LeaveManagement */}
-        <div className="icon-button" onClick={() => toggleMenu("leavemanagement")}>
-          <Plane size={32} />
-          <span>Leave management</span>
-          {
-            <div className={`submenu ${openMenu === 'leavemanagement' ? 'open' : ''}`}>
-              <NavLink to="/leavemanagement/leavemanagement" className="submenu-link">Leave Management</NavLink>
-            </div>
-          }
+          </div>
         </div>
-        {/* Organization */}
-        <div className="icon-button" onClick={() => toggleMenu("Organization")}>
-          <Network size={32} />
-          <span>Organization Hierarchy</span>
-          {openMenu === "Organization" && (
-            <div className="submenu">
-              <NavLink to="/Organization/OrganizationHierarchy" className="submenu-link">OrganizationHierarchy</NavLink>
-            </div>
-          )}
-        </div>
-        
       </div>
-      
+
       {/* Logout */}
       <div className="sidebar-logout">
         <NavLink to="/logout" className="icon-button rpr">
