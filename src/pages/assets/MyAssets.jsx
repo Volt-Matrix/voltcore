@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
-import assetsData from "./assetsData";
-import "./Assets.css";
+import assetsData from "./AssetData";
+import "./MyAssets.css";
 
 function Assets() {
   const [assets, setAssets] = useState(assetsData);
