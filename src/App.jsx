@@ -25,7 +25,6 @@ import InboxMessagesForm from "./pages/inbox/InboxMessage";
 import InboxNotificationsForm from "./pages/Inbox/InboxNotifications";
 import DocumentsForm from "./pages/profile/DocumentsForm";
 import LeaveDashboard from "./pages/leaves/LeaveDashboard"; 
-import Assets from "./pages/assets/MyAssets"; 
 import LeaveManagement from "./pages/LeaveManagement/LeaveManagement";
 import OrganizationHierarchy from "./pages/Organization/OrganizationHierarchy";
 import AttendanceHistory from "./pages/Attendance/AttendanceHistory";
