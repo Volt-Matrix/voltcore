@@ -235,3 +235,11 @@ button {
   background-color: #007bff;
   color: white;
 }
+
+.page-layout-container{
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--header-height) 1em;
+  margin-left: var(--sidenav-width);
+  gap:1em
+}
