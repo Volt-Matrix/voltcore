@@ -65,6 +65,7 @@ function App() {
          
           {/* Profile routes */}
           <Route path="profile/basic-details" element={<BasicDetails />} />
+          <Route path="/basic-details" element={<BasicDetails />} />
           <Route path="/education" element={<EducationDocuments />} />
           <Route path="/experiences" element={<Experiences />} />
           <Route path="/bank" element={<BankDetails />} />

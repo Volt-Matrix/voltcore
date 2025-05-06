@@ -49,10 +49,10 @@ function Sidebar() {
                 <NavLink to="/profile/ProfileList" className="submenu-link">
                   ProfileList
                 </NavLink>
-                <NavLink to="/profile/experience" className="submenu-link">
+                {/* <NavLink to="/profile/experience" className="submenu-link">
                   Experience
-                </NavLink>
-                <NavLink to="/profile/contracts" className="submenu-link">
+                </NavLink> */}
+                {/* <NavLink to="/profile/contracts" className="submenu-link">
                   Contracts
                 </NavLink>
                 <NavLink to="/profile/documents" className="submenu-link">
@@ -60,7 +60,7 @@ function Sidebar() {
                 </NavLink>
                 <NavLink to="/profile/reporting" className="submenu-link">
                   Reporting
-                </NavLink>
+                </NavLink> */}
                 <NavLink to="/teams/teamhierarchy" className="submenu-link">
                   {' '}
                   Team Hierarchy

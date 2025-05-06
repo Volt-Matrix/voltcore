@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./BasicDetails.css";
-import { Link } from 'react-router-dom';
+import ProfileNavbar from '../../components/Profile/ProfileNavbar';
+
 
 const BasicDetails = ({ profileData, onSave }) => {
   const defaultProfileData = {
@@ -58,14 +59,7 @@ const BasicDetails = ({ profileData, onSave }) => {
 
   return (
     <div className="employee-profile">
-      <div className="navbar">
-        <Link to="/profile" className="nav-link active">Profile</Link>
-        <Link to="/education" className="nav-link">Educational Documents</Link>
-        <Link to="/experiences" className="nav-link">Experience</Link>
-        <Link to="/bank" className="nav-link">Bank Details</Link>
-        <Link to="/on-board" className="nav-link">Onboard</Link>
-        <Link to="/onboard-task" className="nav-link">OnBoarding-Tasks</Link>
-      </div>
+      <ProfileNavbar />
       
       <div className="profile-header">
   <img src={profileImage} alt="Profile" className="profile-image" />

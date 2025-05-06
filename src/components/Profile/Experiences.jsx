@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./documents.css";
+import ProfileNavbar from './ProfileNavbar';
 
 const Experiences = () => {
   const [experiences, setExperiences] = useState([
@@ -36,12 +37,7 @@ const Experiences = () => {
 
   return (
     <div className="employee-profile">
-      <div className="navbar">
-        <Link to="profile/basic-details" className="nav-link">Profile</Link>
-        <Link to="/education" className="nav-link">Educational Documents</Link>
-        <Link to="/experiences" className="nav-link active">Experience</Link>
-        <Link to="/bank" className="nav-link">Bank Details</Link>
-      </div>
+      <ProfileNavbar />
 
       <h2>Experience Details</h2>
 
