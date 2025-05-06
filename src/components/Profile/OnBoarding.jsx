@@ -47,7 +47,7 @@ const OnBoarding = () => {
   const filteredEmployees = employees.filter(emp => emp.JoiningDate === formData.JoiningDate);
 
   return (
-    <div className="onboard-wrapper">
+    <div className="onboard-wrapper"><area shape="" coords="" href="" alt="" />
       <div className="cards-container">
         {/* Onboarding Form Card */}
         <div className="card onboarding-card">

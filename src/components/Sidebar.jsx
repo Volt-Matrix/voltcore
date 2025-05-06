@@ -49,10 +49,10 @@ function Sidebar() {
                 <NavLink to="/profile/ProfileList" className="submenu-link">
                   ProfileList
                 </NavLink>
-                <NavLink to="/profile/experience" className="submenu-link">
+                {/* <NavLink to="/profile/experience" className="submenu-link">
                   Experience
-                </NavLink>
-                <NavLink to="/profile/contracts" className="submenu-link">
+                </NavLink> */}
+                {/* <NavLink to="/profile/contracts" className="submenu-link">
                   Contracts
                 </NavLink>
                 <NavLink to="/profile/documents" className="submenu-link">
@@ -60,7 +60,7 @@ function Sidebar() {
                 </NavLink>
                 <NavLink to="/profile/reporting" className="submenu-link">
                   Reporting
-                </NavLink>
+                </NavLink> */}
                 <NavLink to="/teams/teamhierarchy" className="submenu-link">
                   {' '}
                   Team Hierarchy
@@ -76,13 +76,19 @@ function Sidebar() {
             <BarChart />
             <span>Assets</span>
           </div>
-
+          {
           <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
+            <div className="submenu__content">
             <NavLink to="/assets" className="submenu-link">
-              Assets
+              My Assets
+            </NavLink>
+            <NavLink to="/assets/dashboard" className="submenu-link">
+              Assets Category
             </NavLink>
           </div>
         </div>
+      }
+      </div>
 
         {/* Organization */}
         <div className="icon-button rpr" onClick={() => toggleMenu('organization')}>

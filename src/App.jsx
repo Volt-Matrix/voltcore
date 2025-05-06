@@ -15,6 +15,8 @@ import ProfileList from "./pages/profile/ProfileList";
 import Experience from "./pages/profile/Experience";
 import Contracts from "./pages/profile/Contracts";
 import Reporting from "./pages/profile/Reporting";
+import AssetDashboard from "./pages/assets/AssetDashboard";
+import MyAssets from "./pages/Assets/MyAssets";
 import ApplyLeave from "./pages/leaves/ApplyLeave";
 import LeaveList from "./pages/leaves/LeaveList";
 import LeaveData from "./pages/leaves/LeaveData";
@@ -23,7 +25,7 @@ import InboxMessagesForm from "./pages/inbox/InboxMessage";
 import InboxNotificationsForm from "./pages/Inbox/InboxNotifications";
 import DocumentsForm from "./pages/profile/DocumentsForm";
 import LeaveDashboard from "./pages/leaves/LeaveDashboard"; 
-import Assets from "./pages/assets/Assets"; 
+import Assets from "./pages/assets/MyAssets"; 
 import LeaveManagement from "./pages/LeaveManagement/LeaveManagement";
 import OrganizationHierarchy from "./pages/Organization/OrganizationHierarchy";
 import AttendanceHistory from "./pages/Attendance/AttendanceHistory";
@@ -66,6 +68,7 @@ function App() {
          
           {/* Profile routes */}
           <Route path="profile/basic-details" element={<BasicDetails />} />
+          <Route path="/basic-details" element={<BasicDetails />} />
           <Route path="/education" element={<EducationDocuments />} />
           <Route path="/experiences" element={<Experiences />} />
           <Route path="/bank" element={<BankDetails />} />
@@ -77,6 +80,10 @@ function App() {
           <Route path="profile/contracts" element={<Contracts />} />
           {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
           <Route path="profile/reporting" element={<Reporting />} />
+
+          <Route path="/assets" element={<MyAssets />} />
+          <Route path="/assets/dashboard" element={<AssetDashboard />} />
+          
 
           {/* Leaves */}
           <Route path="leaves/dashboard" element={<LeaveDashboard />} /> 
