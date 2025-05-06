@@ -76,13 +76,19 @@ function Sidebar() {
             <BarChart />
             <span>Assets</span>
           </div>
-
+          {
           <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
-            <NavLink to="/assets" className="submenu-link">
-              Assets
+            <div className="submenu__content">
+            <NavLink to="/assets/myassets" className="submenu-link">
+              My Assets
+            </NavLink>
+            <NavLink to="/assets/dashboard" className="submenu-link">
+              Assets Category
             </NavLink>
           </div>
         </div>
+      }
+      </div>
 
         {/* Organization */}
         <div className="icon-button rpr" onClick={() => toggleMenu('organization')}>
