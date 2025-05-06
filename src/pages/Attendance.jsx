@@ -8,7 +8,7 @@ import SubmittedTimeSheetList from '../components/AttendanceComponents/Submitted
 function Attendance() {
   return (
     <div className="att-container">
-      <div className="action-section card-p">
+      <div className="action-section">
         <TimeSheet />
       </div>
       <div className="att-s2">

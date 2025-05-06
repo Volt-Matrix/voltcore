@@ -20,6 +20,11 @@
   font-size: 22px;
   font-weight: 600;
 }
+.topbar-left{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
 
 .topbar-right {
   display: flex;
@@ -50,4 +55,11 @@
   white-space: nowrap;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+}
+.cvm-brand{
+  width: 5em;
+  padding: 10px;
+}
+.cvm-brand img{
+  max-width: 100%;
 }
