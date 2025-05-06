@@ -79,7 +79,7 @@ function Sidebar() {
           {
           <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
             <div className="submenu__content">
-            <NavLink to="/assets/myassets" className="submenu-link">
+            <NavLink to="/assets" className="submenu-link">
               My Assets
             </NavLink>
             <NavLink to="/assets/dashboard" className="submenu-link">
