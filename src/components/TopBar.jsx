@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './TopBar.css';
 import { FaCog, FaBell, FaUserCircle } from 'react-icons/fa';
-
+import cvmlogo from '../../public/cvmlogo.png';
 function TopBar() {
   const [active, setActive] = useState('');
 
@@ -13,7 +13,10 @@ function TopBar() {
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <h2>VoltMatrix HRMS</h2>
+        <div className="cvm-brand">
+          <img src={cvmlogo} alt="core-volt-matrix logo"  />
+        </div>
+        <h2>Core volt matrix</h2>
       </div>
       <div className="topbar-right">
         <div className="topbar-icon" onClick={() => handleClick('settings')}>
