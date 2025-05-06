@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';  
 import "./documents.css";
+import ProfileNavbar from './ProfileNavbar';
 
 const BankDetails = () => {
   const [bankDetails, setBankDetails] = useState({ bankName: '', accountNumber: '', ifscCode: '' });
@@ -22,12 +23,7 @@ const BankDetails = () => {
 
   return (
     <div className="employee-profile">
-      <div className="navbar">
-        <Link to="profile/basic-details" className="nav-link">Profile</Link>
-        <Link to="/education" className="nav-link">Educational Documents</Link>
-        <Link to="/experience" className="nav-link">Experience</Link>
-        <Link to="/bank" className="nav-link active">Bank Details</Link>
-      </div>
+      <ProfileNavbar />
 
       <h2>Bank Details</h2>
 

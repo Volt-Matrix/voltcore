@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import "./documents.css";
+import ProfileNavbar from './ProfileNavbar';
 
 const EducationalDocuments = () => {
   const [documents, setDocuments] = useState([{ degree: '', institute: '', file: null }]);
@@ -36,12 +37,7 @@ const EducationalDocuments = () => {
 
   return (
     <div className="employee-profile">
-      <div className="navbar">
-        <Link to="profile/basic-details" className="nav-link">Profile</Link>
-        <Link to="/education" className="nav-link active">Educational Documents</Link>
-        <Link to="/experiences" className="nav-link">Experience</Link>
-        <Link to="/bank" className="nav-link">Bank Details</Link>
-      </div>
+      <ProfileNavbar />
       <h2>Upload Educational Documents</h2>
 
       <form onSubmit={handleSubmit}>
