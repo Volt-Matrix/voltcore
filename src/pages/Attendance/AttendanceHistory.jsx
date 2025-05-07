@@ -204,7 +204,7 @@ const AttendanceHistory = () => {
       </div>
 
       <div className="attendance-table">
-        <table>
+        <table className="table-style1">
           <thead>
             <tr>
               <th>Employee</th>
