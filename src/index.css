@@ -243,3 +243,32 @@ button {
   margin-left: var(--sidenav-width);
   gap:1em
 }
+
+/* table style 1 */
+
+.table-style1 {
+  width: 100%;
+  border-spacing: 0;
+  overflow:hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.table-style1 thead th {
+  padding: 10px 0;
+}
+
+.table-style1 th,
+.table-style1 td {
+  padding: 5px;
+  text-align:center;
+}
+
+.table-style1 thead {
+  background-color: #1b4965;
+  color: #fff;
+}
+
+.table-style1 tbody tr:nth-child(even) {
+  background-color: white;
+}
