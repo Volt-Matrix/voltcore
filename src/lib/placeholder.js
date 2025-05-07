@@ -118,3 +118,10 @@ export const empPayslips = {
         {period: 'MAY 2025', month: 5, year: 2025, payDate: 'May 31, 2025', netPay: "₹85,439", downloadUrl: 'https://www.youtube.com/watch?v=YaNkAvEG9fs' }
     ]
 };
+
+export const hrPayslipsUploadHistory = [
+    {filename: 'VM_MAY-2025_payslips.xlsx', payPeriod: 'MAY 2025', uploadTime: '08:34 AM, May 01 2025', status: 'Success', successNum: 61, failedNum: 0},
+    {filename: 'VM_APRIL-2025_payslips.xlsx', payPeriod: 'APR 2025', uploadTime: '09:45 AM, April 01 2025', status: 'Success', successNum: 49, failedNum: 0},
+    {filename: 'VM_MARCH-2025_payslips.xlsx', payPeriod: 'MAR 2025', uploadTime: '09:10 AM, March 01 2025', status: 'Success', successNum: 49, failedNum: 0},
+    {filename: 'VM_FEB-2025_payslips.xlsx', payPeriod: 'FEB 2025', uploadTime: '10:39 AM, February 01 2025', status: 'Success', successNum: 26, failedNum: 0},
+]

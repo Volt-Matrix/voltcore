@@ -14,7 +14,7 @@ function EmpPayslips () {
         <div className='empps_content-wrapper page-layout-container'>
             <header>
                 <h2 className='rpr'>My Payslips</h2>
-                <hr />
+                <hr className='color-grey'/>
             </header>
 
             <section className='empps_filters osns'>
