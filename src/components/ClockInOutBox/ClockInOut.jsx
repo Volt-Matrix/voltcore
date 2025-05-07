@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import "./ClockInOut.css";
-import { isLastDayOfMonth } from 'date-fns';
 
 function ClockInOut () {
     const [isClockIn, setIsClockIn] = useState(false);
@@ -14,7 +13,7 @@ function ClockInOut () {
 
     useEffect(() => {
         let intervalId;
-        
+
         if (isClockIn && clockedInTime) {
             updateDuration();
 
