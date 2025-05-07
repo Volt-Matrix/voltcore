@@ -172,7 +172,7 @@ function LeaveDashboard() {
           <option value="Earned">Earned Leave</option>
         </select>
 
-        <table>
+        <table className='table-style1'>
           <thead>
             <tr>
               <th>Leave Type</th>
