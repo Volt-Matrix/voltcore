@@ -70,22 +70,9 @@
     font-size: 22px;
     margin-bottom: 15px;
   }
-  
-  .leave-management-container .table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fdfdfd;
-  }
-  
-  .leave-management-container.table th, .leave-management-container .table td {
-    border: 1px solid #ddd;
-    padding: 12px 10px;
-    text-align: left;
-  }
-  
-  .leave-management-container .table th {
-    background-color: #f0f0f0;
-    font-weight: 600;
+
+  .section tbody tr:nth-child(even) {
+    background-color: #f4f6f8;
   }
   
   .leave-management-container button {

@@ -140,7 +140,7 @@ const AssetListTab = () => {
           </div>
         )}
 
-        <table className="asset-list-table">
+        <table className="table-style1">
           <thead>
             <tr>
               <th>
