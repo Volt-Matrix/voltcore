@@ -122,34 +122,9 @@
   text-align: center;
 }
 
-.attendance-table {
-  background: #fff;
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  overflow-x: auto;
-}
-
-.attendance-table table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.attendance-table th,
-.attendance-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.attendance-table th {
-  background-color: #f0f2f5;
-  color: #333;
-}
-
-.attendance-table td {
-  color: #555;
+.attendance-table thead th,
+.attendance-table tbody td {
+  padding: 10px 0;
 }
 
 .pagination-controls {

@@ -74,7 +74,7 @@ function HRPayslips () {
                     <hr className='color-grey'/>                 
                 </header>
                 
-                <table className='osns'>
+                <table className='table-style1 osns'>
                     <thead>
                         <tr>
                             <th>File Name</th>

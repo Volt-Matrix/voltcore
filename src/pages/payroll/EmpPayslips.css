@@ -28,35 +28,8 @@
     width: 70px;
 }
 
-.empps_table {
+.empps_table-container {
     width: 100%;
-}
-
-.empps_table > table {
-    width: 100%;
-    border-spacing: 0;
-    overflow:hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.empps_table thead th {
-    padding: 10px 0;
-}
-
-.empps_table th,
-.empps_table td {
-    padding: 5px;
-    text-align:center;
-}
-
-.empps_table > table thead {
-    background-color: #1b4965;
-    color: #fff;
-}
-
-.empps_table > table tbody tr:nth-child(even) {
-    background-color: white;
 }
 
 .empps_download-cell {

@@ -82,7 +82,7 @@ function Assets() {
       </div>
 
       {/* Asset Table */}
-      <table className="assets-table">
+      <table className="table-style1">
         <thead>
           <tr>
             <th>Asset Name</th>

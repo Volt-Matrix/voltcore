@@ -154,7 +154,7 @@ const warning = ()=>{
           <input type="date" name="fromDate" onChange={handleDatePick} />
           <input type="date" name="toDate" onChange={handleDatePick} />
         </div>
-        <table className="flex-1 scrollable-table">
+        <table className="table-style1">
           <thead>
             <tr className="rpr">
               {timeSheetFields.map((field, index) => (

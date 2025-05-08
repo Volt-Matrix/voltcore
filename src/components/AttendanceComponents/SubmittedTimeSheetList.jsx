@@ -126,8 +126,8 @@ const SubmittedTimeSheetList = () => {
   }, [pagination.pageIndex, pagination.pageSize]);
 
   return (
-    <div className="p-4">
-      <table className="w-full border border-gray-300 scrollable-table">
+    <div className="timesheet-list-container p-4">
+      <table className="table-style1">
         <thead className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

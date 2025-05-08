@@ -26,8 +26,8 @@ function EmpPayslips () {
                 </select>
             </section>
 
-            <section className='empps_table osns'>
-                <table>
+            <section className='empps_table-container osns'>
+                <table className='table-style1'>
                     <thead>
                         <tr>
                             <th>Pay Period</th>
