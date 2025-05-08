@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AssetDashboard.css";
 import AssetCategorySection from "./AssetCategorySection";
-import AssetListTab from "./AssetListTab";
+import AssetPR from "./AssetPR";
 import assetData from "./AssetData";
 import {
   FaCheckCircle,
@@ -14,11 +14,8 @@ import {
 
 const tabs = [
   "Dashboard",
-  "Assets List",
   "Asset category",
-  "Assets Log",
-  "Reports",
-  "Assets PR",
+  "Asset PR",
 ];
 
 const AssetDashboard = () => {
@@ -28,10 +25,10 @@ const AssetDashboard = () => {
   const statusCounts = {
     "Available": 0,
     "Assigned": 0,
-    "Out for Repair": 0,
-    "Broken - Not Fixable": 0,
+    "In Repair": 0,
+    "Retired": 0,
     "Archived": 0,
-    "Lost / Stolen": 0,
+    "Lost": 0,
   };
 
   assetData.forEach((asset) => {
@@ -42,7 +39,7 @@ const AssetDashboard = () => {
 
   const [showStatus, setShowStatus] = useState(true);
 
-  const pendingRequests = 1;
+  const pendingRequests = 0;
   const licenseDue = 0;
   const licenseUpcoming = 0;
   const warrantyDue = 0;
@@ -96,23 +93,23 @@ const AssetDashboard = () => {
           <div className="status-section">
             <div className="status-header" onClick={() => setShowStatus(!showStatus)}>
               <h3>Assets Status</h3>
-              <span>{showStatus ? "▲" : "▼"}</span>
+              
             </div>
             {showStatus && (
               <div className="status-summary">
                 <StatusCard icon={<FaCheckCircle />} color="available" count={statusCounts["Available"]} label="Available" />
                 <StatusCard icon={<FaHourglass />} color="assigned" count={statusCounts["Assigned"]} label="Assigned" />
-                <StatusCard icon={<FaTools />} color="repair" count={statusCounts["Out for Repair"]} label="In Repair" />
-                <StatusCard icon={<FaExclamationCircle />} color="broken" count={statusCounts["Broken - Not Fixable"]} label="Broken" />
-                <StatusCard icon={<FaBox />} color="archived" count={statusCounts["Archived"]} label="Retired" />
-                <StatusCard icon={<FaQuestionCircle />} color="lost" count={statusCounts["Lost / Stolen"]} label="Lost / Stolen" />
+                <StatusCard icon={<FaTools />} color="repair" count={statusCounts["In Repair"]} label="In Repair" />
+                <StatusCard icon={<FaExclamationCircle />} color="broken" count={statusCounts["Retired"]} label="Retired" />
+                <StatusCard icon={<FaBox />} color="archived" count={statusCounts["Archived"]} label="Archived" />
+                <StatusCard icon={<FaQuestionCircle />} color="lost" count={statusCounts["Lost"]} label="Lost" />
               </div>
             )}
           </div>
         </>
       )}
       {activeTab === "Asset category" && <AssetCategorySection />}
-      {activeTab === "Assets List" && <AssetListTab />}
+      {activeTab === "Asset PR" && <AssetPR/>}
 
 
 

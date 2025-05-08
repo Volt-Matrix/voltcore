@@ -122,7 +122,12 @@
     border: none;
     cursor: pointer;
   }
-
+  .asset-table td:last-child {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+  }
   .search-filter-container {
     display: flex;
     justify-content: space-between;
