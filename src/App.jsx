@@ -81,7 +81,7 @@ function App() {
           {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
           <Route path="profile/reporting" element={<Reporting />} />
 
-          <Route path="/assets/myassets" element={<MyAssets />} />
+          <Route path="/assets/" element={<MyAssets />} />
           <Route path="/assets/dashboard" element={<AssetDashboard />} />
           
           

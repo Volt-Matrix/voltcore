@@ -41,7 +41,7 @@ const AssetPR = () => {
 
       {/* Card wrapper */}
       <div className="asset-card">
-        <table className="asset-table">
+        <table className="table-style1">
           <thead>
             <tr>
               <th>User</th>

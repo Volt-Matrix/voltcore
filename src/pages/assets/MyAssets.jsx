@@ -67,46 +67,52 @@ const MyAssets = () => {
       </div>
 
       {showRequestForm && (
-        <div className="asset-card">
-          <form className="request-form" onSubmit={handleFormSubmit}>
-            <input
-              type="text"
-              name="userName"
-              placeholder="Request User Name"
-              value={formData.userName}
-              onChange={handleInputChange}
-              required
-            />
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select Asset Category</option>
-              <option value="Laptop">Laptop</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Keyboard">Keyboard</option>
-              <option value="Other">Other</option>
-            </select>
-            <textarea
-              name="description"
-              placeholder="Description"
-              value={formData.description}
-              onChange={handleInputChange}
-              required
-            />
-            <button type="submit">Submit</button>
-          </form>
+  <div className="overlay">
+    <div className="request-popup-card">
+      <form className="request-form" onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          name="userName"
+          placeholder="Request User Name"
+          value={formData.userName}
+          onChange={handleInputChange}
+          required
+        />
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="">Select Asset Category</option>
+          <option value="Laptop">Laptop</option>
+          <option value="Monitor">Monitor</option>
+          <option value="Keyboard">Keyboard</option>
+          <option value="Other">Other</option>
+        </select>
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        />
+        <div className="form-buttons">
+          <button type="submit">Submit</button>
+          <button type="button" className="cancel-btn" onClick={() => setShowRequestForm(false)}>Cancel</button>
         </div>
-      )}
+      </form>
+    </div>
+  </div>
+)}
+
 
       <div className="asset-card">
-        <table className="asset-table">
+        <table className="table-style1">
           <thead>
             <tr>
-              <th>Type</th>
-              <th>Serial Number</th>
+              <th> Asset Type</th>
+              <th>Asset ID</th>
               <th>Assigned Date</th>
               <th>Status</th>
               <th>Actions</th>
