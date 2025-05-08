@@ -169,7 +169,7 @@ const AssetCategorySection = () => {
               style={{ marginBottom: "10px", width: "100%" }}
             />
 
-            <table className="asset-table">
+            <table className="table-style1">
               <thead>
                 <tr>
                   <th>Asset Type</th>

@@ -119,7 +119,7 @@ function LeaveManagement() {
 
       <div className="section">
         <h2>Employee Leave Requests</h2>
-        <table className="table">
+        <table className="table-style1">
           <thead>
             <tr>
               <th>Name</th>

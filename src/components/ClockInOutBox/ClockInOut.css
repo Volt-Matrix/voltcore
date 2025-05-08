@@ -1,7 +1,7 @@
 .clockinout_content-wrapper {
     display:flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     gap: 20px;
     height: 100%;
 }
@@ -9,8 +9,10 @@
 .clockinout_duration {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+
+    height:50%;
 }
 
 .clockinout_big-num {

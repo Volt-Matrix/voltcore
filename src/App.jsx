@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Payroll from "./pages/Payroll";
+import EmpPayslips from "./pages/payroll/EmpPayslips";
+import HRPayslips from "./pages/payroll/HRPayslips";
 import MyTeamForm from "./pages/Teams/MyTeamForm";
 import TeamPerformanceForm from "./pages/Teams/TeamPerformanceForm";
 import TeamRequestsForm from "./pages/Teams/TeamRequestsForm";
@@ -112,6 +114,10 @@ function App() {
           <Route path="attendance/daily" element={<Attendance/>}/>
           {/* Note:Should be changed */}
           <Route path="attendance/myTimeSheet" element={<CustomTImeSheet/>}/>
+          
+          {/* Payroll */}
+          <Route path="payroll/emp/payslips" element={<EmpPayslips />} />
+          <Route path="payroll/hr/payslips" element={<HRPayslips/>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -32,7 +32,7 @@ function Home() {
 
 
   return (
-    <div className="att-container home_content-wrapper">
+    <div className="page-layout-container home_content-wrapper">
 
         <div className="home_greet-time">
           <div className="home_greet rpr">
