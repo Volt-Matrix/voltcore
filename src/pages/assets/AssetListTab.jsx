@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import itAssetList from "./AssetData";
 import "./AssetListTab.css";
 
 const statusClass = (status) => {
@@ -20,8 +19,8 @@ const statusClass = (status) => {
   }
 };
 
-const AssetListTab = () => {
-  const [assets, setAssets] = useState(itAssetList);
+const AssetListTab = ({ assetList = [], selectedCategory = "All" }) => {
+  const [assets, setAssets] = useState(assetList);
   const [selectedAssets, setSelectedAssets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -29,15 +28,19 @@ const AssetListTab = () => {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, statusFilter]);
+    setAssets(assetList); // Update when parent list changes
+    setCurrentPage(1); // Reset page on update
+  }, [assetList]);
 
   const filteredAssets = assets.filter((a) => {
-    const matchesStatus = statusFilter === "All" || a.status === statusFilter;
+    const matchesCategory =
+      selectedCategory === "All" || a.assetName === selectedCategory;
+    const matchesStatus =
+      statusFilter === "All" || a.status === statusFilter;
     const matchesSearch =
       a.assetName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       a.assetId.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesStatus && matchesSearch;
+    return matchesCategory && matchesStatus && matchesSearch;
   });
 
   const totalPages = Math.ceil(filteredAssets.length / rowsPerPage);
@@ -70,7 +73,9 @@ const AssetListTab = () => {
 
   const handleBulkDelete = () => {
     if (window.confirm("Delete selected assets?")) {
-      setAssets((prev) => prev.filter((a) => !selectedAssets.includes(a.assetId)));
+      setAssets((prev) =>
+        prev.filter((a) => !selectedAssets.includes(a.assetId))
+      );
       setSelectedAssets([]);
     }
   };
@@ -109,7 +114,7 @@ const AssetListTab = () => {
     <div className="asset-list-tab">
       <div className="card">
         <div className="table-header">
-          <h3>IT Assets List</h3>
+          <h3>IT Assets List {selectedCategory !== "All" && ` - ${selectedCategory}`}</h3>
           <div className="top-controls">
             <input
               type="text"
@@ -135,8 +140,12 @@ const AssetListTab = () => {
           <div className="bulk-actions">
             <button onClick={handleBulkDelete}>🗑️ Delete</button>
             <button onClick={handleBulkAssign}>📤 Assign</button>
-            <button onClick={() => handleBulkChangeStatus("Available")}>✅ Available</button>
-            <button onClick={() => handleBulkChangeStatus("In Repair")}>🛠️ In Repair</button>
+            <button onClick={() => handleBulkChangeStatus("Available")}>
+              ✅ Available
+            </button>
+            <button onClick={() => handleBulkChangeStatus("In Repair")}>
+              🛠️ In Repair
+            </button>
           </div>
         )}
 
@@ -174,13 +183,25 @@ const AssetListTab = () => {
                 <td>{asset.assetName}</td>
                 <td>{asset.assetId}</td>
                 <td>
-                  <span className={statusClass(asset.status)}>{asset.status}</span>
+                  <span className={statusClass(asset.status)}>
+                    {asset.status}
+                  </span>
                 </td>
                 <td>{asset.assignedTo}</td>
                 <td>{asset.assignedDate}</td>
                 <td>
-                  <button title="Edit" onClick={() => handleEdit(asset.assetId)}>✏️</button>
-                  <button title="Delete" onClick={() => handleDelete(asset.assetId)}>🗑️</button>
+                  <button
+                    title="Edit"
+                    onClick={() => handleEdit(asset.assetId)}
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    title="Delete"
+                    onClick={() => handleDelete(asset.assetId)}
+                  >
+                    🗑️
+                  </button>
                 </td>
               </tr>
             ))}

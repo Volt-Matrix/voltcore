@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import itAssetList from "./AssetData"; // Your IT asset raw data
-import AssetListTab from "./AssetListTab"; // Table for detailed asset items
+import itAssetList from "./AssetData"; 
+import AssetListTab from "./AssetListTab"; 
 import "./AssetCategorySection.css";
 
 const groupAssets = (list) => {

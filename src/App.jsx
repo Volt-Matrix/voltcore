@@ -24,7 +24,6 @@ import InboxMessagesForm from "./pages/inbox/InboxMessage";
 import InboxNotificationsForm from "./pages/Inbox/InboxNotifications";
 import DocumentsForm from "./pages/profile/DocumentsForm";
 import LeaveDashboard from "./pages/leaves/LeaveDashboard"; 
-import Assets from "./pages/assets/MyAssets"; 
 import LeaveManagement from "./pages/LeaveManagement/LeaveManagement";
 import OrganizationHierarchy from "./pages/Organization/OrganizationHierarchy";
 import AttendanceHistory from "./pages/Attendance/AttendanceHistory";
@@ -80,8 +79,9 @@ function App() {
           {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
           <Route path="profile/reporting" element={<Reporting />} />
 
-          <Route path="/assets" element={<MyAssets />} />
+          <Route path="/assets/myassets" element={<MyAssets />} />
           <Route path="/assets/dashboard" element={<AssetDashboard />} />
+          
           
 
           {/* Leaves */}
