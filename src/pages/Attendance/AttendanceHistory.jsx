@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, PieChart, Pie, Cell
 } from 'recharts';
-import GaugeChart from 'react-gauge-chart';
+// import GaugeChart from 'react-gauge-chart';
 
 const attendanceTrendData = [
   { month: 'Jan', team: 'Team A', present: 25, absent: 3, wfh: 2 },
