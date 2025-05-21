@@ -47,7 +47,6 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/home" />} />
@@ -117,7 +116,6 @@ function App() {
         </Route>
         <Route path="register" element={<Register />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 

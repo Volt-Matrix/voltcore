@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import { loggedInUserDetails } from '../lib/placeholder';
-
+import { useAuth } from '../CustomHook/useAuth';
 // import components
 import ClockInOut from '../components/ClockInOutBox/ClockInOut';
 import AnnouncementsPreview from '../components/AnnouncementsBox/AnnouncementsPreview';
@@ -24,10 +24,14 @@ const quickLinksUrls = [
 
 function Home() {
   const [time, setTime] = useState(new Date());
-
+  const [userName,setUserName] = useState('')
+  const auth = useAuth
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
+    // console.log(localStorage.getItem('userName'));
+    setUserName(localStorage.getItem('userName'))
     return () => clearInterval(interval)
+    
   }, []);
 
 
@@ -36,7 +40,7 @@ function Home() {
 
         <div className="home_greet-time">
           <div className="home_greet rpr">
-            <p>Welcome back, {loggedInUserDetails.name}!</p>
+            <p>Welcome back, {userName}!</p>
           </div>
           <div className="home_time osns">
             <p>{time.toLocaleTimeString()}, {time.toDateString()}</p>

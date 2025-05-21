@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import './AttendanceHistory.css';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, PieChart, Pie, Cell
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
 } from 'recharts';
-// import GaugeChart from 'react-gauge-chart';
 
 const attendanceTrendData = [
   { month: 'Jan', team: 'Team A', present: 25, absent: 3, wfh: 2 },
@@ -48,7 +57,18 @@ const locationData = [
 ];
 
 const tableData = Array.from({ length: 30 }, (_, i) => {
-  const names = ['Bhavish Kanna', 'John Doe', 'Ava Smith', 'Liam Brown', 'Olivia White', 'Mia Turner', 'Lucas Davis', 'Emma Wilson', 'James Taylor', 'Sophia Moore'];
+  const names = [
+    'Bhavish Kanna',
+    'John Doe',
+    'Ava Smith',
+    'Liam Brown',
+    'Olivia White',
+    'Mia Turner',
+    'Lucas Davis',
+    'Emma Wilson',
+    'James Taylor',
+    'Sophia Moore',
+  ];
   const teams = ['Team A', 'Team B', 'Team C', 'Team D'];
   const statuses = ['Present', 'WFH', 'Absent'];
   return {
@@ -56,7 +76,7 @@ const tableData = Array.from({ length: 30 }, (_, i) => {
     team: teams[i % teams.length],
     status: statuses[i % statuses.length],
     hours: (Math.random() * 2 + 5).toFixed(1),
-    date: `2025-05-${(30 - i).toString().padStart(2, '0')}`
+    date: `2025-05-${(30 - i).toString().padStart(2, '0')}`,
   };
 });
 
@@ -74,10 +94,10 @@ const AttendanceHistory = () => {
   };
 
   const monthsOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-  const groupedData = monthsOrder.map(month => {
-    const monthlyEntries = attendanceTrendData.filter(entry => entry.month === month);
+  const groupedData = monthsOrder.map((month) => {
+    const monthlyEntries = attendanceTrendData.filter((entry) => entry.month === month);
     const monthObj = { month };
-    monthlyEntries.forEach(entry => {
+    monthlyEntries.forEach((entry) => {
       monthObj[`${entry.team}_present`] = entry.present;
       monthObj[`${entry.team}_absent`] = entry.absent;
       monthObj[`${entry.team}_wfh`] = entry.wfh;
@@ -115,14 +135,22 @@ const AttendanceHistory = () => {
           <label>Team</label>
           <select name="team" value={filters.team} onChange={handleChange}>
             <option value="all">All</option>
-            {[...new Set(tableData.map(emp => emp.team))].map(team => (
-              <option key={team} value={team}>{team}</option>
+            {[...new Set(tableData.map((emp) => emp.team))].map((team) => (
+              <option key={team} value={team}>
+                {team}
+              </option>
             ))}
           </select>
         </div>
         <div className="date-filter-box">
           <label>Search Employee</label>
-          <input type="text" name="search" placeholder="Search Employee" value={filters.search} onChange={handleChange} />
+          <input
+            type="text"
+            name="search"
+            placeholder="Search Employee"
+            value={filters.search}
+            onChange={handleChange}
+          />
         </div>
         <div className="summary-card">
           <h4>Unapproved Leave</h4>
@@ -135,7 +163,14 @@ const AttendanceHistory = () => {
       </div>
 
       <div className="attendance-kpi-cards">
-        {[ ['Total Present', '124'], ['Total WFH', '38'], ['Total Absent', '15'], ['Avg. Attendance', '82.6%'], ['Avg. WFH', '23.4%'], ['Avg. Absenteeism', '3.1%'] ].map(([label, value]) => (
+        {[
+          ['Total Present', '124'],
+          ['Total WFH', '38'],
+          ['Total Absent', '15'],
+          ['Avg. Attendance', '82.6%'],
+          ['Avg. WFH', '23.4%'],
+          ['Avg. Absenteeism', '3.1%'],
+        ].map(([label, value]) => (
           <div className="kpi-card" key={label}>
             <h3>{label}</h3>
             <p>{value}</p>
@@ -153,9 +188,27 @@ const AttendanceHistory = () => {
               <YAxis />
               <Tooltip />
               {['Team A', 'Team B', 'Team C', 'Team D'].flatMap((team) => [
-                <Line key={`${team}_present`} type="monotone" dataKey={`${team}_present`} stroke="#0088FE" name={`${team} - Present`} />,
-                <Line key={`${team}_absent`} type="monotone" dataKey={`${team}_absent`} stroke="#FF8042" name={`${team} - Absent`} />,
-                <Line key={`${team}_wfh`} type="monotone" dataKey={`${team}_wfh`} stroke="#00C49F" name={`${team} - WFH`} />,
+                <Line
+                  key={`${team}_present`}
+                  type="monotone"
+                  dataKey={`${team}_present`}
+                  stroke="#0088FE"
+                  name={`${team} - Present`}
+                />,
+                <Line
+                  key={`${team}_absent`}
+                  type="monotone"
+                  dataKey={`${team}_absent`}
+                  stroke="#FF8042"
+                  name={`${team} - Absent`}
+                />,
+                <Line
+                  key={`${team}_wfh`}
+                  type="monotone"
+                  dataKey={`${team}_wfh`}
+                  stroke="#00C49F"
+                  name={`${team} - WFH`}
+                />,
               ])}
             </LineChart>
           </ResponsiveContainer>
@@ -168,24 +221,10 @@ const AttendanceHistory = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis />
-              <Tooltip cursor={{ fill: "none" }}/>
+              <Tooltip cursor={{ fill: 'none' }} />
               <Bar dataKey="rate" fill="#FF8042" />
             </BarChart>
           </ResponsiveContainer>
-        </div>
-
-        <div className="chart-box">
-          <div className="chart-title">Avg. Working Hours</div>
-          <GaugeChart
-            id="avg-hours-gauge"
-            nrOfLevels={20}
-            percent={6.4 / 8}
-            arcPadding={0.02}
-            colors={["#6366f1"]}
-            needleColor="#1e293b"
-            textColor="#1e293b"
-            formatTextValue={() => "6.4 hrs"}
-          />
         </div>
 
         <div className="chart-box">
@@ -197,7 +236,7 @@ const AttendanceHistory = () => {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip  />
+              <Tooltip />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -227,9 +266,15 @@ const AttendanceHistory = () => {
           </tbody>
         </table>
         <div className="pagination-controls">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button>
-          <span>Page {page} of {totalPages}</span>
-          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            Previous
+          </button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+            Next
+          </button>
         </div>
       </div>
     </div>
