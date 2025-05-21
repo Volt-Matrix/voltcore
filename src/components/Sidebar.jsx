@@ -14,10 +14,10 @@ import {
   Network,
 } from 'lucide-react';
 import './Sidebar.css';
-
+import { useAuth } from '../CustomHook/useAuth';
 function Sidebar() {
   const [openMenu, setOpenMenu] = useState(null);
-
+  const auth = useAuth()
   const toggleMenu = (menuName) => {
     setOpenMenu((prev) => (prev === menuName ? null : menuName));
   };
@@ -77,18 +77,18 @@ function Sidebar() {
             <span>Assets</span>
           </div>
           {
-          <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
-            <div className="submenu__content">
-            <NavLink to="/assets" className="submenu-link">
-              My Assets
-            </NavLink>
-            <NavLink to="/assets/dashboard" className="submenu-link">
-              Assets Category
-            </NavLink>
-          </div>
+            <div className={`submenu ${openMenu === 'assets' ? 'open' : ''}`}>
+              <div className="submenu__content">
+                <NavLink to="/assets" className="submenu-link">
+                  My Assets
+                </NavLink>
+                <NavLink to="/assets/dashboard" className="submenu-link">
+                  Assets Category
+                </NavLink>
+              </div>
+            </div>
+          }
         </div>
-      }
-      </div>
 
         {/* Organization */}
         <div className="icon-button rpr" onClick={() => toggleMenu('organization')}>
@@ -156,12 +156,6 @@ function Sidebar() {
 
           <div className={`submenu ${openMenu === 'leaves' ? 'open' : ''}`}>
             <div className="submenu__content">
-              <NavLink to="/leaves/apply" className="submenu-link">
-                Apply Leave
-              </NavLink>
-              <NavLink to="/leaves/list" className="submenu-link">
-                Leave List
-              </NavLink>
               <NavLink to="/leaves/dashboard" className="submenu-link">
                 Leave Dashboard
               </NavLink>
@@ -175,7 +169,7 @@ function Sidebar() {
 
       {/* Logout */}
       <div className="sidebar-logout">
-        <NavLink to="/logout" className="icon-button rpr">
+        <NavLink to="#" className="icon-button rpr" onClick={()=>{auth.logout()}}>
           <LogOut size={32} />
           <span>Logout</span>
         </NavLink>
