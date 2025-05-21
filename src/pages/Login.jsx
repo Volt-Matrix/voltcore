@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 // import { loginUserService } from '../api/services';
 import axios from 'axios';
+import { useAuth } from '../CustomHook/useAuth';
 function Login() {
   const [loginData, setLoginIndata] = useState({
     userName: '',
     password: '',
   });
+  const auth = useAuth()
   // const navigate = useNavigate();
   const handleLogin = async (test) => {
     // if (username === 'admin' && password === '123456') {
@@ -87,7 +89,8 @@ function Login() {
           />
           <button
             onClick={() => {
-              handleLogin(true);
+              // handleLogin(true);
+              auth.login(loginData)
             }}
           >
             Login
