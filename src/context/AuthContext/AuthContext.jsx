@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
             navigate('/login');
           }
         });
-        localStorage.removeItem('firstName')
+        localStorage.removeItem('userName')
     } catch (error) {
       console.log(error);
     }
