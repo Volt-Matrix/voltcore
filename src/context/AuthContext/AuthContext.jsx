@@ -5,21 +5,21 @@ import { set } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 const initialState = { firstName: '', email: '', isLoggedIn: false, id: '' };
 export const AuthContext = createContext();
+
+export const getCsrfToken = async () => {
+  try {
+    const res = await axios.get('http://localhost:8000/csrf/', {
+      withCredentials: true,
+    });
+    return res.data.csrftoken;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(initialState);
   const navigate = useNavigate();
-  const getCsrfToken = async () => {
-    try {
-      const res = await axios.get('http://localhost:8000/csrf/', {
-        withCredentials: true,
-      });
-      const data = res.data;
-      console.log(data.csrftoken);
-      return data.csrftoken;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const login = async (loginData) => {
     console.log(loginData);
     const csrf = await getCsrfToken();
