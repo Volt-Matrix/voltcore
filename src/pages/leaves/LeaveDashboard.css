@@ -104,26 +104,13 @@
   margin-top: 20px;
 }
 
-.history-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
 .history-table th,
 .history-table td {
-  padding: 15px;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
-.history-table th {
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
+  padding: 10px;
 }
 
 .history-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f4f6f8;
 }
 
 /* Dropdown Filter for Leave Type */

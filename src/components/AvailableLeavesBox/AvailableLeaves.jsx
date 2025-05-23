@@ -8,7 +8,7 @@ function AvailableLeaves () {
             <h2 className="rpr">Available Leaves</h2>
             <div className="avl-leaves_content">
                 <div className="avl-leaves_earned">
-                    <p className="osns color-grey">Earned</p>
+                    <p className="osns color-grey">Casual</p>
                     <h5 className="rpr">{loggedInUserDetails['availableEarnedLeaves']}</h5>
                     <p className="avl-leaves_days osns color-grey">Days</p>
                 </div>
