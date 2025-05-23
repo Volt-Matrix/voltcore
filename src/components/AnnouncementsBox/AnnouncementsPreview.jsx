@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./AnnouncementsPreview.css"
+import { NavLink } from 'react-router-dom';
 import { MdCampaign, MdArrowForward } from "react-icons/md";
 import { announcementListDummy } from '../../lib/placeholder';
 import { getAnnouncements } from '../../api/services';
@@ -47,7 +48,7 @@ function AnnouncementsPreview () {
                 ))}
             </div>
             <div className="ancmt-preview_view-all">
-                <a href="/announcements">View all annoucements <MdArrowForward /></a>
+                <NavLink to='/announcements'>View all annoucements <MdArrowForward /></NavLink>
             </div>
         </div>
     );
