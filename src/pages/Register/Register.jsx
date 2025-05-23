@@ -3,9 +3,9 @@ import './Register.css';
 import { registerUser } from '../../api/services';
 function Register() {
   const [registerData, setRegisterData] = useState({
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    first_name: '',
+    last_name: '',
+    phone: '',
     password: '',
   });
   const handleInput = (e) => {

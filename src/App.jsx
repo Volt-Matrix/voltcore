@@ -38,6 +38,7 @@ import Success from './components/Profile/Success';
 import OnBoarding from './components/Profile/OnBoarding';
 import OnboardingTask from './components/Profile/OnboardingTask';
 import Register from './pages/Register/Register';
+import Announcements from './pages/announcements/Announcements';
 
 const ProtectedRoute = ({ children }) => {
   // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -113,6 +114,7 @@ function App() {
           {/* Payroll */}
           <Route path="payroll/emp/payslips" element={<EmpPayslips />} />
           <Route path="payroll/hr/payslips" element={<HRPayslips />} />
+          <Route path="announcements" element={<Announcements />} />
         </Route>
         <Route path="register" element={<Register />} />
       </Routes>

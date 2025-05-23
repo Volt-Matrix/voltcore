@@ -52,7 +52,7 @@ export const loggedInUserDetails = {
     availableSickLeaves: 5,
 }
 
-export const announcementList = [
+export const announcementListDummy = [
     {
         title: 'Office Relocation Update - Moving Next Month!',
         content: 'We will be working from our new office from May 28th. Details about the new location and logistics will be shared soon.'
