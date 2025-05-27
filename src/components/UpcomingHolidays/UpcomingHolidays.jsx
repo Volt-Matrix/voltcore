@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { parse, format } from 'date-fns';
 import "./UpcomingHolidays.css";
-import { upcomingHolidaysList } from '../../lib/placeholder';
 import { getHolidays } from '../../api/services';
-import Year from 'react-calendar/dist/esm/DecadeView/Year.js';
-import { filter } from 'd3';
-
 const NUM_ROWS = 6 // to display
 
 function UpcomingHolidays () {
