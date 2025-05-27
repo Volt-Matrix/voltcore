@@ -39,6 +39,8 @@ import OnBoarding from './components/Profile/OnBoarding';
 import OnboardingTask from './components/Profile/OnboardingTask';
 import Register from './pages/Register/Register';
 import Announcements from './pages/announcements/Announcements';
+import BasicDetailsWrapper from './pages/profile/BasicDetailsWrapper';
+
 
 const ProtectedRoute = ({ children }) => {
   // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -65,6 +67,7 @@ function App() {
           <Route path="attendance" element={<Attendance />} />
 
           {/* Profile routes */}
+          <Route path="profile/basic-details" element={<BasicDetailsWrapper />} />
           <Route path="profile/basic-details" element={<BasicDetails />} />
           <Route path="/basic-details" element={<BasicDetails />} />
           <Route path="/education" element={<EducationDocuments />} />
