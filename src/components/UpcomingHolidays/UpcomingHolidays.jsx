@@ -50,6 +50,7 @@ function UpcomingHolidays () {
         <div className="UHD_content-wrapper card-p">
             <h2 className="rpr">Upcoming Holidays</h2>
             <div className="UHD_main-content osns">
+                {holidaysList.length == 0 && <p>Error occurred: Please try logging in or run "python manage.py import_holidays holidays2025.csv" in the backend</p>}
                 <table>
                 {holidaysList.slice(0, NUM_ROWS).map((holiday, index) => (
                     <tr key={index}>
