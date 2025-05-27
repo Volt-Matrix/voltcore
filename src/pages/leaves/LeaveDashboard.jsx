@@ -1,204 +1,140 @@
-import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import ApplyLeaveForm from "./ApplyLeave";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  Legend,
-  LabelList
-} from "recharts";
-import leaveRequestsData from "./LeaveData";
-import "./LeaveDashboard.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "./Leave.css";
 
-const totalLeaves = {
-  "Sick Leave": 6,
-  "Casual Leave": 18,
-  "Earned Leave": 12
-};
-
-const months = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
-
-function LeaveDashboard() {
-  const [showApplyModal, setShowApplyModal] = useState(false);
-  const [filterType, setFilterType] = useState("All");
-
-  const usedLeaves = {
-    "Sick Leave": leaveRequestsData.filter(leave => leave.leaveType.includes("Sick")).length,
-    "Casual Leave": leaveRequestsData.filter(leave => leave.leaveType.includes("Casual")).length,
-    "Earned Leave": leaveRequestsData.filter(leave => leave.leaveType.includes("Earned")).length
-  };
-
-  const remainingLeaves = {
-    "Sick Leave": totalLeaves["Sick Leave"] - usedLeaves["Sick Leave"],
-    "Casual Leave": totalLeaves["Casual Leave"] - usedLeaves["Casual Leave"],
-    "Earned Leave": totalLeaves["Earned Leave"] - usedLeaves["Earned Leave"],
-    "Total":
-      (totalLeaves["Sick Leave"] + totalLeaves["Casual Leave"] + totalLeaves["Earned Leave"]) -
-      (usedLeaves["Sick Leave"] + usedLeaves["Casual Leave"] + usedLeaves["Earned Leave"])
-  };
-
-  const yearlyLeaveData = months.map((month, index) => {
-    const monthLeaves = leaveRequestsData.filter((leave) => {
-      const leaveMonth = new Date(leave.startDate).getMonth();
-      return leaveMonth === index;
-    });
-    return {
-      month,
-      Sick: monthLeaves.filter(l => l.leaveType.includes("Sick")).length,
-      Casual: monthLeaves.filter(l => l.leaveType.includes("Casual")).length,
-      Earned: monthLeaves.filter(l => l.leaveType.includes("Earned")).length
-    };
+function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
+  const [formData, setFormData] = useState({
+    leaveType: "",
+    fromDate: "",
+    toDate: "",
+    reason: "",
+    contactDuringLeave: "",
+    attachment: null,
   });
+  const [csrfToken, setCsrfToken] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const todayDate = new Date().toLocaleDateString('en-GB', {
-    day: '2-digit', month: 'short', year: 'numeric'
-  });
+  useEffect(() => {
+    axios.get("http://localhost:8000/csrf/", { withCredentials: true })
+      .then(res => setCsrfToken(res.data.csrftoken))
+      .catch(err => console.error("Failed to fetch CSRF token", err));
+  }, []);
 
-  const getStatusBadge = (status) => {
-    switch (status.toLowerCase()) {
-      case "approved":
-        return <span className="badge badge-approved">✔️ Approved</span>;
-      case "rejected":
-        return <span className="badge badge-rejected">❌ Rejected</span>;
-      case "pending":
-        return <span className="badge badge-pending">⏳ Pending</span>;
-      default:
-        return status;
+  useEffect(() => {
+    if (editingLeave) {
+      setFormData({
+        leaveType: editingLeave.leaveType,
+        fromDate: editingLeave.startDate,
+        toDate: editingLeave.endDate,
+        reason: editingLeave.reason,
+        contactDuringLeave: editingLeave.contactDuringLeave || "",
+        attachment: null,
+      });
+    }
+  }, [editingLeave]);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "attachment") {
+      setFormData({ ...formData, attachment: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
 
-  const cardClass = (remaining) => {
-    return remaining === 0 ? "card card-zero" : "card";
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.leaveType) newErrors.leaveType = "Select a Leave Type";
+    if (!formData.fromDate) newErrors.fromDate = "Start date is required";
+    if (!formData.toDate) newErrors.toDate = "End date is required";
+    if (!formData.reason.trim()) newErrors.reason = "Reason is required";
+    return newErrors;
   };
 
-  const filteredLeaves = filterType === "All"
-    ? leaveRequestsData
-    : leaveRequestsData.filter(leave => leave.leaveType.includes(filterType));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    const form = new FormData();
+    form.append("leaveType", formData.leaveType);
+    form.append("startDate", formData.fromDate);
+    form.append("endDate", formData.toDate);
+    form.append("reason", formData.reason);
+    form.append("contactDuringLeave", formData.contactDuringLeave);
+    if (formData.attachment) form.append("attachment", formData.attachment);
+
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      "X-CSRFToken": csrfToken,
+    };
+
+    try {
+      if (editingLeave) {
+        await axios.patch(
+          `http://localhost:8000/leave/${editingLeave.id}/`,
+          form,
+          { headers, withCredentials: true }
+        );
+        toast.success("Leave updated successfully!");
+      } else {
+        form.append("status", "Pending");
+        await axios.post("http://localhost:8000/leave/", form, {
+          headers,
+          withCredentials: true,
+        });
+        toast.success("Leave applied successfully!");
+      }
+
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      console.error("Submission error:", error.response || error);
+      toast.error("Failed to submit leave application.");
+    }
+  };
 
   return (
-    <div className="leave-dashboard">
-
-      {/* Apply Leave Modal */}
-      {showApplyModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="modal-close-button" onClick={() => setShowApplyModal(false)}>×</button>
-            <ApplyLeaveForm onSuccess={() => setShowApplyModal(false)} />
-          </div>
-        </div>
-      )}
-
-      {/* Top Cards */}
-      <div className="top-bar">
-        <div className="leave-cards">
-          <div className={cardClass(remainingLeaves["Sick Leave"])}>
-            <div className="leave-icon">🩺</div>
-            <h4>Sick Leave</h4>
-            <p>{remainingLeaves["Sick Leave"]} Leaves Remaining</p>
-          </div>
-          <div className={cardClass(remainingLeaves["Casual Leave"])}>
-            <div className="leave-icon">🏖️</div>
-            <h4>Casual Leave</h4>
-            <p>{remainingLeaves["Casual Leave"]} Leaves Remaining</p>
-          </div>
-          <div className={cardClass(remainingLeaves["Earned Leave"])}>
-            <div className="leave-icon">📚</div>
-            <h4>Earned Leave</h4>
-            <p>{remainingLeaves["Earned Leave"]} Leaves Remaining</p>
-          </div>
-          <div className={cardClass(remainingLeaves["Total"])}>
-            <div className="leave-icon">🗓️</div>
-            <h4>Total Leaves</h4>
-            <p>{remainingLeaves["Total"]} Leaves Remaining</p>
-          </div>
-        </div>
-
-        <div className="leave-buttons">
-          <button className="apply-button" onClick={() => setShowApplyModal(true)}>Apply Leave</button>
-        </div>
-      </div>
-
-      {/* Last Updated */}
-      <div className="last-updated">
-        Last Updated: {todayDate}
-      </div>
-
-      {/* Yearly Leave Graph */}
-      <div className="middle-section">
-        <div className="graph-container">
-          <h3>Yearly Leave Graph</h3>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={yearlyLeaveData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="Sick" stackId="a" fill="#82ca9d">
-                <LabelList dataKey="Sick" position="top" formatter={(v) => v > 0 ? `${v}` : ""} />
-              </Bar>
-              <Bar dataKey="Casual" stackId="a" fill="#8884d8">
-                <LabelList dataKey="Casual" position="top" formatter={(v) => v > 0 ? `${v}` : ""} />
-              </Bar>
-              <Bar dataKey="Earned" stackId="a" fill="#ffc658">
-                <LabelList dataKey="Earned" position="top" formatter={(v) => v > 0 ? `${v}` : ""} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Leave History Table */}
-      <div className="history-table">
-        <h3>Leave History Table</h3>
-
-        <label htmlFor="type-filter">Filter by Leave Type:</label>
-        <select
-          id="type-filter"
-          value={filterType}
-          onChange={(e) => setFilterType(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Sick">Sick Leave</option>
-          <option value="Casual">Casual Leave</option>
-          <option value="Earned">Earned Leave</option>
+    <div className="leave-form">
+      <h2>{editingLeave ? "Edit Leave" : "Apply for Leave"}</h2>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <label>Leave Type:</label>
+        <select name="leaveType" value={formData.leaveType} onChange={handleChange} required>
+          <option value="">Select</option>
+          <option value="Casual">Casual</option>
+          <option value="Sick">Sick</option>
+          <option value="Earned">Earned</option>
         </select>
+        {errors.leaveType && <small className="error-text">{errors.leaveType}</small>}
 
-        <table className='table-style1'>
-          <thead>
-            <tr>
-              <th>Leave Type</th>
-              <th>Start</th>
-              <th>End</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLeaves
-              .filter(leave => ["Sick", "Casual", "Earned"].some(type => leave.leaveType.includes(type)))
-              .map((leave) => (
-                <tr key={leave.id}>
-                  <td>{leave.leaveType}</td>
-                  <td>{leave.startDate}</td>
-                  <td>{leave.endDate}</td>
-                  <td>{getStatusBadge(leave.status)}</td>
-                </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <label>From Date:</label>
+        <input type="date" name="fromDate" value={formData.fromDate} onChange={handleChange} required />
+        {errors.fromDate && <small className="error-text">{errors.fromDate}</small>}
 
-      <ToastContainer />
+        <label>To Date:</label>
+        <input type="date" name="toDate" value={formData.toDate} onChange={handleChange} required />
+        {errors.toDate && <small className="error-text">{errors.toDate}</small>}
+
+        <label>Reason:</label>
+        <textarea name="reason" rows={3} value={formData.reason} onChange={handleChange} required />
+        {errors.reason && <small className="error-text">{errors.reason}</small>}
+
+        <label>Contact During Leave (Optional):</label>
+        <input name="contactDuringLeave" value={formData.contactDuringLeave} onChange={handleChange} />
+
+        <label>Attachment (Optional):</label>
+        <input type="file" name="attachment" onChange={handleChange} accept=".pdf,.jpg,.png" />
+
+        <div className="form-buttons">
+          <button type="submit">{editingLeave ? "Update" : "Apply"}</button>
+          {onClose && <button type="button" onClick={onClose}>Cancel</button>}
+        </div>
+      </form>
     </div>
   );
 }
 
-export default LeaveDashboard;
+export default ApplyLeaveForm;
