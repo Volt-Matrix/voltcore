@@ -26,6 +26,7 @@ function Sidebar() {
     setOpenMenu((prev) => (prev === menuName ? null : menuName));
   };
   console.log(openMenu);
+  const role = localStorage.getItem('role');
   // Need Change: We can have single component do all the redering by using map method by passing list name and icon as props
   return (
     <div className="sidebar">
@@ -39,29 +40,32 @@ function Sidebar() {
         </div>
         {NavigationPaths.map((ele, index) => {
           const Icon = ele.mainPath.icon && LucideIcons[ele.mainPath.icon];
+          console.log(ele);
           let className = ele.mainPath.className;
-          return (
-            <div className="icon-button rpr" key={index} onClick={() => toggleMenu(className)}>
-              <NavLink to={ele.mainPath.to || '#'} className="navbtns">
-                {ele.mainPath.icon && <Icon size={32} />}
-                <span>{ele.mainPath.Name}</span>
-              </NavLink>
-
-              {ele.subPath && (
-                <div className={`submenu ${openMenu == className ? 'open' : ''}`}>
-                  <div className="submenu__content">
-                    {ele.subPath.map((subPath, index) => {
-                      return (
-                        <NavLink to={subPath.to} key={index} className="submenu-link">
-                          {subPath.Name}
-                        </NavLink>
-                      );
-                    })}
+          console.log(`My Role->${role}`);
+          if (ele.mainPath.accessList.includes(role))
+            return (
+              <div className="icon-button rpr" key={index} onClick={() => toggleMenu(className)}>
+                <NavLink to={ele.mainPath.to || '#'} className="navbtns">
+                  {ele.mainPath.icon && <Icon size={32} />}
+                  <span>{ele.mainPath.Name}</span>
+                </NavLink>
+                {ele.subPath && (
+                  <div className={`submenu ${openMenu == className ? 'open' : ''}`}>
+                    <div className="submenu__content">
+                      {ele.subPath.map((subPath, index) => {
+                        return (
+                          <NavLink to={subPath.to} key={index} className="submenu-link">
+                            {subPath.Name}
+                          </NavLink>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          );
+                )}
+              </div>
+            );
+          else return <></>;
         })}
       </div>
 
