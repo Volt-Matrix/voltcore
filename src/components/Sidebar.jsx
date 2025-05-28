@@ -52,7 +52,7 @@ function Sidebar() {
                   <div className="submenu__content">
                     {ele.subPath.map((subPath, index) => {
                       return (
-                        <NavLink to={subPath.to} className="submenu-link">
+                        <NavLink to={subPath.to} key={index} className="submenu-link">
                           {subPath.Name}
                         </NavLink>
                       );
