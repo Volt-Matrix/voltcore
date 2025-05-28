@@ -31,11 +31,11 @@ export const AuthProvider = ({ children }) => {
       withCredentials: true, // Important for session cookie
     });
     console.log(response.data.user);
-    const {firstName,isLoggedIn} = response.data.user;
+    const {firstName,isLoggedIn,role} = response.data.user;
     localStorage.setItem('userName',firstName);
-    // localStorage.setItem('isLoggedIn)
+    localStorage.setItem('role',role.replace(/\s/g, "").toLowerCase())
     setLoginData({ ...response.data.user });
-    if (response.data.user.isLoggedIn) {
+    if (isLoggedIn) {
       navigate('/', { replace: true });
     }
   };
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
             navigate('/login');
           }
         });
-        localStorage.removeItem('userName')
+        localStorage.clear()
     } catch (error) {
       console.log(error);
     }
