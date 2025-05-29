@@ -56,3 +56,14 @@ export const getHolidays = () => {
     throw error;
   })
 }
+
+export const getBirthdays = () => {
+  return api.get('birthdays/', {withCredentials: true}).then((resp) => {
+    console.log('fetched birthdays: ', resp.data)
+    return resp.data;
+  })
+  .catch((error) => {
+    console.error('birthdays get failed: ', error)
+    throw error;
+  })
+}
