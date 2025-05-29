@@ -5,6 +5,8 @@ import { MdCampaign, MdArrowForward } from "react-icons/md";
 import { announcementListDummy } from '../../lib/placeholder';
 import { getAnnouncements } from '../../api/services';
 
+const NUM_ROWS = 2;
+
 function AnnouncementsPreview () {
     const [announcementsList, setAnnouncementsList] = useState([]);
 
@@ -39,11 +41,11 @@ function AnnouncementsPreview () {
                 <h2>Announcements</h2>
             </div>
             <div className="ancmt-preview_content">
-                {announcementsList.slice(0, 2).map((item, index) => (
+                {announcementsList.slice(0, NUM_ROWS).map((item, index) => (
                     <div key={index} className='ancmt-preview_list-item'>
                         <h4 className="rpr">{item['title']}</h4>
                         <p className="osns color-grey">{processContentString(item['content'])}</p>
-                        {index < announcementsList.length-1 && <hr className="color-grey"/>}
+                        {index < NUM_ROWS-1 && <hr className="color-grey"/>}
                     </div>
                 ))}
             </div>
