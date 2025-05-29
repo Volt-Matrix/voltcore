@@ -69,7 +69,7 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-box">
-        <h2 className="title">Rapid HRMS</h2>
+        <h2 className="title">Corevolt HRMS</h2>
         <div className="login-form">
           <label>Username</label>
           <input

@@ -45,3 +45,14 @@ export const getAnnouncements = () => {
     throw error;
   });
 };
+
+export const getHolidays = () => {
+  return api.get('holidays/', {withCredentials: true}).then((resp) => {
+    console.log('fetched holidays: ', resp.data)
+    return resp.data;
+  })
+  .catch((error) => {
+    console.error('holidays get failed: ', error)
+    throw error;
+  })
+}
