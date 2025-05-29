@@ -4,8 +4,8 @@ function HolidayList({ holidayList }) {
   //   const tableColumns = ['date', 'name'];
   return (
     <div className="card-p hlist-cont">
-      <div className="rsh t-cent">Holiday List Card</div>
-      <div className='table-container'>
+      <div className="rsh t-cent">Holiday List</div>
+      <div className="table-container">
         <table className="scrollable-table osns">
           <thead>
             <tr>

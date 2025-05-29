@@ -29,9 +29,10 @@ api.interceptors.response.use(
   },
   (error) => {
     // Handle non-2xx errors (e.g., 401 Unauthorized)
-    if (error.response.status === 401) {
-      // Redirect to login or refresh token
-    }
+    // if (error.response.status === 401) {
+    //   // Redirect to login or refresh token
+    // }
+    console.log(error)
     return Promise.reject(error);
   }
 );
