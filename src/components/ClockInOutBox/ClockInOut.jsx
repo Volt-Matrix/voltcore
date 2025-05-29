@@ -35,8 +35,9 @@ function ClockInOut() {
       if (intervalId) clearInterval(intervalId);
     };
   }, [isClockIn, clockedInTime]);
-useEffect(()=>{    empCheckClockIn();
-},[])
+  useEffect(() => {
+    empCheckClockIn();
+  }, []);
   const updateDuration = () => {
     if (!isClockIn) return;
 
