@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { toast } from "react-toastify";
 import "./Leave.css";
 
@@ -77,7 +76,7 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
     try {
       if (editingLeave) {
         await axios.patch(
-          `http://localhost:8000/leave/${editingLeave.id}/`,
+          "http://localhost:8000/leave/${editingLeave.id}/",
           form,
           { headers, withCredentials: true }
         );

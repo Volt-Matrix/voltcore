@@ -78,6 +78,7 @@
     background: none;
     border: none;
     cursor: pointer;
+    padding-left:25px;
   }
   .asset-card-container {
     background-color: #fff;
