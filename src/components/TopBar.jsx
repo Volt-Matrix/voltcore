@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import './TopBar.css';
 import { FaCog, FaBell, FaUserCircle } from 'react-icons/fa';
-import cvmlogo from '../../public/cvmlogo.png';
+// import cvmlogo from '../../public/cvmlogo.png';
+import cvmlogo from '../../public/cvm-logo.svg'
 import { useAuth } from '../CustomHook/useAuth';
 function TopBar() {
   const [active, setActive] = useState('');
@@ -22,8 +23,8 @@ function TopBar() {
         <div className="cvm-brand">
           <img src={cvmlogo} alt="core-volt-matrix logo" />
         </div>
-        <h2>Core volt matrix</h2>
       </div>
+      <h2 className='rpr'>Employee Services Portal</h2>
       <div className="topbar-right">
         <div className="topbar-icon" onClick={() => handleClick('settings')}>
           <FaCog />
