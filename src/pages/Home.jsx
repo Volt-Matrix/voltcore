@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './Home.css';
 import { loggedInUserDetails } from '../lib/placeholder';
 import { useAuth } from '../CustomHook/useAuth';
@@ -16,10 +16,10 @@ import { FaLink } from "react-icons/fa";
 
 // quick links urls
 const quickLinksUrls = [
-  {name: "Leave Request", url: "leaves/apply", cname: "leave-req",bgcolor: "#3bceac"},
-  {name: "Payslips", url: "payroll", cname: "payslips", bgcolor: "#f6bd60"},
-  {name: "Fill Timesheet", url: "attendance", cname: "timesheet", bgcolor: "#8ecae6"},
-  {name: "Suggestions Box", url: "suggestions-box", cname: "suggestions", bgcolor: "#f28482"},
+  {name: "Leave Request", url: "/leaves/dashboard"},
+  {name: "Payslips", url: "/payroll/emp/payslips"},
+  {name: "Fill Timesheet", url: "/attendance/daily"},
+  {name: "My Assets", url: "/assets"},
 ]
 
 function Home() {
@@ -84,9 +84,9 @@ function Home() {
 
               <div className="home_quick-links card-p">
                 <h2 className="rpr"><FaLink className='home_link-icon'/> Quick Links</h2>
-                <div className="home_quick-links-content">
+                <div className="home_quick-links-content osns">
                   {quickLinksUrls.map((qlink, index) => (
-                    <Link key={index} className={`home_${qlink.cname}`} to={qlink.url}>{qlink.name}</Link>
+                    <NavLink key={index} to={qlink.url}>{qlink.name}</NavLink>
                   ))}
                 </div>
               </div>
