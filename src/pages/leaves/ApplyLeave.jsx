@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { toast } from "react-toastify";
 import "./Leave.css";
-
-function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
+ 
 function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
   const [formData, setFormData] = useState({
     leaveType: "",
@@ -12,23 +10,20 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
     toDate: "",
     reason: "",
     contactDuringLeave: "",
-    leaveType: "",
-    fromDate: "",
-    toDate: "",
-    reason: "",
-    contactDuringLeave: "",
     attachment: null,
   });
-  const [csrfToken, setCsrfToken] = useState("");
+ 
   const [csrfToken, setCsrfToken] = useState("");
   const [errors, setErrors] = useState({});
-
+ 
+  // Fetch CSRF token
   useEffect(() => {
     axios.get("http://localhost:8000/csrf/", { withCredentials: true })
       .then(res => setCsrfToken(res.data.csrftoken))
       .catch(err => console.error("Failed to fetch CSRF token", err));
   }, []);
-
+ 
+  // Pre-fill form data when editing
   useEffect(() => {
     if (editingLeave) {
       setFormData({
@@ -41,36 +36,16 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
       });
     }
   }, [editingLeave]);
-
-  useEffect(() => {
-    axios.get("http://localhost:8000/csrf/", { withCredentials: true })
-      .then(res => setCsrfToken(res.data.csrftoken))
-      .catch(err => console.error("Failed to fetch CSRF token", err));
-  }, []);
-
-  useEffect(() => {
-    if (editingLeave) {
-      setFormData({
-        leaveType: editingLeave.leaveType,
-        fromDate: editingLeave.startDate,
-        toDate: editingLeave.endDate,
-        reason: editingLeave.reason,
-        contactDuringLeave: editingLeave.contactDuringLeave || "",
-        attachment: null,
-      });
-    }
-  }, [editingLeave]);
-
+ 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "attachment") {
     if (name === "attachment") {
       setFormData({ ...formData, attachment: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
-
+ 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.leaveType) newErrors.leaveType = "Select a Leave Type";
@@ -79,8 +54,7 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
     if (!formData.reason.trim()) newErrors.reason = "Reason is required";
     return newErrors;
   };
-
-  const handleSubmit = async (e) => {
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -88,7 +62,7 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
       setErrors(validationErrors);
       return;
     }
-
+ 
     const form = new FormData();
     form.append("leaveType", formData.leaveType);
     form.append("startDate", formData.fromDate);
@@ -96,19 +70,18 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
     form.append("reason", formData.reason);
     form.append("contactDuringLeave", formData.contactDuringLeave);
     if (formData.attachment) form.append("attachment", formData.attachment);
-
+ 
     const headers = {
       "Content-Type": "multipart/form-data",
       "X-CSRFToken": csrfToken,
     };
-
+ 
     try {
       if (editingLeave) {
-        await axios.patch(
-          `http://localhost:8000/leave/${editingLeave.id}/`,
-          form,
-          { headers, withCredentials: true }
-        );
+        await axios.patch(`http://localhost:8000/leave/${editingLeave.id}/`, form, {
+          headers,
+          withCredentials: true,
+        });
         toast.success("Leave updated successfully!");
       } else {
         form.append("status", "Pending");
@@ -118,50 +91,14 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
         });
         toast.success("Leave applied successfully!");
       }
-
-      return;
-    }
-
-    const form = new FormData();
-    form.append("leaveType", formData.leaveType);
-    form.append("startDate", formData.fromDate);
-    form.append("endDate", formData.toDate);
-    form.append("reason", formData.reason);
-    form.append("contactDuringLeave", formData.contactDuringLeave);
-    if (formData.attachment) form.append("attachment", formData.attachment);
-
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      "X-CSRFToken": csrfToken,
-    };
-
-    try {
-      if (editingLeave) {
-        await axios.patch(
-          `http://localhost:8000/leave/${editingLeave.id}/`,
-          form,
-          { headers, withCredentials: true }
-        );
-        toast.success("Leave updated successfully!");
-      } else {
-        form.append("status", "Pending");
-        await axios.post("http://localhost:8000/leave/", form, {
-          headers,
-          withCredentials: true,
-        });
-        toast.success("Leave applied successfully!");
-      }
-
+ 
       if (onSuccess) onSuccess();
-    } catch (error) {
-      console.error("Submission error:", error.response || error);
-      toast.error("Failed to submit leave application.");
     } catch (error) {
       console.error("Submission error:", error.response || error);
       toast.error("Failed to submit leave application.");
     }
   };
-
+ 
   return (
     <div className="leave-form">
       <h2>{editingLeave ? "Edit Leave" : "Apply for Leave"}</h2>
@@ -174,61 +111,32 @@ function ApplyLeaveForm({ onSuccess, editingLeave, onClose }) {
           <option value="Earned">Earned</option>
         </select>
         {errors.leaveType && <small className="error-text">{errors.leaveType}</small>}
-    <div className="leave-form">
-      <h2>{editingLeave ? "Edit Leave" : "Apply for Leave"}</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label>Leave Type:</label>
-        <select name="leaveType" value={formData.leaveType} onChange={handleChange} required>
-          <option value="">Select</option>
-          <option value="Casual">Casual</option>
-          <option value="Sick">Sick</option>
-          <option value="Earned">Earned</option>
-        </select>
-        {errors.leaveType && <small className="error-text">{errors.leaveType}</small>}
-
+ 
         <label>From Date:</label>
         <input type="date" name="fromDate" value={formData.fromDate} onChange={handleChange} required />
         {errors.fromDate && <small className="error-text">{errors.fromDate}</small>}
-        <label>From Date:</label>
-        <input type="date" name="fromDate" value={formData.fromDate} onChange={handleChange} required />
-        {errors.fromDate && <small className="error-text">{errors.fromDate}</small>}
-
+ 
         <label>To Date:</label>
         <input type="date" name="toDate" value={formData.toDate} onChange={handleChange} required />
         {errors.toDate && <small className="error-text">{errors.toDate}</small>}
-        <label>To Date:</label>
-        <input type="date" name="toDate" value={formData.toDate} onChange={handleChange} required />
-        {errors.toDate && <small className="error-text">{errors.toDate}</small>}
-
+ 
         <label>Reason:</label>
         <textarea name="reason" rows={3} value={formData.reason} onChange={handleChange} required />
         {errors.reason && <small className="error-text">{errors.reason}</small>}
-        <label>Reason:</label>
-        <textarea name="reason" rows={3} value={formData.reason} onChange={handleChange} required />
-        {errors.reason && <small className="error-text">{errors.reason}</small>}
-
+ 
         <label>Contact During Leave (Optional):</label>
         <input name="contactDuringLeave" value={formData.contactDuringLeave} onChange={handleChange} />
-        <label>Contact During Leave (Optional):</label>
-        <input name="contactDuringLeave" value={formData.contactDuringLeave} onChange={handleChange} />
-
+ 
         <label>Attachment (Optional):</label>
         <input type="file" name="attachment" onChange={handleChange} accept=".pdf,.jpg,.png" />
-        <label>Attachment (Optional):</label>
-        <input type="file" name="attachment" onChange={handleChange} accept=".pdf,.jpg,.png" />
-
-        <div className="form-buttons">
-          <button type="submit">{editingLeave ? "Update" : "Apply"}</button>
-          {onClose && <button type="button" onClick={onClose}>Cancel</button>}
+ 
         <div className="form-buttons">
           <button type="submit">{editingLeave ? "Update" : "Apply"}</button>
           {onClose && <button type="button" onClick={onClose}>Cancel</button>}
         </div>
       </form>
     </div>
-      </form>
-    </div>
   );
 }
-
+ 
 export default ApplyLeaveForm;
