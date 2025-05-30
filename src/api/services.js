@@ -79,7 +79,7 @@ export const employeeClockIn = async () => {
 };
 export const employeeClockInCheck = async () => {
   const csrf = await getCsrfToken();
-  let isClockedIn = false
+  let isClockedIn = false;
   await api
     .get('employee/checkIn-check/', {
       headers: {
@@ -89,15 +89,15 @@ export const employeeClockInCheck = async () => {
     })
     .then((resp) => {
       console.log('Employee Clock In time: ', resp.data);
-      const {clock_in} = resp.data
-      isClockedIn = clock_in
+      const { clock_in } = resp.data;
+      isClockedIn = clock_in;
       return resp.data;
     })
     .catch((error) => {
       console.error('Error Clock In: ', error);
       throw error;
     });
-    return isClockedIn
+  return isClockedIn;
 };
 export const employeeClockOut = async () => {
   const csrf = await getCsrfToken();
@@ -116,6 +116,19 @@ export const employeeClockOut = async () => {
     })
     .catch((error) => {
       console.error('Error Clock In: ', error);
+      throw error;
+    });
+};
+
+export const getBirthdays = () => {
+  return api
+    .get('birthdays/', { withCredentials: true })
+    .then((resp) => {
+      console.log('fetched birthdays: ', resp.data);
+      return resp.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
       throw error;
     });
 };

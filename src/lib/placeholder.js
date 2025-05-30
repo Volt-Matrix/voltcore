@@ -78,11 +78,11 @@ export const upcomingHolidaysList = [
   { name: 'Diwali', date: '21 OCT 2025', day: 'Tuesday' },
 ];
 
-export const upcomingBirthdaysList = [
-  { name: 'Devshri J', role: 'Senior Software Engineer', bday: 'April 27' },
-  { name: 'Surya K', role: 'Associate Software Engineer', bday: 'May 23' },
-  { name: 'Anuv Jain', role: 'Creative Advisor', bday: 'May 27' },
-  { name: 'Ishanya', role: 'Project Manager', bday: 'Jun 02' },
+export const upcomingBirthdaysListDummy = [
+  { name: '[Dummy] Devshri J', role: 'Senior Software Engineer', bday: 'April 27' },
+  { name: '[Dummy] Surya K', role: 'Associate Software Engineer', bday: 'May 23' },
+  { name: '[Dummy] Anuv Jain', role: 'Creative Advisor', bday: 'May 27' },
+  { name: '[Dummy] Ishanya', role: 'Project Manager', bday: 'Jun 02' },
 ];
 
 export const empPayslips = {
