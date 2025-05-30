@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { backendUrl } from './urls';
+
+axios.defaults.withCredentials = true;
 const api = axios.create({
   baseURL: backendUrl,
   timeout: 10000,
