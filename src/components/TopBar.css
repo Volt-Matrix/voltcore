@@ -2,7 +2,7 @@
 .topbar {
   width: 100%;
   height: 60px;
-  background-color: #031d44;
+  background-color: #133c55;
   color: #e7ecef;
   display: flex;
   justify-content: space-between;
@@ -12,6 +12,8 @@
   top: 0;
   left: 0;
   z-index: 999;
+
+  border-bottom: 1px solid #3d566e;
 }
 
 .topbar h2 {
