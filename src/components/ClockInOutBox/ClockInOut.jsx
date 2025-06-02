@@ -10,53 +10,54 @@ function ClockInOut() {
   const [showClockOutButton, setShowClockOutButton] = useState(false);
   const [showClockInButton, setShowClockInButton] = useState(true);
   const [clockedInDuration, setClockedInDuration] = useState({ hours: 0, mins: 0 });
+  const [checkInDisable, setCheckInDisable] = useState(true);
   const empCheckClockIn = async () => {
     const checkClockIn = await employeeClockInCheck();
-    if (checkClockIn) {
+    const { isClockedIn, inTime } = checkClockIn;
+    console.log('Is Employee CLocked In', isClockedIn, inTime);
+    if (isClockedIn) {
+      console.log(inTime);
+      setCheckInDisable(isClockedIn);
+      updateDuration(inTime);
+
+      let intervalId = setInterval(() => {
+        updateDuration(inTime);
+      }, 60000);
       setShowClockInButton(false);
       setShowClockOutButton(true);
     } else {
       setShowClockInButton(true);
       setShowClockOutButton(false);
+      setCheckInDisable(false);
     }
   };
+
   useEffect(() => {
-    let intervalId;
-
-    if (isClockIn && clockedInTime) {
-      updateDuration();
-
-      intervalId = setInterval(updateDuration, 60000);
-    }
-
-    // console.log(`Clock In out check front`, checkClockIn);
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [isClockIn, clockedInTime]);
-  useEffect(() => {
-    empCheckClockIn();
+    setTimeout(() => {
+      empCheckClockIn();
+    }, 2000);
   }, []);
-  const updateDuration = () => {
-    if (!isClockIn) return;
-
+  const updateDuration = (inTime) => {
     const now = new Date();
-    const diffMs = now - clockedInTime; // in milliseconds
+    const diffMs = now - new Date(inTime); // in milliseconds
+    console.log('diffMs-In Time', inTime);
     const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
     const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
 
     setClockedInDuration({ hours: diffHrs, mins: diffMins });
+    console.log({ hours: diffHrs, mins: diffMins });
   };
 
-  const handleClockIn = () => {
-    employeeClockIn();
-    const now = new Date();
+  const handleClockIn = async () => {
+    const data = await employeeClockIn();
     setIsClockIn(true);
-    setClockedInTime(now);
     setShowClockInButton(false);
     setShowClockInMessage(true);
+    updateDuration(data.inTime);
 
+    let intervalId = setInterval(() => {
+      updateDuration(data.inTime);
+    }, 60000);
     // hide message after 2 seconds
     setTimeout(() => {
       setShowClockInMessage(false);
@@ -90,7 +91,7 @@ function ClockInOut() {
 
       {showClockInMessage && (
         <div className="color-grey">
-          Successfully clocked in in at {clockedInTime.toLocaleTimeString()}
+          {/* Successfully clocked in in at {clockedInTime.toLocaleTimeString()} */}
         </div>
       )}
       {showClockOutMessage && (
@@ -101,7 +102,11 @@ function ClockInOut() {
 
       <div className="clockinout_buttons">
         {showClockInButton && (
-          <button onClick={handleClockIn} className="clockinout_button clockinout_clockin-button">
+          <button
+            onClick={handleClockIn}
+            className="clockinout_button clockinout_clockin-button"
+            disabled={checkInDisable}
+          >
             Clock IN
           </button>
         )}

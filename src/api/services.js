@@ -59,6 +59,8 @@ export const getHolidays = () => {
 
 export const employeeClockIn = async () => {
   const csrf = await getCsrfToken();
+  let isClockedIn = false;
+  let inTime = null;
   await api
     .get('employee/clock-in/', {
       headers: {
@@ -69,17 +71,21 @@ export const employeeClockIn = async () => {
     .then((resp) => {
       console.log('Employee Clock In time: ', resp.data);
       const { clock_in } = resp.data.session[0];
-      console.log(new Date(clock_in).toLocaleTimeString());
+      isClockedIn = resp.data.clock_in
+      inTime = clock_in
+      console.log(resp.data);
       return resp.data;
     })
     .catch((error) => {
       console.error('Error Clock In: ', error);
       throw error;
     });
+    return { isClockedIn, inTime };
 };
 export const employeeClockInCheck = async () => {
   const csrf = await getCsrfToken();
   let isClockedIn = false;
+  let inTime = null;
   await api
     .get('employee/checkIn-check/', {
       headers: {
@@ -91,13 +97,16 @@ export const employeeClockInCheck = async () => {
       console.log('Employee Clock In time: ', resp.data);
       const { clock_in } = resp.data;
       isClockedIn = clock_in;
+
+      inTime = clock_in ? resp.data.session[0].clock_in : false;
+
       return resp.data;
     })
     .catch((error) => {
       console.error('Error Clock In: ', error);
       throw error;
     });
-  return isClockedIn;
+  return { isClockedIn, inTime };
 };
 export const employeeClockOut = async () => {
   const csrf = await getCsrfToken();
