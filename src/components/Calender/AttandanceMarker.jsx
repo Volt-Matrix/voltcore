@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
-import './AttandanceMarker.css'
+import './AttandanceMarker.css';
+import { getMySessions } from '../../api/services';
 
 const attendanceData = [
   { date: '4/29/2025', status: 1, checkIn: '9:00AM', checkOut: '5:00PM', totalHours: 8 },
@@ -16,10 +17,10 @@ const attendanceData = [
 
 const AttendanceCalendar = () => {
   const [value, setValue] = useState(new Date());
-
+  const [attendancesData, setAttendancesData] = useState([]);
   const getTileData = (date) => {
     const dateString = format(date, 'M/d/yyyy');
-    return attendanceData.find((item) => item.date === dateString);
+    return attendancesData.find((item) => format(item.clock_in, 'M/d/yyyy') === dateString);
   };
 
   const tileContent = ({ date, view }) => {
@@ -27,15 +28,17 @@ const AttendanceCalendar = () => {
       const data = getTileData(date);
       if (data) {
         return (
-          <div className="relative group flex justify-center items-center">
+          <div className="relative group flex justify-center items-center osns">
             {/* Show the date */}
             {/* Tooltip */}
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col items-center bg-[#4CAF50] text-white text-xs p-2 rounded shadow-md whitespace-nowrap z-50 w-[150px] h-[100px] flex justify-center">
-              {data.status === 1 ? (
+              {data.clock_in ? (
                 <>
-                  <div>CheckIn: {data.checkIn}</div>
-                  <div>CheckOut: {data.checkOut}</div>
-                  <div>Hours: {data.totalHours}</div>
+                  <div>Check-in: {format(data.clock_in, 'HH:mm:ss')}</div>
+                  <div>Check-out: {data.clock_out ? format(data.clock_out, 'HH:mm:ss') : ''}</div>
+                  <div>
+                    Hours: {data.total_work_time ? timeToSeconds(data.total_work_time).toFixed(2) : ''}
+                  </div>
                 </>
               ) : (
                 <div>Absent</div>
@@ -52,12 +55,24 @@ const AttendanceCalendar = () => {
     if (view === 'month') {
       const data = getTileData(date);
       if (data) {
-        return data.status === 1 ? 'bg-green-500 text-white rounded-lg group present-day' : 'bg-red-500 text-white rounded-lg group absent-day';
+        return data.status === 1
+          ? 'bg-green-500 text-white rounded-lg group present-day'
+          : 'bg-red-500 text-white rounded-lg group absent-day';
       }
     }
     return '';
   };
-
+  const fetchEmployeeAttendance = async () => {
+    const data = await getMySessions();
+    setAttendancesData(data);
+  };
+  function timeToSeconds(timeString) {
+    const [hours, minutes, seconds] = timeString.split(':').map(Number);
+    return hours + minutes / 60 + seconds / 3600;
+  }
+  useEffect(() => {
+    fetchEmployeeAttendance();
+  }, []);
   return (
     <div className="p-8 overflow-visible">
       <h1 className="rsh t-cent">Attendance Calendar</h1>

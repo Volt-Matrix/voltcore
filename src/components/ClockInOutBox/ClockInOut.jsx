@@ -17,7 +17,7 @@ function ClockInOut() {
     console.log('Is Employee CLocked In', isClockedIn, inTime);
     if (isClockedIn) {
       console.log(inTime);
-      setCheckInDisable(isClockedIn);
+      // setCheckInDisable(isClockedIn);
       updateDuration(inTime);
 
       let intervalId = setInterval(() => {
@@ -28,14 +28,12 @@ function ClockInOut() {
     } else {
       setShowClockInButton(true);
       setShowClockOutButton(false);
-      setCheckInDisable(false);
+      // setCheckInDisable(false);
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      empCheckClockIn();
-    }, 2000);
+    empCheckClockIn();
   }, []);
   const updateDuration = (inTime) => {
     const now = new Date();
@@ -105,7 +103,7 @@ function ClockInOut() {
           <button
             onClick={handleClockIn}
             className="clockinout_button clockinout_clockin-button"
-            disabled={checkInDisable}
+            // disabled={checkInDisable}
           >
             Clock IN
           </button>
