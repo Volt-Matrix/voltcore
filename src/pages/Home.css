@@ -127,27 +127,20 @@
   margin: 0;
 }
 
-.home_leave-req, .home_payslips, .home_timesheet, .home_suggestions {
+.home_quick-links-content * {
   padding:5px;
   padding-right: 5px;
   padding-left:5px;
-  border-radius: 7px;
+  border-radius: 5px;
 
   text-align: center;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #1565c0;
 }
 
-.home_leave-req {
-  background: #3bceac;
-}
-
-.home_payslips {
-  background: #f6bd60;
-}
-
-.home_timesheet {
-  background: #8ecae6;
-}
-
-.home_suggestions {
-  background: #f28482;
+.home_quick-links-content *:hover {
+  background-color: #1565c0;
+  border-color: #1565c0;
+  color: white;
 }
