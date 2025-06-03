@@ -2,7 +2,8 @@ import React from 'react';
 import './AddTimeExpense.css';
 import { Check } from 'lucide-react';
 import { X } from 'lucide-react';
-const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data }) => {
+const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data,saveTimeExpense }) => {
+  
   return (
     <div className="atexp-con">
       <div>{expIndex + 1}</div>
@@ -22,6 +23,13 @@ const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data }) => {
         }}
         placeholder="Please give task details"
         value={data.description}
+      />
+       <Check
+        onClick={() => {
+          // handleExpenseInput('', rowId, expIndex, 'remove');
+          saveTimeExpense(rowId, expIndex)
+          console.log('Save Input')
+        }}
       />
       <X
         onClick={() => {

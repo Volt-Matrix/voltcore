@@ -159,9 +159,13 @@ export const getMySessions = async () => {
 };
 
 export const addTimeSheetDetails = async (postData) => {
+  const csrf = await getCsrfToken();
   let data = [];
   await api
-    .post('time-sheet-details/', { withCredentials: true })
+    .post('time-sheet-details/', postData, {
+      headers: { 'X-CSRFToken': csrf },
+      withCredentials: true,
+    })
     .then((res) => {
       console.log('My Session: ', res.data);
       data = res.data.sessions;
@@ -196,3 +200,27 @@ export const getDailyLog = async (postData) => {
     });
   return data;
 };
+
+export const addTimeExpenseData= async(postData)=>{
+  // add-time-expense
+  const csrf = await getCsrfToken();
+  let data = [];
+  await api
+    .post('attendance-add-time-expense/', postData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      data = res.data.dailyLog;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
+}
