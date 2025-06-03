@@ -71,8 +71,8 @@ export const employeeClockIn = async () => {
     .then((resp) => {
       console.log('Employee Clock In time: ', resp.data);
       const { clock_in } = resp.data.session[0];
-      isClockedIn = resp.data.clock_in
-      inTime = clock_in
+      isClockedIn = resp.data.clock_in;
+      inTime = clock_in;
       console.log(resp.data);
       return resp.data;
     })
@@ -80,7 +80,7 @@ export const employeeClockIn = async () => {
       console.error('Error Clock In: ', error);
       throw error;
     });
-    return { isClockedIn, inTime };
+  return { isClockedIn, inTime };
 };
 export const employeeClockInCheck = async () => {
   const csrf = await getCsrfToken();
@@ -140,4 +140,20 @@ export const getBirthdays = () => {
       console.error('birthdays get failed: ', error);
       throw error;
     });
+};
+
+export const getMySessions = async () => {
+  let data = [];
+  await api
+    .get('my_sessions/', { withCredentials: true })
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      data = res.data.sessions;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
 };
