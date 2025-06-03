@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CirclePlus } from 'lucide-react';
-import { eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval, fromUnixTime } from 'date-fns';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
-import { ToastContainer,toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { addTimeSheetDetails } from '../../api/services';
+import { getDailyLog } from '../../api/services';
+import { timeToHours } from '../../lib/utils/timetohours';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -31,19 +34,19 @@ function CustomTImeSheet() {
     dateRange: [],
     data: [],
   });
-const warning = ()=>{
-  toast('Make Sure to save details before exit', {
-    position: 'top-left',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: false,
-    draggable: true,
-    progress: undefined,
-    theme: 'light',
-    transition: Bounce,
-  });
-}
+  const warning = () => {
+    toast('Make Sure to save details before exit', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      transition: Bounce,
+    });
+  };
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
     setTimeSheetData({
@@ -59,7 +62,7 @@ const warning = ()=>{
     setOpenRowIndex((prev) => (prev === index ? null : index));
   };
   const addTimeExpense = (e, rowId, indexOfInput, cmd) => {
-    console.log('inoput index', indexOfInput,rowId);
+    console.log('inoput index', indexOfInput, rowId);
     if (cmd == 'remove') {
       setTimeSheetData((prev) => ({
         ...prev,
@@ -68,7 +71,10 @@ const warning = ()=>{
             return {
               ...ele,
               timeExpense: ele.timeExpense.filter((timeExp, expInd) => {
-                console.log(`expIndex ${expInd},input INdex ${indexOfInput}`,expInd !== indexOfInput);
+                console.log(
+                  `expIndex ${expInd},input INdex ${indexOfInput}`,
+                  expInd !== indexOfInput
+                );
                 return expInd !== indexOfInput;
               }),
             };
@@ -119,31 +125,41 @@ const warning = ()=>{
     });
     setTimeSheetData({ ...timeSheetData, data: [...myTimeSheetData] });
   };
+  const myDailyLog = async (fDate, tDate) => {
+    const logs = await getDailyLog({ fromDate: fDate, toDate: tDate });
+    const myList = logs.map((item, index) => {
+      return {
+        id: index,
+        date: new Date(item.clock_in).toLocaleDateString(),
+        checkIn: new Date(item.clock_in).toLocaleTimeString(),
+        checkOut: item.clock_out ? new Date(item.clock_out).toLocaleTimeString() : '',
+        totalHours: item.total_work_time ? timeToHours(item.total_work_time).toFixed(2) : '',
+        timeExpense: [],
+      };
+    });
+    console.log('Date Range--->', myList);
+    setTimeSheetData({ ...timeSheetData, data: [...myList] });
+  };
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
+
     if (fDate && tDate) {
-      const myList = eachDayOfInterval({ start: fDate, end: tDate }).map((item, index) => {
-        return {
-          id: index,
-          date: new Date(item).toLocaleDateString(),
-          checkIn: '9:00',
-          checkOut: '5:00',
-          totalHours: 8,
-          timeExpense: [],
-        };
-      });
-      console.log('Date Range--->', myList);
-      setTimeSheetData({ ...timeSheetData, data: [...myList] });
+      myDailyLog(fDate, tDate);
     }
   }, [timeSheetData.fromDate, timeSheetData.toDate]);
+  useEffect(() => {
+    // addTimeSheetDetails();
+  }, []);
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
         <ArrowLeft
           onClick={() => {
-            warning()
-            setTimeout(()=>{navigate(-1)},5000)
+            warning();
+            setTimeout(() => {
+              navigate(-1);
+            }, 5000);
           }}
         />
         Time Sheet

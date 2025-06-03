@@ -157,3 +157,42 @@ export const getMySessions = async () => {
     });
   return data;
 };
+
+export const addTimeSheetDetails = async (postData) => {
+  let data = [];
+  await api
+    .post('time-sheet-details/', { withCredentials: true })
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      data = res.data.sessions;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
+};
+
+export const getDailyLog = async (postData) => {
+  const csrf = await getCsrfToken();
+  let data = [];
+  await api
+    .post('daily-log/', postData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      data = res.data.dailyLog;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
+};

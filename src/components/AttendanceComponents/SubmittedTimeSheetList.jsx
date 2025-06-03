@@ -8,11 +8,13 @@ import {
 } from '@tanstack/react-table';
 import ActionMenu from '../MoreActionsButton/MoreActionsButton';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-
+import { getDailyLog } from '../../api/services';
 const actionTypes = [
   { name: 'Report', action: 's' },
-  { name: 'Re-Submit', action: () => {
-    toast('You time sheet has been resubmitted', {
+  {
+    name: 'Re-Submit',
+    action: () => {
+      toast('You time sheet has been resubmitted', {
         position: 'top-left',
         autoClose: 5000,
         hideProgressBar: false,
@@ -23,7 +25,8 @@ const actionTypes = [
         theme: 'light',
         transition: Bounce,
       });
-  } },
+    },
+  },
 ];
 const fetchServerData = async (pageIndex, pageSize) => {
   // Replace this with your actual API call
@@ -124,7 +127,13 @@ const SubmittedTimeSheetList = () => {
     };
     fetchData();
   }, [pagination.pageIndex, pagination.pageSize]);
-
+  const dailyLog=async()=>{
+    const logs = await getDailyLog();
+    console.log(`Daily Logs`,logs)
+  }
+  useEffect(() => {
+    dailyLog()
+  }, []);
   return (
     <div className="timesheet-list-container p-4">
       <table className="table-style1">
