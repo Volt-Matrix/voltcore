@@ -54,7 +54,7 @@ function AttendanceOverview () {
 
     const [statTotalPresent, setStatTotalPresent] = useState(0);
     const [statTotalAbsent, setStatTotalAbsent] = useState(0);
-    const [statAvgCheckInTime, setStatAvgCheckInTime] = useState('08:25 AM'); 
+    const [statAvgCheckInTime, setStatAvgCheckInTime] = useState('N/A'); 
 
     // --- Data Fetching Logic ---
     // Use useCallback for functions passed as dependencies to useEffect or event handlers if they cause re-renders
@@ -62,19 +62,36 @@ function AttendanceOverview () {
         setIsLoading(true);
         setFetchError(null);
         getAttendanceOverviewData(activeFilters)
-            .then((data) => {
-                setAttendanceTableData(data);
-                let presentCount = 0;
-                data.forEach(item => {
-                    if (item.status === "Present") presentCount++;
-                });
-                setStatTotalPresent(presentCount);
-                setStatTotalAbsent(data.length - presentCount);
+            .then((responseData) => {
+                const empData = responseData.employee_attendance_list || [];
+                setAttendanceTableData(empData);
+
+                if (responseData.summary_stats && responseData.summary_stats.average_check_in_time) {
+                    setStatAvgCheckInTime(responseData.summary_stats.average_check_in_time);
+                } else {
+                    setStatAvgCheckInTime('N/A'); // If no data or no one present
+                }
+
+                if (responseData.summary_stats && responseData.summary_stats.total_present) {
+                    setStatTotalPresent(responseData.summary_stats.total_present);
+                } else {
+                    setStatTotalPresent(0); // If no data or no one present
+                }
+
+                if (responseData.summary_stats && responseData.summary_stats.total_absent) {
+                    setStatTotalAbsent(responseData.summary_stats.total_absent);
+                } else {
+                    setStatTotalAbsent(0); // If no data or no one present
+                }
+
             })
             .catch((error) => {
                 console.error("Attendance overview fetch failed: ", error);
                 setFetchError(error.detail || error.message || "Failed to load attendance data.");
                 setAttendanceTableData([]);
+                setStatAvgCheckInTime('N/A');
+                setStatTotalPresent(0);
+                setStatTotalAbsent(0);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -175,7 +192,7 @@ function AttendanceOverview () {
             <section className='att-ov-stats-container osns'>
                 <AttendanceStatCard title='Total Employees Present' icon={<FaCheckCircle />} value={isLoading ? '...' : statTotalPresent} />
                 <AttendanceStatCard title='Employees Absent' icon={<FaUserSlash />}  value={isLoading ? '...' : statTotalAbsent} />
-                <AttendanceStatCard title='Average Check-In Time' icon={<FaClock />}  value={statAvgCheckInTime} />
+                <AttendanceStatCard title='Average Check-In Time' icon={<FaClock />}  value={isLoading ? '...' : statAvgCheckInTime} />
             </section>
 
             <section className='att-ov-clockinout-table-container osns'>
