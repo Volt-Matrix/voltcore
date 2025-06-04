@@ -200,8 +200,55 @@ export const getDailyLog = async (postData) => {
     });
   return data;
 };
-
-export const addTimeExpenseData= async(postData)=>{
+export const getDailyLogForTimeSheet = async () => {
+  const csrf = await getCsrfToken();
+  let data = [];
+  await api
+    .get('daily-log/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      data = res.data.dailyLog;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
+};
+export const deleteMyTimeExpense = async (sessionId,expenseId) => {
+  const csrf = await getCsrfToken();
+  let data = [];
+  await api
+    .delete(
+      `daily-log-delete-expense/${sessionId}/${expenseId}/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      console.log(`Delete Status Code-->`,res.status)
+      data = res.data.dailyLog;
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return data;
+};
+export const addTimeExpenseData = async (postData) => {
   // add-time-expense
   const csrf = await getCsrfToken();
   let data = [];
@@ -223,4 +270,4 @@ export const addTimeExpenseData= async(postData)=>{
       throw error;
     });
   return data;
-}
+};

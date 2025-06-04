@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CirclePlus } from 'lucide-react';
-import { eachDayOfInterval, fromUnixTime } from 'date-fns';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { addTimeSheetDetails, addTimeExpenseData } from '../../api/services';
+import { addTimeSheetDetails, addTimeExpenseData ,deleteMyTimeExpense} from '../../api/services';
 import { getDailyLog } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
 export const timeSheetFields = [
@@ -150,6 +149,13 @@ function CustomTImeSheet() {
     console.log(`Changed Session-->`, session);
     addTimeExpenseData({...session.timeExpense[indexOfInput],session_id:session.session_id});
   };
+  const deleteTimeExpense = (rowId, indexOfInput)=>{
+    let session = timeSheetData.data.find((ele, index) => rowId == index);
+    const sessionId = session.session_id
+    const expenseId = session.timeExpense[indexOfInput].id
+    console.log(`Delete session`,session.session_id,session.timeExpense[indexOfInput].id)
+    deleteMyTimeExpense(sessionId,expenseId)
+  }
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
@@ -229,6 +235,7 @@ function CustomTImeSheet() {
                             data={timeSheetData.data[index].timeExpense[expindex]}
                             key={expindex}
                             saveTimeExpense={saveTimeExpenseData}
+                            deleteTimeExpense ={deleteTimeExpense}
                           />
                         ))}
                       </div>

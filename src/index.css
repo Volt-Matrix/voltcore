@@ -272,3 +272,7 @@ button {
 .table-style1 tbody tr:nth-child(even) {
   background-color: white;
 }
+/* Pointer */
+.pntr{
+  cursor: pointer;
+}
