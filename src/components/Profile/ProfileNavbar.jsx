@@ -1,32 +1,32 @@
-// src/components/Navbar.js
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css'; // optional: for styling
+import './Navbar.css';
 
 const ProfileNavbar = () => {
   const location = useLocation();
 
   const navItems = [
     { to: '/basic-details', label: 'Profile' },
-    { to: '/education', label: 'Educational Documents' },
-    { to: '/experiences', label: 'Experience' },
-    { to: '/bank', label: 'Bank Details' },
-    { to: '/on-board', label: 'Onboard' },
-    { to: '/onboard-task', label: 'OnBoarding-Tasks' },
+    { to: '/documents-view', label: 'Documents' },
+    { to: '/upload', label: 'Upload' },
   ];
 
   return (
-    <div className="navbar">
-      {navItems.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          className={`nav-link ${location.pathname === item.to ? 'active' : ''}`}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </div>
+    <nav className="modern-navbar">
+      <div className="navbar-left">
+        <div className="navbar-links">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`nav-link ${location.pathname === item.to ? 'active' : ''}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </nav>
   );
 };
 
