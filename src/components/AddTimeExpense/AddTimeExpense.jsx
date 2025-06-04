@@ -1,7 +1,7 @@
 import React from 'react';
 import './AddTimeExpense.css';
 import { Check } from 'lucide-react';
-import { X ,Pencil} from 'lucide-react';
+import { X, Pencil,Trash2  } from 'lucide-react';
 const AddTimeExpense = ({
   handleExpenseInput,
   rowId,
@@ -21,6 +21,7 @@ const AddTimeExpense = ({
         }}
         value={data?.hourSpent}
         placeholder="Please Add Hours Spent"
+        disabled={data.status}
       />
       <textarea
         name="description"
@@ -29,22 +30,27 @@ const AddTimeExpense = ({
         }}
         placeholder="Please give task details"
         value={data.description}
+        disabled={data.status}
+        
       />
-      <Pencil/>
-      <Check
-        onClick={() => {
-          // handleExpenseInput('', rowId, expIndex, 'remove');
-          saveTimeExpense(rowId, expIndex);
-          console.log('Save Input');
-        }}
-        className='pntr'
-      />
-      <X
+      {data.status && <Pencil  className="pntr" />}
+      {!data.status && (
+        <Check
+          onClick={() => {
+            // handleExpenseInput('', rowId, expIndex, 'remove');
+            saveTimeExpense(rowId, expIndex);
+            console.log('Save Input');
+          }}
+          className="pntr"
+        />
+      )}
+
+      <Trash2 
         onClick={() => {
           // handleExpenseInput('', rowId, expIndex, 'remove');
           deleteTimeExpense(rowId, expIndex);
         }}
-        className='pntr'
+        className="pntr"
       />
     </div>
   );

@@ -5,7 +5,7 @@ import { ArrowLeft, CirclePlus } from 'lucide-react';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { addTimeSheetDetails, addTimeExpenseData ,deleteMyTimeExpense} from '../../api/services';
+import { addTimeSheetDetails, addTimeExpenseData, deleteMyTimeExpense } from '../../api/services';
 import { getDailyLog } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
 export const timeSheetFields = [
@@ -128,12 +128,16 @@ function CustomTImeSheet() {
     const myList = logs.map((item, index) => {
       return {
         id: index,
-        session_id:item.id,
+        session_id: item.id,
         date: new Date(item.clock_in).toLocaleDateString(),
         checkIn: new Date(item.clock_in).toLocaleTimeString(),
         checkOut: item.clock_out ? new Date(item.clock_out).toLocaleTimeString() : '',
         totalHours: item.total_work_time ? timeToHours(item.total_work_time).toFixed(2) : '',
-        timeExpense: [...item.timesheet_details],
+        timeExpense: [
+          ...item.timesheet_details.map((expense, index) => {
+            return { ...expense, status: true };
+          }),
+        ],
       };
     });
     console.log('Date Range--->', myList);
@@ -147,15 +151,15 @@ function CustomTImeSheet() {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     let session = timeSheetData.data.find((ele, index) => rowId == index);
     console.log(`Changed Session-->`, session);
-    addTimeExpenseData({...session.timeExpense[indexOfInput],session_id:session.session_id});
+    addTimeExpenseData({ ...session.timeExpense[indexOfInput], session_id: session.session_id });
   };
-  const deleteTimeExpense = (rowId, indexOfInput)=>{
+  const deleteTimeExpense = (rowId, indexOfInput) => {
     let session = timeSheetData.data.find((ele, index) => rowId == index);
-    const sessionId = session.session_id
-    const expenseId = session.timeExpense[indexOfInput].id
-    console.log(`Delete session`,session.session_id,session.timeExpense[indexOfInput].id)
-    deleteMyTimeExpense(sessionId,expenseId)
-  }
+    const sessionId = session.session_id;
+    const expenseId = session.timeExpense[indexOfInput].id;
+    console.log(`Delete session`, session.session_id, session.timeExpense[indexOfInput].id);
+    deleteMyTimeExpense(sessionId, expenseId);
+  };
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
@@ -164,9 +168,6 @@ function CustomTImeSheet() {
     }
   }, [timeSheetData.fromDate, timeSheetData.toDate]);
 
-  useEffect(() => {
-    addTimeSheetDetails();
-  }, []);
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
@@ -235,7 +236,7 @@ function CustomTImeSheet() {
                             data={timeSheetData.data[index].timeExpense[expindex]}
                             key={expindex}
                             saveTimeExpense={saveTimeExpenseData}
-                            deleteTimeExpense ={deleteTimeExpense}
+                            deleteTimeExpense={deleteTimeExpense}
                           />
                         ))}
                       </div>
