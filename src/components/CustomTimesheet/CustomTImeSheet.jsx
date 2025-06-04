@@ -120,6 +120,7 @@ function CustomTImeSheet() {
     myTimeSheetData[addExpenseToDataIndex].timeExpense.push({
       hourSpent: 0,
       description: '',
+      status: false,
     });
     setTimeSheetData({ ...timeSheetData, data: [...myTimeSheetData] });
   };
@@ -147,18 +148,48 @@ function CustomTImeSheet() {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     addTimeSheetDetails(timeSheetData);
   };
-  const saveTimeExpenseData = (rowId, indexOfInput) => {
+  const saveTimeExpenseData = async (rowId, indexOfInput) => {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     let session = timeSheetData.data.find((ele, index) => rowId == index);
     console.log(`Changed Session-->`, session);
-    addTimeExpenseData({ ...session.timeExpense[indexOfInput], session_id: session.session_id });
+    const savedLog = await addTimeExpenseData({
+      ...session.timeExpense[indexOfInput],
+      session_id: session.session_id,
+    });
+    console.log(`Sucessfully created`, savedLog);
+    if (savedLog.id) {
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...savedLog,
+                      status: true,
+                    }
+                  : timeExp
+              ),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+    }
   };
-  const deleteTimeExpense = (rowId, indexOfInput) => {
+  const deleteTimeExpense = async (rowId, indexOfInput) => {
     let session = timeSheetData.data.find((ele, index) => rowId == index);
     const sessionId = session.session_id;
     const expenseId = session.timeExpense[indexOfInput].id;
     console.log(`Delete session`, session.session_id, session.timeExpense[indexOfInput].id);
-    deleteMyTimeExpense(sessionId, expenseId);
+    const status = await deleteMyTimeExpense(sessionId, expenseId);
+    if (status) {
+      addTimeExpense('', rowId, indexOfInput, 'remove');
+      return;
+    }
   };
   useEffect(() => {
     const fDate = timeSheetData.fromDate;

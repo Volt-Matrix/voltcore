@@ -224,7 +224,7 @@ export const getDailyLogForTimeSheet = async () => {
 };
 export const deleteMyTimeExpense = async (sessionId,expenseId) => {
   const csrf = await getCsrfToken();
-  let data = [];
+  let status = false;
   await api
     .delete(
       `daily-log-delete-expense/${sessionId}/${expenseId}/`,
@@ -239,19 +239,21 @@ export const deleteMyTimeExpense = async (sessionId,expenseId) => {
     .then((res) => {
       console.log('My Session: ', res.data);
       console.log(`Delete Status Code-->`,res.status)
-      data = res.data.dailyLog;
+      if(res.status==200){
+        status = true
+      }
       return res.data;
     })
     .catch((error) => {
       console.error('birthdays get failed: ', error);
       throw error;
     });
-  return data;
+  return status;
 };
 export const addTimeExpenseData = async (postData) => {
   // add-time-expense
   const csrf = await getCsrfToken();
-  let data = [];
+  let data ;
   await api
     .post('attendance-add-time-expense/', postData, {
       headers: {
@@ -262,7 +264,7 @@ export const addTimeExpenseData = async (postData) => {
     })
     .then((res) => {
       console.log('My Session: ', res.data);
-      data = res.data.dailyLog;
+      data = res.data
       return res.data;
     })
     .catch((error) => {
