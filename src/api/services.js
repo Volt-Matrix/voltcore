@@ -157,3 +157,35 @@ export const getMySessions = async () => {
     });
   return data;
 };
+
+export const getAttendanceOverviewData = async (filters) => {
+  // filters = { date: 'YYYY-MM-DD', department_id: '...', search: '...' }
+  const queryParams = new URLSearchParams();
+  if (filters.date) queryParams.append('date', filters.date);
+  if (filters.department_id) queryParams.append('department_id', filters.department_id);
+  if (filters.search) queryParams.append('search', filters.search);
+
+  try {
+    const response = await api.get(`attendance-overview/?${queryParams.toString()}`, {
+      withCredentials: true,
+    });
+    console.log('Fetched attendance overview: ', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Attendance overview get failed: ', error.response?.data || error.message);
+    throw error.response?.data || error;
+  }
+};
+
+export const getTeams = async () => {
+  try {
+    const response = await api.get('teams/', {
+      withCredentials: true,
+    });
+    console.log('Fetched teams: ', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Teams get failed: ', error.response?.data || error.message);
+    throw error.response?.data || error;
+  }
+};
