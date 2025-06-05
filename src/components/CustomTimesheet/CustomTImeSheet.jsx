@@ -5,7 +5,12 @@ import { ArrowLeft, CirclePlus } from 'lucide-react';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { addTimeSheetDetails, addTimeExpenseData, deleteMyTimeExpense } from '../../api/services';
+import {
+  addTimeSheetDetails,
+  addTimeExpenseData,
+  deleteMyTimeExpense,
+  upDateMyTimeExpense,
+} from '../../api/services';
 import { getDailyLog } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
 export const timeSheetFields = [
@@ -83,6 +88,29 @@ function CustomTImeSheet() {
       }));
       return;
     }
+    if (cmd == 'edit') {
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...timeExp,
+                      status: false,
+                    }
+                  : timeExp
+              ),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+      return;
+    }
     const name = e.target.name;
     const value = e.target.value;
     const myExpenseDetails = {
@@ -152,6 +180,33 @@ function CustomTImeSheet() {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     let session = timeSheetData.data.find((ele, index) => rowId == index);
     console.log(`Changed Session-->`, session);
+    if (session.timeExpense[indexOfInput].id) {
+      let editExpense = session.timeExpense[indexOfInput];
+      console.log('Not newly created');
+      const editedLog = upDateMyTimeExpense(rowId, editExpense);
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...timeExp,
+                      status: editedLog,
+                    }
+                  : timeExp
+              ),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+      return;
+    }
+    console.log('newly created');
     const savedLog = await addTimeExpenseData({
       ...session.timeExpense[indexOfInput],
       session_id: session.session_id,

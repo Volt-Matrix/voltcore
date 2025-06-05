@@ -34,9 +34,10 @@ const AddTimeExpense = ({
         
       />
       {data.status && <Pencil  className="pntr"   onClick={() => {
-            // handleExpenseInput('', rowId, expIndex, 'remove');
-            // saveTimeExpense(rowId, expIndex);
+            handleExpenseInput('', rowId, expIndex, 'edit');
             console.log('Edit Data');
+            
+
           }} />}
       {!data.status && (
         <Check

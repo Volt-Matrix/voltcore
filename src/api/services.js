@@ -273,3 +273,34 @@ export const addTimeExpenseData = async (postData) => {
     });
   return data;
 };
+export const upDateMyTimeExpense = async (sessionId,expenseId) => {
+  console.log(`upDateMyTimeExpense--`,expenseId)
+  const{id}  = expenseId
+  const csrf = await getCsrfToken();
+  let status = false;
+  await api
+    .put(
+      `daily-log-delete-expense/${sessionId}/${id}/`,expenseId,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log('My Session: ', res.data);
+      console.log(`Delete Status Code-->`,res.status)
+      status=true
+      if(res.status==200){
+        status = true
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return status;
+};
