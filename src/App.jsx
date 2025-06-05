@@ -29,7 +29,7 @@ import LeaveDashboard from './pages/leaves/LeaveDashboard';
 import LeaveManagement from './pages/LeaveManagement/LeaveManagement';
 import OrganizationHierarchy from './pages/Organization/OrganizationHierarchy';
 import AttendanceHistory from './pages/Attendance/AttendanceHistory';
-
+import AttendanceOverview from './pages/Attendance/AttendanceOverview';
 import CustomTImeSheet from './components/CustomTimesheet/CustomTImeSheet';
 import EducationDocuments from './components/Profile/EducationDocuments';
 import Experiences from './components/Profile/Experiences';
@@ -99,6 +99,7 @@ function App() {
 
           {/* Attendance */}
           <Route path="Attendance/AttendanceHistory" element={<AttendanceHistory />} />
+          <Route path="attendance/overview" element={<AttendanceOverview />} />
 
           {/* Teams*/}
           <Route path="teams/myteam" element={<MyTeamForm />} />
