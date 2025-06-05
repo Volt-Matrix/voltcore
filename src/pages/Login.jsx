@@ -97,13 +97,6 @@ function Login() {
           </button>
           <button
             onClick={async () => {
-              handleLogin(false);
-            }}
-          >
-            Test
-          </button>
-          <button
-            onClick={async () => {
               const csrf = await getCsrfToken();
               try {
                 await axios.post(

@@ -8,6 +8,17 @@ import {
 import "./LeaveManagement.css";
 
 Modal.setAppElement("#root");
+function getCsrfToken() {
+  const name = "csrftoken";
+  const cookies = document.cookie.split(";");
+  for (let cookie of cookies) {
+    const [key, value] = cookie.trim().split("=");
+    if (key === name) return Promise.resolve(decodeURIComponent(value));
+  }
+  return Promise.reject("CSRF token not found");
+}
+
+
 
 function LeaveManagement() {
   const [stats, setStats] = useState({ onLeave: 0, wfh: 0, present: 0 });
@@ -21,13 +32,15 @@ function LeaveManagement() {
   const [leaveInfo, setLeaveInfo] = useState({});
   const [totalUsers, setTotalUsers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [refresh, setRefresh] = useState(false);
   const itemsPerPage = 5;
 
 
 
   const API_BASE = "http://localhost:8000";
+  
 
-  useEffect(() => {
+    useEffect(() => {
     fetch(`${API_BASE}/api/total-users/`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -46,6 +59,7 @@ function LeaveManagement() {
     })
     .then(res => res.json())
     .then(data => {
+      console.log('fetched leave requests data: ', data);
       if (Array.isArray(data)) {
         setLeaveRequests(data);
         buildLeaveInfo(data);
@@ -54,7 +68,7 @@ function LeaveManagement() {
       }
     })
     .catch(err => console.error("Failed to fetch leaves:", err));
-  }, []);
+  }, [refresh]);
   
 
   useEffect(() => {
@@ -74,11 +88,11 @@ function LeaveManagement() {
     };
   
     const onLeave = requests.filter(
-      r => r.status === "Approved" && r.type !== "WFH" && isOnDate(r.startDate, r.endDate)
+      r => r.status === "Approved" && r.leaveType !== "WFH" && isOnDate(r.startDate, r.endDate)
     ).length;
   
     const wfh = requests.filter(
-      r => r.status === "Approved" && r.type === "WFH" && isOnDate(r.startDate, r.endDate)
+      r => r.status === "Approved" && r.leaveType === "WFH" && isOnDate(r.startDate, r.endDate)
     ).length;
   
     const present = totalUsers - onLeave - wfh;
@@ -122,8 +136,8 @@ function LeaveManagement() {
     (selectedDept === "All" || req.department === selectedDept) &&
     isWithinDateRange(req) &&
     (nameFilter.trim() === "" ||
-    req.user_email.toLowerCase().includes(nameFilter.toLowerCase()) ||
-    req.user_name?.toLowerCase().includes(nameFilter.toLowerCase()))
+    (req.user_email || "").toLowerCase().includes(nameFilter.toLowerCase()) ||
+    (req.user_name || "").toLowerCase().includes(nameFilter.toLowerCase()))
 
   );
 
@@ -144,24 +158,27 @@ function LeaveManagement() {
   };
 
   const handleDecision = (id, newStatus) => {
-    fetch(`${API_BASE}/api/leave-requests/${id}/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        
-      },
-      body: JSON.stringify({ status: newStatus }),
-      credentials: "include"
+  getCsrfToken()
+    .then((csrf) => {
+      return fetch(`${API_BASE}/api/leave-requests/${id}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf,
+        },
+        body: JSON.stringify({ status: newStatus }),
+        credentials: "include",
+      });
     })
-      .then(res => res.json())
-      .then(updatedReq => {
-        const updatedList = leaveRequests.map(req => (req.id === id ? updatedReq : req));
-        setLeaveRequests(updatedList);
-        buildLeaveInfo(updatedList);
-      })
-      
-      .catch(err => console.error("Error updating status:", err));
+    .then(res => res.json())
+    .then(data => {
+      console.log('data from patch: ', data)
+      setRefresh(prev => !prev);
+    })
+    .catch(err => console.error("Error updating status:", err));
   };
+    
+
   const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
   const paginatedRequests = filteredRequests.slice(
     (currentPage - 1) * itemsPerPage,
