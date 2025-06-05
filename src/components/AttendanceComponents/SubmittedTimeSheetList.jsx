@@ -8,23 +8,10 @@ import {
 } from '@tanstack/react-table';
 import ActionMenu from '../MoreActionsButton/MoreActionsButton';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { getDailyLogForTimeSheet } from '../../api/services';
+import { timeToHours } from '../../lib/utils/timetohours';
+import { useNavigate } from 'react-router-dom';
 
-const actionTypes = [
-  { name: 'Report', action: 's' },
-  { name: 'Re-Submit', action: () => {
-    toast('You time sheet has been resubmitted', {
-        position: 'top-left',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
-  } },
-];
 const fetchServerData = async (pageIndex, pageSize) => {
   // Replace this with your actual API call
   // Simulated response
@@ -45,28 +32,44 @@ const fetchServerData = async (pageIndex, pageSize) => {
 };
 
 const SubmittedTimeSheetList = () => {
+  const navigate = useNavigate();
   const columns = [
     {
       header: 'ID',
       accessorKey: 'id',
     },
     {
-      header: 'Applied Date',
-      accessorKey: 'appliedDate',
+      header: 'Clock-in',
+      accessorKey: 'clock_in',
+      cell: (info) => {
+        const data = new Date(info.getValue()).toLocaleDateString();
+        console.log(`tanstack query table--`, data);
+        return <span>{data}</span>;
+      },
     },
     {
-      header: 'From',
-      accessorKey: 'fromDate',
+      header: 'Clock-out',
+      accessorKey: 'clock_out',
+      cell: (info) => {
+        const data = new Date(info.getValue()).toLocaleDateString();
+        console.log(`tanstack query table--`, data);
+        return <span>{data}</span>;
+      },
     },
     {
-      header: 'To',
-      accessorKey: 'toDate',
+      header: 'Logged hours',
+      accessorKey: 'total_work_time',
+      cell: (info) => {
+        const data = info.getValue() ? timeToHours(info.getValue()).toFixed(2) : '';
+        console.log(`tanstack query table--`, data);
+        return <span>{data}</span>;
+      },
     },
     {
       header: 'Status',
-      accessorKey: 'status',
+      accessorKey: 'approval_status',
       cell: (info) => {
-        const status = info.getValue();
+        const status = info.getValue() ? info.getValue().toLowerCase() : '';
         let className = '';
         if (status === 'pending') className = 'sts-p';
         else if (status === 'approved') className = 'sts-a';
@@ -83,9 +86,38 @@ const SubmittedTimeSheetList = () => {
 
         return (
           <div className="flex space-x-2">
-            <ActionMenu actionTypes={actionTypes} onEdit={() => handleEditClick(row.id)} />
+            <ActionMenu
+              actionTypes={actionTypes}
+              onEdit={() => handleEditClick(row.id)}
+              rowData={row}
+            />
           </div>
         );
+      },
+    },
+  ];
+  const actionTypes = [
+    {
+      name: 'Add time expense',
+      action: (id) => {
+        console.log(`Time Sheet id to be submitted-->`, id.original);
+        navigate('/attendance/myTimeSheet');
+      },
+    },
+    {
+      name: 'Submit Expense',
+      action: () => {
+        toast('You time sheet has been resubmitted', {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Bounce,
+        });
       },
     },
   ];
@@ -124,7 +156,14 @@ const SubmittedTimeSheetList = () => {
     };
     fetchData();
   }, [pagination.pageIndex, pagination.pageSize]);
-
+  const dailyLog = async () => {
+    const logs = await getDailyLogForTimeSheet();
+    console.log(`Attendence Menu daily logs`, logs);
+    setData([...logs]);
+  };
+  useEffect(() => {
+    dailyLog();
+  }, []);
   return (
     <div className="timesheet-list-container p-4">
       <table className="table-style1">
