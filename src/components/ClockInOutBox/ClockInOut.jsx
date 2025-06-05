@@ -16,9 +16,9 @@ function ClockInOut() {
     console.log('Is Employee CLocked In', isClockedIn, inTime);
     if (isClockedIn) {
       console.log(inTime);
-      updateDuration(subtractTimeString(totalHours));
+      updateDuration(totalHours?subtractTimeString(totalHours):inTime);
       let intervalId = setInterval(() => {
-        updateDuration(subtractTimeString(totalHours));
+        updateDuration(totalHours?subtractTimeString(totalHours):inTime);
       }, 60000);
       setShowClockInButton(false);
       setShowClockOutButton(true);
