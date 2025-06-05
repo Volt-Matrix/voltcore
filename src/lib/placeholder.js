@@ -446,9 +446,9 @@ export const NavigationPaths = [
         accessList: ['hradmin','employee','manager'],
       },
       {
-        to: '/Attendance/AttendanceHistory',
-        Name: 'Attendance History',
-        accessList: ['hradmin','employee','manager'],
+        to: '/attendance/overview',
+        Name: 'Attendance Dashboard',
+        accessList: ['hradmin','manager'],
       },
     ],
   },
