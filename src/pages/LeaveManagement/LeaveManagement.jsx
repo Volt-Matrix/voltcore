@@ -6,6 +6,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from "recharts";
 import "./LeaveManagement.css";
+import { getCsrfToken } from "../../context/AuthContext/AuthContext";
 
 Modal.setAppElement("#root");
 
@@ -21,6 +22,7 @@ function LeaveManagement() {
   const [leaveInfo, setLeaveInfo] = useState({});
   const [totalUsers, setTotalUsers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [refresh, setRefresh] = useState(false);
   const itemsPerPage = 5;
 
 
@@ -46,6 +48,7 @@ function LeaveManagement() {
     })
     .then(res => res.json())
     .then(data => {
+      console.log('fetched leave requests data: ', data);
       if (Array.isArray(data)) {
         setLeaveRequests(data);
         buildLeaveInfo(data);
@@ -54,7 +57,7 @@ function LeaveManagement() {
       }
     })
     .catch(err => console.error("Failed to fetch leaves:", err));
-  }, []);
+  }, [refresh]);
   
 
   useEffect(() => {
@@ -124,7 +127,6 @@ function LeaveManagement() {
     (nameFilter.trim() === "" ||
     req.user_email.toLowerCase().includes(nameFilter.toLowerCase()) ||
     req.user_name?.toLowerCase().includes(nameFilter.toLowerCase()))
-
   );
 
   const leaveDates = Object.keys(leaveInfo).filter(date =>
@@ -144,24 +146,25 @@ function LeaveManagement() {
   };
 
   const handleDecision = (id, newStatus) => {
-    fetch(`${API_BASE}/api/leave-requests/${id}/`, {
+    getCsrfToken().then((csrf) => {
+      return  fetch(`${API_BASE}/api/leave-requests/${id}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        
+        'X-CSRFToken': csrf,
       },
       body: JSON.stringify({ status: newStatus }),
       credentials: "include"
     })
-      .then(res => res.json())
-      .then(updatedReq => {
-        const updatedList = leaveRequests.map(req => (req.id === id ? updatedReq : req));
-        setLeaveRequests(updatedList);
-        buildLeaveInfo(updatedList);
-      })
-      
-      .catch(err => console.error("Error updating status:", err));
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('data from patch: ', data)
+      setRefresh(prev => !prev);
+    })
+    .catch(err => console.error("Error updating status:", err));
   };
+
   const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
   const paginatedRequests = filteredRequests.slice(
     (currentPage - 1) * itemsPerPage,
