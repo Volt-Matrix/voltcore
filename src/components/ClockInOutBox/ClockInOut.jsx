@@ -12,13 +12,13 @@ function ClockInOut() {
   const [clockedInDuration, setClockedInDuration] = useState({ hours: 0, mins: 0 });
   const empCheckClockIn = async () => {
     const checkClockIn = await employeeClockInCheck();
-    const { isClockedIn, inTime,totalHours } = checkClockIn;
+    const { isClockedIn, inTime, totalHours } = checkClockIn;
     console.log('Is Employee CLocked In', isClockedIn, inTime);
     if (isClockedIn) {
       console.log(inTime);
-      updateDuration(totalHours?subtractTimeString(totalHours):inTime);
+      updateDuration(totalHours ? subtractTimeString(totalHours) : inTime);
       let intervalId = setInterval(() => {
-        updateDuration(totalHours?subtractTimeString(totalHours):inTime);
+        updateDuration(totalHours ? subtractTimeString(totalHours) : inTime);
       }, 60000);
       setShowClockInButton(false);
       setShowClockOutButton(true);
