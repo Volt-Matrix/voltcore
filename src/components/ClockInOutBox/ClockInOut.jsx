@@ -1,34 +1,30 @@
 import { React, useState, useEffect } from 'react';
 import './ClockInOut.css';
 import { employeeClockIn, employeeClockInCheck, employeeClockOut } from '../../api/services';
+import { subtractTimeString } from '../../lib/utils/timetohours';
 function ClockInOut() {
   const [isClockIn, setIsClockIn] = useState(false);
-  const [clockedInTime, setClockedInTime] = useState(null);
   const [clockedOutTime, setClockedOutTime] = useState(null);
   const [showClockInMessage, setShowClockInMessage] = useState(false);
   const [showClockOutMessage, setShowClockOutMessage] = useState(false);
   const [showClockOutButton, setShowClockOutButton] = useState(false);
   const [showClockInButton, setShowClockInButton] = useState(true);
   const [clockedInDuration, setClockedInDuration] = useState({ hours: 0, mins: 0 });
-  const [checkInDisable, setCheckInDisable] = useState(true);
   const empCheckClockIn = async () => {
     const checkClockIn = await employeeClockInCheck();
-    const { isClockedIn, inTime } = checkClockIn;
+    const { isClockedIn, inTime,totalHours } = checkClockIn;
     console.log('Is Employee CLocked In', isClockedIn, inTime);
     if (isClockedIn) {
       console.log(inTime);
-      // setCheckInDisable(isClockedIn);
-      updateDuration(inTime);
-
+      updateDuration(subtractTimeString(totalHours));
       let intervalId = setInterval(() => {
-        updateDuration(inTime);
+        updateDuration(subtractTimeString(totalHours));
       }, 60000);
       setShowClockInButton(false);
       setShowClockOutButton(true);
     } else {
       setShowClockInButton(true);
       setShowClockOutButton(false);
-      // setCheckInDisable(false);
     }
   };
 
@@ -51,10 +47,10 @@ function ClockInOut() {
     setIsClockIn(true);
     setShowClockInButton(false);
     setShowClockInMessage(true);
-    updateDuration(data.inTime);
+    updateDuration(subtractTimeString(data.totalHours));
 
     let intervalId = setInterval(() => {
-      updateDuration(data.inTime);
+      updateDuration(subtractTimeString(data.totalHours));
     }, 60000);
     // hide message after 2 seconds
     setTimeout(() => {

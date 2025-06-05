@@ -25,6 +25,9 @@ const AttendanceCalendar = () => {
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
+      if(date>new Date()){
+        return
+      }
       const data = getTileData(date);
       if (data) {
         return (
