@@ -1,26 +1,23 @@
-/* Ensures the white background fills entire viewport right of the sidebar */
 body {
   margin: 0;
   padding: 0;
   background-color: #ffffff;
 }
 
-/* Main hierarchy container */
 .tree-container {
   position: absolute;
-  top: 80px; /* Topbar height */
-  left: 240px; /* Sidebar width */
+  top: 80px;      /* Topbar height */
+  left: 240px;    /* Sidebar width */
   right: 0;
   bottom: 0;
   background-color: #ffffff;
-  overflow-x: auto;
-  overflow-y: auto;
   box-sizing: border-box;
   padding: 40px 20px;
-  min-height: 100vh;
+  overflow: hidden; /* 🔥 Removes scrollbars */
+  min-height: calc(100vh - 80px); /* Ensures vertical coverage */
+  width: calc(100% - 240px);      /* Ensures horizontal coverage */
 }
 
-/* Heading styling */
 .tree-heading {
   text-align: center;
   margin: 20px 0 30px;
@@ -29,13 +26,11 @@ body {
   font-size: 22px;
 }
 
-/* SVG element scales properly */
 svg {
   width: 100%;
   height: auto;
 }
 
-/* Tooltip styling */
 #tooltip {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.75);
