@@ -25,6 +25,9 @@ const AttendanceCalendar = () => {
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
+      if(date>new Date()){
+        return
+      }
       const data = getTileData(date);
       if (data) {
         return (
@@ -69,7 +72,7 @@ const AttendanceCalendar = () => {
   };
   function timeToSeconds(timeString) {
     const [hours, minutes, seconds] = timeString.split(':').map(Number);
-    console.log(hours + minutes / 60 + seconds / 3600);
+    // console.log(hours + minutes / 60 + seconds / 3600);
     return hours + minutes / 60 + seconds / 3600;
   }
   useEffect(() => {

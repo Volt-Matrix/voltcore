@@ -42,7 +42,7 @@ const SubmittedTimeSheetList = () => {
       header: 'Clock-in',
       accessorKey: 'clock_in',
       cell: (info) => {
-        const data = new Date(info.getValue()).toLocaleDateString();
+        const data = new Date(info.getValue()).toLocaleTimeString();
         console.log(`tanstack query table--`, data);
         return <span>{data}</span>;
       },
@@ -51,7 +51,7 @@ const SubmittedTimeSheetList = () => {
       header: 'Clock-out',
       accessorKey: 'clock_out',
       cell: (info) => {
-        const data = new Date(info.getValue()).toLocaleDateString();
+        const data = new Date(info.getValue()).toLocaleTimeString();
         console.log(`tanstack query table--`, data);
         return <span>{data}</span>;
       },
