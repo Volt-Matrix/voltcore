@@ -109,8 +109,17 @@
 
 /* Sticky Logout */
 .sidebar-logout {
-  padding: 20px 0;
+  padding: 16px 0;
   border-top: 1px solid #3d566e;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+/* Reduce the logout icon size */
+.sidebar-logout svg {
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  cursor: pointer;
 }

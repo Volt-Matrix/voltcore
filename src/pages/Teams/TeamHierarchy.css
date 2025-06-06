@@ -1,11 +1,26 @@
-.tree-container {
-  padding: 40px 20px;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  margin-left: 240px;
-  overflow: hidden; /* disables scroll */
+/* Ensures the white background fills entire viewport right of the sidebar */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
 }
 
+/* Main hierarchy container */
+.tree-container {
+  position: absolute;
+  top: 80px; /* Topbar height */
+  left: 240px; /* Sidebar width */
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  overflow-x: auto;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Heading styling */
 .tree-heading {
   text-align: center;
   margin: 20px 0 30px;
@@ -14,7 +29,13 @@
   font-size: 22px;
 }
 
+/* SVG element scales properly */
+svg {
+  width: 100%;
+  height: auto;
+}
 
+/* Tooltip styling */
 #tooltip {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.75);

@@ -40,11 +40,11 @@ function TeamHierarchy() {
 
     const treeLayout = d3.tree().size([width, height]);
 
-    // Collapse all except the first level under CEO
+    // Collapse all except CEO's direct reports
     function collapseAllExceptFirstLevel(d) {
       if (d.children) {
         d.children.forEach(child => {
-          if (d.depth >= 1) {
+          if (d.depth >= 1) { // Only collapse children at depth 2 or more
             child._children = child.children;
             child.children = null;
           }
@@ -195,4 +195,3 @@ function TeamHierarchy() {
 }
 
 export default TeamHierarchy;
-
