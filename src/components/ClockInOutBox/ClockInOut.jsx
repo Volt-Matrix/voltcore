@@ -34,8 +34,7 @@ function ClockInOut() {
     empCheckClockIn();
     return () => {
       console.log(`Component unmounted`);
-      clearInterval(myTimeIntervel)
-      localStorage.setItem('loggedTime',myTimeRef.current)
+      clearInterval(myTimeIntervel);
     };
   }, []);
   const updateDuration = (inTime) => {
@@ -59,7 +58,7 @@ function ClockInOut() {
       updateDuration(data.inTime);
     }, 60000);
     // hide message after 2 seconds
-    setMyTimeInterval(intervalId)
+    setMyTimeInterval(intervalId);
     setTimeout(() => {
       setShowClockInMessage(false);
       setShowClockOutButton(true);
