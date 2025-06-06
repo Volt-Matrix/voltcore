@@ -69,7 +69,6 @@ function ClockInOut() {
     employeeClockOut();
     const now = new Date();
     clearInterval(myTimeIntervel);
-    localStorage.removeItem('loggedTime');
     setIsClockIn(false);
     setClockedOutTime(now);
     setShowClockOutButton(false);
