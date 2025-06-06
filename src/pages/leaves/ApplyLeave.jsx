@@ -15,9 +15,10 @@ function ApplyLeaveForm({ onSuccess, editingLeave }) {
   const [csrfToken, setCsrfToken] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:8000/csrf/", { withCredentials: true })
-      .then(res => setCsrfToken(res.data.csrftoken))
-      .catch(err => console.error("CSRF fetch error", err));
+    axios
+      .get("http://localhost:8000/csrf/", { withCredentials: true })
+      .then((res) => setCsrfToken(res.data.csrftoken))
+      .catch((err) => console.error("CSRF fetch error", err));
   }, []);
 
   useEffect(() => {
@@ -44,30 +45,45 @@ function ApplyLeaveForm({ onSuccess, editingLeave }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const form = new FormData();
-    Object.entries(formData).forEach(([key, val]) => {
-      if (val) form.append(key, val);
-    });
+    form.append("leaveType", formData.leaveType);
+    form.append("startDate", formData.fromDate);
+    form.append("endDate", formData.toDate);
+    form.append("reason", formData.reason);
+    form.append("contactDuringLeave", formData.contactDuringLeave || "");
+    if (formData.attachment) {
+      form.append("attachment", formData.attachment);
+    }
     form.append("status", "Pending");
 
     try {
       if (editingLeave) {
-        await axios.patch(`http://localhost:8000/leave/${editingLeave.id}/`, form, {
-          headers: { "X-CSRFToken": csrfToken },
-          withCredentials: true,
-        });
+        await axios.patch(
+          `http://localhost:8000/leave/${editingLeave.id}/`,
+          form,
+          {
+            headers: {
+              "X-CSRFToken": csrfToken,
+            },
+            withCredentials: true,
+          }
+        );
         toast.success("Leave updated.");
       } else {
         await axios.post("http://localhost:8000/leave/", form, {
-          headers: { "X-CSRFToken": csrfToken },
+          headers: {
+            "X-CSRFToken": csrfToken,
+          },
           withCredentials: true,
         });
         toast.success("Leave applied.");
       }
+
       if (onSuccess) onSuccess();
     } catch (err) {
+      console.error("Backend error:", err.response?.data || err);
       toast.error("Submission failed");
-      console.error(err);
     }
   };
 
@@ -95,7 +111,7 @@ function ApplyLeaveForm({ onSuccess, editingLeave }) {
       <div className="form-row">
         <div className="form-group">
           <label>Reason:</label>
-          <input type="text" name="Reason" value={formData.contactDuringLeave} onChange={handleChange} required/>
+          <input type="text" name="reason" value={formData.reason} onChange={handleChange} required />
         </div>
         <div className="form-group">
           <label>Contact (Optional):</label>
@@ -103,7 +119,7 @@ function ApplyLeaveForm({ onSuccess, editingLeave }) {
         </div>
         <div className="form-group">
           <label>Attachment (Optional):</label>
-          <input type="file" name="attachment" onChange={handleChange} accept=".pdf,.png,.jpg" />
+          <input type="file" name="attachment" onChange={handleChange} accept=".pdf,.png,.jpg,.jpeg" />
         </div>
       </div>
 
