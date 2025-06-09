@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CirclePlus } from 'lucide-react';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
@@ -50,6 +50,8 @@ function CustomTImeSheet() {
       transition: Bounce,
     });
   };
+  const location = useLocation();
+
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
     setTimeSheetData({
@@ -240,20 +242,32 @@ function CustomTImeSheet() {
     const sessionId = session.session_id;
     const expenseId = session.timeExpense[indexOfInput].id;
     console.log(`Delete session`, session.session_id, session.timeExpense[indexOfInput].id);
+    if (!expenseId) {
+      addTimeExpense('', rowId, indexOfInput, 'remove');
+      return;
+    }
     const status = await deleteMyTimeExpense(sessionId, expenseId);
     if (status) {
       addTimeExpense('', rowId, indexOfInput, 'remove');
       return;
     }
   };
-  useEffect(() => {
+  const getTimeSheet = ()=>{
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
     if (fDate && tDate) {
       myDailyLog(fDate, tDate);
     }
-  }, [timeSheetData.fromDate, timeSheetData.toDate]);
-
+  }
+  useEffect(() => {
+    const data = location.state;
+    console.log(data);
+    if (data.clock_in) {
+      let expDate = new Date(data.clock_in);
+      let frtDate = `${expDate.getFullYear()}-${String(expDate.getMonth() + 1).padStart(2, '0')}-${expDate.getDate()}`;
+      myDailyLog(frtDate, frtDate);
+    }
+  }, []);
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
@@ -272,6 +286,7 @@ function CustomTImeSheet() {
           <div className="rpr block">Pick Range</div>
           <input type="date" name="fromDate" onChange={handleDatePick} />
           <input type="date" name="toDate" onChange={handleDatePick} />
+          <button onClick={()=>{getTimeSheet()}}>Get</button>
         </div>
         <table className="table-style1">
           <thead>
