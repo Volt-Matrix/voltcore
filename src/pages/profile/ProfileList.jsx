@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./ProfileList.css";
+import { useEmployee } from '../../components/Profile/EmployeeContext';
+import './ProfileList.css';
 
 const ProfileList = () => {
-  const [profiles, setProfiles] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { setProfile } = useEmployee();
 
   useEffect(() => {
-    const fetchProfiles = async () => {
+    const fetchEmployees = async () => {
       try {
-        const response = await fetch('http://localhost:8000/profiles/');
-        if (!response.ok) throw new Error('Failed to fetch profiles');
+        const response = await fetch('http://localhost:8000/employees/');
+        if (!response.ok) throw new Error('Failed to fetch employee data');
         const data = await response.json();
-        setProfiles(data);
+        console.log('Fetched employees:', data); // Debug log
+        setEmployees(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -23,65 +26,59 @@ const ProfileList = () => {
       }
     };
 
-    fetchProfiles();
+    fetchEmployees();
   }, []);
 
-  const handleEdit = (profile) => {
-    navigate('/basic-details', { state: { profile } }); // ✅ pass full profile object
+  const handleEdit = (employee) => {
+    setProfile(employee);
+    navigate('/basic-details', { state: { profile: employee } });
   };
 
-  if (loading) return <p>Loading profiles...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (profiles.length === 0) return <p>No profiles found.</p>;
+  const handleDelete = async (employeeId) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this employee?');
+    if (!confirmDelete) return;
 
-  
-  const handleDelete = async (profileId) => {
-  const confirmDelete = window.confirm("Are you sure you want to delete this profile?");
-  if (!confirmDelete) return;
+    try {
+      const response = await fetch(`http://localhost:8000/employees/${employeeId}/`, {
+        method: 'DELETE',
+      });
 
-  try {
-    const response = await fetch(`http://localhost:8000/profiles/${profileId}/`, {
-      method: 'DELETE',
-    });
-
-    if (response.ok) {
-      // Remove from frontend list
-      setProfiles(prev => prev.filter(profile => profile.id !== profileId));
-      alert("Profile deleted successfully");
-    } else {
-      alert("Failed to delete profile.");
+      if (response.ok) {
+        setEmployees((prev) => prev.filter((emp) => emp.id !== employeeId));
+        alert('Employee deleted successfully');
+      } else {
+        alert('Failed to delete employee');
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      alert('Error deleting employee');
     }
-  } catch (error) {
-    console.error("Delete error:", error);
-    alert("Error deleting profile");
-  }
-};
+  };
 
+  if (loading) return <p>Loading employees...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (employees.length === 0) return <p>No employees found.</p>;
 
   return (
     <div className="profile-list-container">
-      <h1 className='emp-head'>Employee Profiles</h1>
+      <h1 className="emp-head">Employee Profiles</h1>
       <ul className="profile-list">
-        {profiles.map(profile => (
-          <li key={profile.id} className="profile-item">
+        {employees.map((employee) => (
+          <li key={employee.id} className="profile-item">
             <img
-              src={profile.profile_picture || "https://placehold.co/100x100"} 
-              alt={profile.full_name}
+              src="https://placehold.co/100x100"
+              alt={employee.user?.full_name || 'Employee'}
               className="profile-list-image"
             />
             <div className="profile-info">
-              <h3>{profile.full_name}</h3>
-              <p><strong>Employee ID:</strong> {profile.employee_id}</p>
-              <p><strong>Email:</strong> {profile.email}</p>
-              <p><strong>Phone:</strong> {profile.phone}</p>
-              <p><strong>City:</strong> {profile.city}</p>
-              <p><strong>Country:</strong> {profile.country}</p>
-              <button onClick={() => handleEdit(profile)} className="edit-btn">
-                Edit
-              </button>
-              <button onClick={() => handleDelete(profile.id)} className="delete-btn">
-              Delete
-              </button>
+              <h3>{employee.user?.full_name || 'N/A'}</h3>
+              <p><strong>Employee ID:</strong> {employee.employee_id}</p>
+              <p><strong>Email:</strong> {employee.user?.email || 'N/A'}</p>
+              <p><strong>Phone:</strong> {employee.user?.profile?.phone || 'N/A'}</p>
+              <p><strong>Gender:</strong> {employee.gender || 'N/A'}</p>
+              <p><strong>Status:</strong> {employee.employment_status || 'N/A'}</p>
+              <button onClick={() => handleEdit(employee)} className="edit-btn">Edit</button>
+              <button onClick={() => handleDelete(employee.id)} className="delete-btn">Delete</button>
             </div>
           </li>
         ))}
