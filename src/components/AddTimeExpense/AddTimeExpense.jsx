@@ -1,8 +1,15 @@
 import React from 'react';
 import './AddTimeExpense.css';
 import { Check } from 'lucide-react';
-import { X } from 'lucide-react';
-const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data }) => {
+import { X, Pencil,Trash2  } from 'lucide-react';
+const AddTimeExpense = ({
+  handleExpenseInput,
+  rowId,
+  expIndex,
+  data,
+  saveTimeExpense,
+  deleteTimeExpense,
+}) => {
   return (
     <div className="atexp-con">
       <div>{expIndex + 1}</div>
@@ -14,6 +21,7 @@ const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data }) => {
         }}
         value={data?.hourSpent}
         placeholder="Please Add Hours Spent"
+        disabled={data.status}
       />
       <textarea
         name="description"
@@ -22,11 +30,32 @@ const AddTimeExpense = ({ handleExpenseInput, rowId, expIndex, data }) => {
         }}
         placeholder="Please give task details"
         value={data.description}
+        disabled={data.status}
+        
       />
-      <X
+      {data.status && <Pencil  className="pntr"   onClick={() => {
+            handleExpenseInput('', rowId, expIndex, 'edit');
+            console.log('Edit Data');
+            
+
+          }} />}
+      {!data.status && (
+        <Check
+          onClick={() => {
+            // handleExpenseInput('', rowId, expIndex, 'remove');
+            saveTimeExpense(rowId, expIndex);
+            console.log('Save Input');
+          }}
+          className="pntr"
+        />
+      )}
+
+      <Trash2 
         onClick={() => {
-          handleExpenseInput('', rowId, expIndex, 'remove');
+          // handleExpenseInput('', rowId, expIndex, 'remove');
+          deleteTimeExpense(rowId, expIndex);
         }}
+        className="pntr"
       />
     </div>
   );

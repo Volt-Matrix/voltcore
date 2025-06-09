@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CirclePlus } from 'lucide-react';
-import { eachDayOfInterval } from 'date-fns';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
-import { ToastContainer,toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import {
+  addTimeSheetDetails,
+  addTimeExpenseData,
+  deleteMyTimeExpense,
+  upDateMyTimeExpense,
+} from '../../api/services';
+import { getDailyLog } from '../../api/services';
+import { timeToHours } from '../../lib/utils/timetohours';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -28,22 +35,21 @@ function CustomTImeSheet() {
   const [timeSheetData, setTimeSheetData] = useState({
     fromDate: '',
     toDate: '',
-    dateRange: [],
     data: [],
   });
-const warning = ()=>{
-  toast('Make Sure to save details before exit', {
-    position: 'top-left',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: false,
-    draggable: true,
-    progress: undefined,
-    theme: 'light',
-    transition: Bounce,
-  });
-}
+  const warning = () => {
+    toast('Make Sure to save details before exit', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      transition: Bounce,
+    });
+  };
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
     setTimeSheetData({
@@ -59,7 +65,7 @@ const warning = ()=>{
     setOpenRowIndex((prev) => (prev === index ? null : index));
   };
   const addTimeExpense = (e, rowId, indexOfInput, cmd) => {
-    console.log('inoput index', indexOfInput,rowId);
+    console.log('inoput index', indexOfInput, rowId);
     if (cmd == 'remove') {
       setTimeSheetData((prev) => ({
         ...prev,
@@ -68,9 +74,35 @@ const warning = ()=>{
             return {
               ...ele,
               timeExpense: ele.timeExpense.filter((timeExp, expInd) => {
-                console.log(`expIndex ${expInd},input INdex ${indexOfInput}`,expInd !== indexOfInput);
+                console.log(
+                  `expIndex ${expInd},input INdex ${indexOfInput}`,
+                  expInd !== indexOfInput
+                );
                 return expInd !== indexOfInput;
               }),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+      return;
+    }
+    if (cmd == 'edit') {
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...timeExp,
+                      status: false,
+                    }
+                  : timeExp
+              ),
             };
           } else {
             return ele;
@@ -116,34 +148,121 @@ const warning = ()=>{
     myTimeSheetData[addExpenseToDataIndex].timeExpense.push({
       hourSpent: 0,
       description: '',
+      status: false,
     });
     setTimeSheetData({ ...timeSheetData, data: [...myTimeSheetData] });
+  };
+  const myDailyLog = async (fDate, tDate) => {
+    const logs = await getDailyLog({ fromDate: fDate, toDate: tDate });
+    const myList = logs.map((item, index) => {
+      return {
+        id: index,
+        session_id: item.id,
+        date: new Date(item.clock_in).toLocaleDateString(),
+        checkIn: new Date(item.clock_in).toLocaleTimeString(),
+        checkOut: item.clock_out ? new Date(item.clock_out).toLocaleTimeString() : '',
+        totalHours: item.total_work_time ? timeToHours(item.total_work_time).toFixed(2) : '',
+        timeExpense: [
+          ...item.timesheet_details.map((expense, index) => {
+            return { ...expense, status: true };
+          }),
+        ],
+      };
+    });
+    console.log('Date Range--->', myList);
+    setTimeSheetData({ ...timeSheetData, data: [...myList] });
+  };
+  const submitTimeSheet = (rowId, indexOfInput) => {
+    console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
+    addTimeSheetDetails(timeSheetData);
+  };
+  const saveTimeExpenseData = async (rowId, indexOfInput) => {
+    console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
+    let session = timeSheetData.data.find((ele, index) => rowId == index);
+    console.log(`Changed Session-->`, session);
+    if (session.timeExpense[indexOfInput].id) {
+      let editExpense = session.timeExpense[indexOfInput];
+      console.log('Not newly created');
+      const editedLog = upDateMyTimeExpense(rowId, editExpense);
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...timeExp,
+                      status: editedLog,
+                    }
+                  : timeExp
+              ),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+      return;
+    }
+    console.log('newly created');
+    const savedLog = await addTimeExpenseData({
+      ...session.timeExpense[indexOfInput],
+      session_id: session.session_id,
+    });
+    console.log(`Sucessfully created`, savedLog);
+    if (savedLog.id) {
+      setTimeSheetData((prev) => ({
+        ...prev,
+        data: prev.data.map((ele, index) => {
+          if (rowId == index) {
+            return {
+              ...ele,
+              timeExpense: ele.timeExpense.map((timeExp, expInd) =>
+                expInd == indexOfInput
+                  ? {
+                      ...savedLog,
+                      status: true,
+                    }
+                  : timeExp
+              ),
+            };
+          } else {
+            return ele;
+          }
+        }),
+      }));
+    }
+  };
+  const deleteTimeExpense = async (rowId, indexOfInput) => {
+    let session = timeSheetData.data.find((ele, index) => rowId == index);
+    const sessionId = session.session_id;
+    const expenseId = session.timeExpense[indexOfInput].id;
+    console.log(`Delete session`, session.session_id, session.timeExpense[indexOfInput].id);
+    const status = await deleteMyTimeExpense(sessionId, expenseId);
+    if (status) {
+      addTimeExpense('', rowId, indexOfInput, 'remove');
+      return;
+    }
   };
   useEffect(() => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
     if (fDate && tDate) {
-      const myList = eachDayOfInterval({ start: fDate, end: tDate }).map((item, index) => {
-        return {
-          id: index,
-          date: new Date(item).toLocaleDateString(),
-          checkIn: '9:00',
-          checkOut: '5:00',
-          totalHours: 8,
-          timeExpense: [],
-        };
-      });
-      console.log('Date Range--->', myList);
-      setTimeSheetData({ ...timeSheetData, data: [...myList] });
+      myDailyLog(fDate, tDate);
     }
   }, [timeSheetData.fromDate, timeSheetData.toDate]);
+
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
         <ArrowLeft
           onClick={() => {
-            warning()
-            setTimeout(()=>{navigate(-1)},5000)
+            warning();
+            setTimeout(() => {
+              navigate(-1);
+            }, 5000);
           }}
         />
         Time Sheet
@@ -202,6 +321,8 @@ const warning = ()=>{
                             expIndex={expindex}
                             data={timeSheetData.data[index].timeExpense[expindex]}
                             key={expindex}
+                            saveTimeExpense={saveTimeExpenseData}
+                            deleteTimeExpense={deleteTimeExpense}
                           />
                         ))}
                       </div>
@@ -212,7 +333,9 @@ const warning = ()=>{
             ))}
           </tbody>
         </table>
-        <button className="mrg-tp">Save</button>
+        <button className="mrg-tp" onClick={submitTimeSheet}>
+          Save
+        </button>
       </div>
       <ToastContainer
         position="top-left"

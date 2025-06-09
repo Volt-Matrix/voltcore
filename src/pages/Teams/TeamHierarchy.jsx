@@ -1,12 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { teamHierarchy } from './teamData';
 import './TeamHierarchy.css';
 
 function TeamHierarchy() {
   const svgRef = useRef();
 
   useEffect(() => {
+    fetch("http://localhost:8000/api/team-hierarchy/", {
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        renderTree(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching team hierarchy:", err);
+      });
+  }, []);
+
+  function renderTree(teamHierarchy) {
     const margin = { top: 80, right: 90, bottom: 50, left: 90 };
     const width = 1200 - margin.left - margin.right;
     const height = 800 - margin.top - margin.bottom;
@@ -28,15 +40,20 @@ function TeamHierarchy() {
 
     const treeLayout = d3.tree().size([width, height]);
 
-    function collapse(d) {
+    // Collapse all except the first level under CEO
+    function collapseAllExceptFirstLevel(d) {
       if (d.children) {
-        d._children = d.children;
-        d._children.forEach(collapse);
-        d.children = null;
+        d.children.forEach(child => {
+          if (d.depth >= 1) {
+            child._children = child.children;
+            child.children = null;
+          }
+          collapseAllExceptFirstLevel(child);
+        });
       }
     }
 
-    if (root.children) root.children.forEach(collapse);
+    collapseAllExceptFirstLevel(root);
     update(root);
 
     function update(source) {
@@ -62,7 +79,10 @@ function TeamHierarchy() {
           update(d);
         });
 
-      nodeEnter.append('circle').attr('r', 25).attr('fill', '#fff').attr('stroke', '#666');
+      nodeEnter.append('circle')
+        .attr('r', 25)
+        .attr('fill', (d) => d.depth === 0 ? '#ffe066' : '#fff') // Highlight CEO
+        .attr('stroke', '#666');
 
       nodeEnter.each(function (d) {
         const g = d3.select(this);
@@ -163,7 +183,7 @@ function TeamHierarchy() {
         d.y0 = d.y;
       });
     }
-  }, []);
+  }
 
   return (
     <div className="tree-container">
@@ -175,3 +195,4 @@ function TeamHierarchy() {
 }
 
 export default TeamHierarchy;
+

@@ -1,39 +1,41 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import './ClockInOut.css';
 import { employeeClockIn, employeeClockInCheck, employeeClockOut } from '../../api/services';
+import { subtractTimeString } from '../../lib/utils/timetohours';
 function ClockInOut() {
   const [isClockIn, setIsClockIn] = useState(false);
-  const [clockedInTime, setClockedInTime] = useState(null);
   const [clockedOutTime, setClockedOutTime] = useState(null);
   const [showClockInMessage, setShowClockInMessage] = useState(false);
   const [showClockOutMessage, setShowClockOutMessage] = useState(false);
   const [showClockOutButton, setShowClockOutButton] = useState(false);
   const [showClockInButton, setShowClockInButton] = useState(true);
   const [clockedInDuration, setClockedInDuration] = useState({ hours: 0, mins: 0 });
-  const [checkInDisable, setCheckInDisable] = useState(true);
+  const [myTimeIntervel, setMyTimeInterval] = useState('');
+  const myTimeRef = useRef('');
   const empCheckClockIn = async () => {
     const checkClockIn = await employeeClockInCheck();
-    const { isClockedIn, inTime } = checkClockIn;
+    const { isClockedIn, inTime, totalHours } = checkClockIn;
     console.log('Is Employee CLocked In', isClockedIn, inTime);
     if (isClockedIn) {
-      console.log(inTime);
-      // setCheckInDisable(isClockedIn);
       updateDuration(inTime);
-
       let intervalId = setInterval(() => {
         updateDuration(inTime);
       }, 60000);
+      setMyTimeInterval(intervalId);
       setShowClockInButton(false);
       setShowClockOutButton(true);
     } else {
       setShowClockInButton(true);
       setShowClockOutButton(false);
-      // setCheckInDisable(false);
     }
   };
 
   useEffect(() => {
     empCheckClockIn();
+    return () => {
+      console.log(`Component unmounted`);
+      clearInterval(myTimeIntervel);
+    };
   }, []);
   const updateDuration = (inTime) => {
     const now = new Date();
@@ -41,8 +43,8 @@ function ClockInOut() {
     console.log('diffMs-In Time', inTime);
     const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
     const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-
     setClockedInDuration({ hours: diffHrs, mins: diffMins });
+    myTimeRef.current = `${diffHrs}:${diffMins}`;
     console.log({ hours: diffHrs, mins: diffMins });
   };
 
@@ -52,11 +54,11 @@ function ClockInOut() {
     setShowClockInButton(false);
     setShowClockInMessage(true);
     updateDuration(data.inTime);
-
     let intervalId = setInterval(() => {
       updateDuration(data.inTime);
     }, 60000);
     // hide message after 2 seconds
+    setMyTimeInterval(intervalId);
     setTimeout(() => {
       setShowClockInMessage(false);
       setShowClockOutButton(true);
@@ -66,6 +68,7 @@ function ClockInOut() {
   const handleClockOut = () => {
     employeeClockOut();
     const now = new Date();
+    clearInterval(myTimeIntervel);
     setIsClockIn(false);
     setClockedOutTime(now);
     setShowClockOutButton(false);
