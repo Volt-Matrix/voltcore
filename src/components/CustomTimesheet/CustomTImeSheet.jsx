@@ -262,7 +262,7 @@ function CustomTImeSheet() {
   useEffect(() => {
     const data = location.state;
     console.log(data);
-    if (data.clock_in) {
+    if (data?.clock_in) {
       let expDate = new Date(data.clock_in);
       let frtDate = `${expDate.getFullYear()}-${String(expDate.getMonth() + 1).padStart(2, '0')}-${expDate.getDate()}`;
       myDailyLog(frtDate, frtDate);
