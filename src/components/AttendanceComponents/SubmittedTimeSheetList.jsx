@@ -101,7 +101,7 @@ const SubmittedTimeSheetList = () => {
       name: 'Add time expense',
       action: (id) => {
         console.log(`Time Sheet id to be submitted-->`, id.original);
-        navigate('/attendance/myTimeSheet');
+        navigate('/attendance/myTimeSheet',{state:id.original});
       },
     },
     {

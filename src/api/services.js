@@ -339,3 +339,96 @@ export const upDateMyTimeExpense = async (sessionId,expenseId) => {
     });
   return status;
 };
+export const fetchAllProjects = async () => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = []
+  await api
+    .get(
+      'management/',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`,res.status)
+      projectData=res.data
+      if(res.status==200){
+        status = true
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status= false
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
+export const fetchProjectData = async (projectId) => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = {}
+  await api
+    .get(
+      `management/?projectId=${projectId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`,res.status)
+      projectData={...res.data}
+      if(res.status==200){
+        status = true
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status= false
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
+export const manageProjectMyTeamView = async (projectId) => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = {}
+  await api
+    .get(
+      `management/?projectId=${projectId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`,res.status)
+      projectData={...res.data}
+      if(res.status==200){
+        status = true
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status= false
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
