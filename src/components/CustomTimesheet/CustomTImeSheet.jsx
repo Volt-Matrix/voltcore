@@ -51,6 +51,19 @@ function CustomTImeSheet() {
     });
   };
   const location = useLocation();
+  const toastHandler = (toastCode, message) => {
+    switch (toastCode) {
+      case 'w':
+        toast.warning(message);
+        break;
+      case 's':
+        toast(message);
+        break;
+      default:
+        break;
+    }
+    // toast(message)
+  };
 
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
@@ -181,11 +194,17 @@ function CustomTImeSheet() {
   const saveTimeExpenseData = async (rowId, indexOfInput) => {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     let session = timeSheetData.data.find((ele, index) => rowId == index);
-    console.log(`Changed Session-->`, session);
+    const loggedTimeCheck = editVsClockedTimeCheck(session);
+    if (loggedTimeCheck) {
+      toastHandler('w', 'Total hours exceeding logged hours');
+      return;
+    }
+    console.log(`Changed Session-->`);
     if (session.timeExpense[indexOfInput].id) {
       let editExpense = session.timeExpense[indexOfInput];
       console.log('Not newly created');
       const editedLog = upDateMyTimeExpense(rowId, editExpense);
+      editedLog && toastHandler('s', 'Sucessfully added to the time log');
       setTimeSheetData((prev) => ({
         ...prev,
         data: prev.data.map((ele, index) => {
@@ -208,12 +227,10 @@ function CustomTImeSheet() {
       }));
       return;
     }
-    console.log('newly created');
     const savedLog = await addTimeExpenseData({
       ...session.timeExpense[indexOfInput],
       session_id: session.session_id,
     });
-    console.log(`Sucessfully created`, savedLog);
     if (savedLog.id) {
       setTimeSheetData((prev) => ({
         ...prev,
@@ -235,6 +252,7 @@ function CustomTImeSheet() {
           }
         }),
       }));
+      toastHandler('s',"Data Added to time sheet")
     }
   };
   const deleteTimeExpense = async (rowId, indexOfInput) => {
@@ -249,16 +267,32 @@ function CustomTImeSheet() {
     const status = await deleteMyTimeExpense(sessionId, expenseId);
     if (status) {
       addTimeExpense('', rowId, indexOfInput, 'remove');
+      toastHandler('s','Deleted time expense from daily log')
       return;
     }
   };
-  const getTimeSheet = ()=>{
+  const getTimeSheet = () => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
     if (fDate && tDate) {
       myDailyLog(fDate, tDate);
     }
-  }
+  };
+  const editVsClockedTimeCheck = (session) => {
+    // console.log(`Session for which time is being added to expense sheet--->`, session);
+    let status = false;
+    if (session.timeExpense.length > 0) {
+      const myArr = session.timeExpense;
+      let totalHours = session.timeExpense.reduce(
+        (accumulator, currentValue) => accumulator + +currentValue.hourSpent,
+        0
+      );
+      status = totalHours > session.totalHours;
+      console.log(`Total Hours Spent --->`, totalHours, status);
+      return status;
+    }
+    return status;
+  };
   useEffect(() => {
     const data = location.state;
     console.log(data);
@@ -286,7 +320,13 @@ function CustomTImeSheet() {
           <div className="rpr block">Pick Range</div>
           <input type="date" name="fromDate" onChange={handleDatePick} />
           <input type="date" name="toDate" onChange={handleDatePick} />
-          <button onClick={()=>{getTimeSheet()}}>Get</button>
+          <button
+            onClick={() => {
+              getTimeSheet();
+            }}
+          >
+            Get
+          </button>
         </div>
         <table className="table-style1">
           <thead>
