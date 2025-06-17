@@ -1,11 +1,11 @@
 /* Reset default browser styles */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-:root{
-  --header-height:65px;
-  --sidenav-width:200px;
+:root {
+  --header-height: 65px;
+  --sidenav-width: 200px;
 }
-@import "tailwindcss";
+@import 'tailwindcss';
 * {
   margin: 0;
   padding: 0;
@@ -91,31 +91,32 @@ button {
 /* Custom Font classes */
 
 /* Margins */
-.mrg-tp{
+.mrg-tp {
   margin-top: 10px;
 }
 /*  */
 
 /*For Headings we use sans and for content inside html we can use Open sans*/
 .rpr {
-  font-family: "Roboto", sans-serif;  /*For table Headings,options etc..*/        
+  font-family: 'Roboto', sans-serif; /*For table Headings,options etc..*/
   font-weight: 500;
   font-style: normal;
 }
 /* for home content heading*/
-.rsh {                      /*For Main headings in Page*/                  
-  font-family: "Roboto", sans-serif;
+.rsh {
+  /*For Main headings in Page*/
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-style: normal;
   font-size: 1.5em;
 }
 
-.osns{               /*For Content in Page*/                    
-  font-family: "Open Sans", sans-serif;
+.osns {
+  /*For Content in Page*/
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: 'wdth' 100;
 }
 
 /* for grey subtext color */
@@ -123,31 +124,34 @@ button {
   color: #868e96;
 }
 /* Status Colors */
-.sts-a{
-  color:green
+.sts-a {
+  color: green;
 }
-.sts-p{
-  color:orange
+.sts-p {
+  color: orange;
 }
-.sts-r{
-  color:red
+.sts-r {
+  color: red;
+}
+.sts-s {
+  color: green;
 }
 /* -------------- */
 
 /*title center*/
-.t-cent{ 
+.t-cent {
   text-align: center;
   padding: 0.3em;
 }
 /* All Button Classes */
-.smbfn{
-  font-family: "Roboto", sans-serif;
+.smbfn {
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-size: 1.5em;
   padding: 0.5em;
   border: 1px solid black;
   text-align: center;
-  max-width:300px;
+  max-width: 300px;
 }
 
 /* Button Classes end */
@@ -204,7 +208,7 @@ button {
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin:65px 0 0 200px;
+  margin: 65px 0 0 200px;
 }
 
 /* Nav bar */
@@ -236,12 +240,12 @@ button {
   color: white;
 }
 
-.page-layout-container{
+.page-layout-container {
   display: flex;
   flex-wrap: wrap;
   padding: var(--header-height) 1em;
   margin-left: var(--sidenav-width);
-  gap:1em
+  gap: 1em;
 }
 
 /* table style 1 */
@@ -249,7 +253,7 @@ button {
 .table-style1 {
   width: 100%;
   border-spacing: 0;
-  overflow:hidden;
+  overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
@@ -261,7 +265,7 @@ button {
 .table-style1 th,
 .table-style1 td {
   padding: 5px;
-  text-align:center;
+  text-align: center;
 }
 
 .table-style1 thead {
@@ -273,6 +277,6 @@ button {
   background-color: white;
 }
 /* Pointer */
-.pntr{
+.pntr {
   cursor: pointer;
 }

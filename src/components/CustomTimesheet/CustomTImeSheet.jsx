@@ -13,6 +13,7 @@ import {
 } from '../../api/services';
 import { getDailyLog } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
+import { submitTimeSheet } from '../../api/services';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -24,7 +25,13 @@ export const timeSheetFields = [
 const actionTypes = [
   { name: 'Edit', action: '' },
   { name: 'Report', action: '' },
-  { name: 'submit', action: '' },
+  {
+    name: 'submit',
+    action: async (sessionId) => {
+      await submitTimeSheet(sessionId.session_id);
+      console.log('Submit Time Sheet data to change status', sessionId.session_id);
+    },
+  },
 ];
 // const texp = {
 //   id: 0,
@@ -252,7 +259,7 @@ function CustomTImeSheet() {
           }
         }),
       }));
-      toastHandler('s',"Data Added to time sheet")
+      toastHandler('s', 'Data Added to time sheet');
     }
   };
   const deleteTimeExpense = async (rowId, indexOfInput) => {
@@ -267,7 +274,7 @@ function CustomTImeSheet() {
     const status = await deleteMyTimeExpense(sessionId, expenseId);
     if (status) {
       addTimeExpense('', rowId, indexOfInput, 'remove');
-      toastHandler('s','Deleted time expense from daily log')
+      toastHandler('s', 'Deleted time expense from daily log');
       return;
     }
   };
@@ -354,6 +361,7 @@ function CustomTImeSheet() {
                     <MoreActionsButton
                       actionTypes={actionTypes}
                       onEdit={() => handleEditClick(index)}
+                      rowData={date}
                     />
                   </td>
                 </tr>

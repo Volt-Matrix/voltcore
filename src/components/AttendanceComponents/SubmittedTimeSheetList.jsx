@@ -74,6 +74,7 @@ const SubmittedTimeSheetList = () => {
         if (status === 'pending') className = 'sts-p';
         else if (status === 'approved') className = 'sts-a';
         else if (status === 'rejected') className = 'sts-r';
+        else if (status === 'submitted') className = 'sts-s';
 
         return <span className={className}>{status}</span>;
       },
@@ -101,7 +102,7 @@ const SubmittedTimeSheetList = () => {
       name: 'Add time expense',
       action: (id) => {
         console.log(`Time Sheet id to be submitted-->`, id.original);
-        navigate('/attendance/myTimeSheet',{state:id.original});
+        navigate('/attendance/myTimeSheet', { state: id.original });
       },
     },
     {
