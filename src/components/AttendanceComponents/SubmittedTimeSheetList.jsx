@@ -11,7 +11,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { getDailyLogForTimeSheet } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
 import { useNavigate } from 'react-router-dom';
-
+import { submitTimeSheet } from '../../api/services';
 const fetchServerData = async (pageIndex, pageSize) => {
   // Replace this with your actual API call
   // Simulated response
@@ -107,7 +107,8 @@ const SubmittedTimeSheetList = () => {
     },
     {
       name: 'Submit Expense',
-      action: () => {
+      action:async (id) => {
+        await submitTimeSheet(id.original.id);
         toast('You time sheet has been resubmitted', {
           position: 'top-left',
           autoClose: 5000,
