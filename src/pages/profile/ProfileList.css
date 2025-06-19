@@ -7,6 +7,19 @@
   font-family: Arial, sans-serif;
   background-color: #f4f7fc;
 }
+.delete-btn {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #d9363e;
+}
 
 .profile-list-container h2 {
   text-align: center;

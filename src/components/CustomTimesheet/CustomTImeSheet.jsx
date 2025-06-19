@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './CustomTImeSheet.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CirclePlus } from 'lucide-react';
 import MoreActionsButton from '../MoreActionsButton/MoreActionsButton';
 import AddTimeExpense from '../AddTimeExpense/AddTimeExpense';
@@ -13,6 +13,7 @@ import {
 } from '../../api/services';
 import { getDailyLog } from '../../api/services';
 import { timeToHours } from '../../lib/utils/timetohours';
+import { submitTimeSheet } from '../../api/services';
 export const timeSheetFields = [
   'Date',
   'Check In',
@@ -24,7 +25,13 @@ export const timeSheetFields = [
 const actionTypes = [
   { name: 'Edit', action: '' },
   { name: 'Report', action: '' },
-  { name: 'submit', action: '' },
+  {
+    name: 'submit',
+    action: async (sessionId) => {
+      await submitTimeSheet(sessionId.session_id);
+      console.log('Submit Time Sheet data to change status', sessionId.session_id);
+    },
+  },
 ];
 // const texp = {
 //   id: 0,
@@ -50,6 +57,21 @@ function CustomTImeSheet() {
       transition: Bounce,
     });
   };
+  const location = useLocation();
+  const toastHandler = (toastCode, message) => {
+    switch (toastCode) {
+      case 'w':
+        toast.warning(message);
+        break;
+      case 's':
+        toast(message);
+        break;
+      default:
+        break;
+    }
+    // toast(message)
+  };
+
   const handleDatePick = (e) => {
     console.log('Date Selector-->', e.target.value);
     setTimeSheetData({
@@ -179,11 +201,17 @@ function CustomTImeSheet() {
   const saveTimeExpenseData = async (rowId, indexOfInput) => {
     console.log(`Changing task detail of ${rowId} and expense input ${indexOfInput}`);
     let session = timeSheetData.data.find((ele, index) => rowId == index);
-    console.log(`Changed Session-->`, session);
+    const loggedTimeCheck = editVsClockedTimeCheck(session);
+    if (loggedTimeCheck) {
+      toastHandler('w', 'Total hours exceeding logged hours');
+      return;
+    }
+    console.log(`Changed Session-->`);
     if (session.timeExpense[indexOfInput].id) {
       let editExpense = session.timeExpense[indexOfInput];
       console.log('Not newly created');
       const editedLog = upDateMyTimeExpense(rowId, editExpense);
+      editedLog && toastHandler('s', 'Sucessfully added to the time log');
       setTimeSheetData((prev) => ({
         ...prev,
         data: prev.data.map((ele, index) => {
@@ -206,12 +234,10 @@ function CustomTImeSheet() {
       }));
       return;
     }
-    console.log('newly created');
     const savedLog = await addTimeExpenseData({
       ...session.timeExpense[indexOfInput],
       session_id: session.session_id,
     });
-    console.log(`Sucessfully created`, savedLog);
     if (savedLog.id) {
       setTimeSheetData((prev) => ({
         ...prev,
@@ -233,6 +259,7 @@ function CustomTImeSheet() {
           }
         }),
       }));
+      toastHandler('s', 'Data Added to time sheet');
     }
   };
   const deleteTimeExpense = async (rowId, indexOfInput) => {
@@ -240,20 +267,48 @@ function CustomTImeSheet() {
     const sessionId = session.session_id;
     const expenseId = session.timeExpense[indexOfInput].id;
     console.log(`Delete session`, session.session_id, session.timeExpense[indexOfInput].id);
-    const status = await deleteMyTimeExpense(sessionId, expenseId);
-    if (status) {
+    if (!expenseId) {
       addTimeExpense('', rowId, indexOfInput, 'remove');
       return;
     }
+    const status = await deleteMyTimeExpense(sessionId, expenseId);
+    if (status) {
+      addTimeExpense('', rowId, indexOfInput, 'remove');
+      toastHandler('s', 'Deleted time expense from daily log');
+      return;
+    }
   };
-  useEffect(() => {
+  const getTimeSheet = () => {
     const fDate = timeSheetData.fromDate;
     const tDate = timeSheetData.toDate;
     if (fDate && tDate) {
       myDailyLog(fDate, tDate);
     }
-  }, [timeSheetData.fromDate, timeSheetData.toDate]);
-
+  };
+  const editVsClockedTimeCheck = (session) => {
+    // console.log(`Session for which time is being added to expense sheet--->`, session);
+    let status = false;
+    if (session.timeExpense.length > 0) {
+      const myArr = session.timeExpense;
+      let totalHours = session.timeExpense.reduce(
+        (accumulator, currentValue) => accumulator + +currentValue.hourSpent,
+        0
+      );
+      status = totalHours > session.totalHours;
+      console.log(`Total Hours Spent --->`, totalHours, status);
+      return status;
+    }
+    return status;
+  };
+  useEffect(() => {
+    const data = location.state;
+    console.log(data);
+    if (data?.clock_in) {
+      let expDate = new Date(data.clock_in);
+      let frtDate = `${expDate.getFullYear()}-${String(expDate.getMonth() + 1).padStart(2, '0')}-${expDate.getDate()}`;
+      myDailyLog(frtDate, frtDate);
+    }
+  }, []);
   return (
     <div className="att-container ">
       <div className="flex gap-2 justify-center rsh">
@@ -272,6 +327,13 @@ function CustomTImeSheet() {
           <div className="rpr block">Pick Range</div>
           <input type="date" name="fromDate" onChange={handleDatePick} />
           <input type="date" name="toDate" onChange={handleDatePick} />
+          <button
+            onClick={() => {
+              getTimeSheet();
+            }}
+          >
+            Get
+          </button>
         </div>
         <table className="table-style1">
           <thead>
@@ -299,6 +361,7 @@ function CustomTImeSheet() {
                     <MoreActionsButton
                       actionTypes={actionTypes}
                       onEdit={() => handleEditClick(index)}
+                      rowData={date}
                     />
                   </td>
                 </tr>

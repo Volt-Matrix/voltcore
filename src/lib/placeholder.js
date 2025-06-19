@@ -361,7 +361,7 @@ export const hrPayslipsUploadHistory = [
   },
 ];
 
-export const Roles = ['hradmin','employee','manager'];
+export const Roles = ['hradmin', 'employee', 'manager'];
 export const NavigationPaths = [
   {
     mainPath: {
@@ -369,7 +369,7 @@ export const NavigationPaths = [
       icon: 'Home',
       Name: 'Home',
       className: '',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
   },
   {
@@ -377,23 +377,23 @@ export const NavigationPaths = [
       icon: 'User',
       className: 'profile',
       Name: 'Profile',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/profile/basic-details',
         Name: 'Basic Details',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/profile/ProfileList',
         Name: ' ProfileList',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/teams/teamhierarchy',
         Name: 'Team Hierarchy',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
     ],
   },
@@ -402,18 +402,18 @@ export const NavigationPaths = [
       icon: 'BarChart',
       className: 'assets',
       Name: 'Assets',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/assets',
         Name: ' My Assets',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/assets/dashboard',
         Name: 'Assets Category',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
     ],
   },
@@ -422,13 +422,13 @@ export const NavigationPaths = [
       icon: 'Building',
       className: 'organization',
       Name: 'Org',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/organization/chart',
         Name: 'Org Chart',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
     ],
   },
@@ -437,18 +437,18 @@ export const NavigationPaths = [
       icon: 'CalendarDays',
       className: 'attendance',
       Name: 'Attendance',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/attendance/daily',
         Name: 'Daily Log',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/attendance/overview',
         Name: 'Attendance Dashboard',
-        accessList: ['hradmin','manager'],
+        accessList: ['hradmin', 'manager'],
       },
     ],
   },
@@ -457,18 +457,18 @@ export const NavigationPaths = [
       icon: 'Wallet',
       className: 'payroll',
       Name: 'Payroll',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/payroll/emp/payslips',
         Name: 'My Payslips',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/payroll/hr/payslips',
         Name: 'HR Admin Payslips',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
     ],
   },
@@ -477,18 +477,39 @@ export const NavigationPaths = [
       icon: 'Plane',
       className: 'leaves',
       Name: 'Leaves',
-      accessList: ['hradmin','employee','manager'],
+      accessList: ['hradmin', 'employee', 'manager'],
     },
     subPath: [
       {
         to: '/leaves/dashboard',
         Name: 'Leave Dashboard',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
       },
       {
         to: '/leavemanagement/leavemanagement',
         Name: 'Leave Management',
-        accessList: ['hradmin','employee','manager'],
+        accessList: ['hradmin', 'employee', 'manager'],
+      },
+    ],
+  },
+  {
+    mainPath: {
+      icon: 'NotebookTabs',
+      className: 'ptrmanagement',
+      Name: 'Management',
+      accessList: ['hradmin', 'employee', 'manager'],
+      to: '/ptrmanagement',
+    },
+    subPath: [
+      {
+        to: '/leaves/dashboard',
+        Name: 'Project Management&Team Managemnt',
+        accessList: ['hradmin', 'employee', 'manager'],
+      },
+      {
+        to: '/leavemanagement/leavemanagement',
+        Name: 'Role Management',
+        accessList: ['hradmin', 'employee', 'manager'],
       },
     ],
   },

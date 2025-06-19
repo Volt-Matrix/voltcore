@@ -61,7 +61,7 @@ export const employeeClockIn = async () => {
   const csrf = await getCsrfToken();
   let isClockedIn = false;
   let inTime = null;
-  let totalHours=0
+  let totalHours = 0;
   await api
     .get('employee/clock-in/', {
       headers: {
@@ -74,7 +74,7 @@ export const employeeClockIn = async () => {
       const { clock_in } = resp.data.session[0];
       isClockedIn = resp.data.clock_in;
       inTime = clock_in;
-      totalHours = resp.data.session[0].total_work_time
+      totalHours = resp.data.session[0].total_work_time;
       console.log(resp.data);
       return resp.data;
     })
@@ -82,13 +82,13 @@ export const employeeClockIn = async () => {
       console.error('Error Clock In: ', error);
       throw error;
     });
-  return { isClockedIn, inTime,totalHours };
+  return { isClockedIn, inTime, totalHours };
 };
 export const employeeClockInCheck = async () => {
   const csrf = await getCsrfToken();
   let isClockedIn = false;
   let inTime = null;
-  let totalHours=0;
+  let totalHours = 0;
   await api
     .get('employee/checkIn-check/', {
       headers: {
@@ -100,7 +100,7 @@ export const employeeClockInCheck = async () => {
       console.log('Employee Clock In time: ', resp.data);
       const { clock_in } = resp.data;
       isClockedIn = clock_in;
-      totalHours = resp.data.session[0].total_work_time
+      totalHours = resp.data.session[0].total_work_time;
 
       inTime = clock_in ? resp.data.session[0].clock_in : false;
 
@@ -110,7 +110,7 @@ export const employeeClockInCheck = async () => {
       console.error('Error Clock In: ', error);
       throw error;
     });
-  return { isClockedIn, inTime, totalHours};
+  return { isClockedIn, inTime, totalHours };
 };
 export const employeeClockOut = async () => {
   const csrf = await getCsrfToken();
@@ -257,25 +257,22 @@ export const getDailyLogForTimeSheet = async () => {
     });
   return data;
 };
-export const deleteMyTimeExpense = async (sessionId,expenseId) => {
+export const deleteMyTimeExpense = async (sessionId, expenseId) => {
   const csrf = await getCsrfToken();
   let status = false;
   await api
-    .delete(
-      `daily-log-delete-expense/${sessionId}/${expenseId}/`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrf,
-        },
-        withCredentials: true,
-      }
-    )
+    .delete(`daily-log-delete-expense/${sessionId}/${expenseId}/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
     .then((res) => {
       console.log('My Session: ', res.data);
-      console.log(`Delete Status Code-->`,res.status)
-      if(res.status==200){
-        status = true
+      console.log(`Delete Status Code-->`, res.status);
+      if (res.status == 200) {
+        status = true;
       }
       return res.data;
     })
@@ -288,7 +285,7 @@ export const deleteMyTimeExpense = async (sessionId,expenseId) => {
 export const addTimeExpenseData = async (postData) => {
   // add-time-expense
   const csrf = await getCsrfToken();
-  let data ;
+  let data;
   await api
     .post('attendance-add-time-expense/', postData, {
       headers: {
@@ -299,7 +296,7 @@ export const addTimeExpenseData = async (postData) => {
     })
     .then((res) => {
       console.log('My Session: ', res.data);
-      data = res.data
+      data = res.data;
       return res.data;
     })
     .catch((error) => {
@@ -308,32 +305,140 @@ export const addTimeExpenseData = async (postData) => {
     });
   return data;
 };
-export const upDateMyTimeExpense = async (sessionId,expenseId) => {
-  console.log(`upDateMyTimeExpense--`,expenseId)
-  const{id}  = expenseId
+export const upDateMyTimeExpense = async (sessionId, expenseId) => {
+  console.log(`upDateMyTimeExpense--`, expenseId);
+  const { id } = expenseId;
   const csrf = await getCsrfToken();
   let status = false;
   await api
-    .put(
-      `daily-log-delete-expense/${sessionId}/${id}/`,expenseId,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrf,
-        },
-        withCredentials: true,
-      }
-    )
+    .put(`daily-log-delete-expense/${sessionId}/${id}/`, expenseId, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
     .then((res) => {
       console.log('My Session: ', res.data);
-      console.log(`Delete Status Code-->`,res.status)
-      status=true
-      if(res.status==200){
-        status = true
+      console.log(`Delete Status Code-->`, res.status);
+      status = true;
+      if (res.status == 200) {
+        status = true;
       }
       return res.data;
     })
     .catch((error) => {
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return status;
+};
+export const fetchAllProjects = async () => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = [];
+  await api
+    .get('management/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`, res.status);
+      projectData = res.data;
+      if (res.status == 200) {
+        status = true;
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status = false;
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
+export const fetchProjectData = async (projectId) => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = {};
+  await api
+    .get(`management/?projectId=${projectId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`, res.status);
+      projectData = { ...res.data };
+      if (res.status == 200) {
+        status = true;
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status = false;
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
+export const manageProjectMyTeamView = async (projectId) => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  let projectData = {};
+  await api
+    .get(`management/?projectId=${projectId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`, res.status);
+      projectData = { ...res.data };
+      if (res.status == 200) {
+        status = true;
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status = false;
+      console.error('birthdays get failed: ', error);
+      throw error;
+    });
+  return projectData;
+};
+
+export const submitTimeSheet = async (sessionId) => {
+  const csrf = await getCsrfToken();
+  let status = true;
+  await api
+    .put(`submit-timesheet/${sessionId}/`, sessionId, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log('Pr Details: ', res.data);
+      console.log(`Delete Status Code-->`, res.status);
+      if (res.status == 200) {
+        status = true;
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      status = false;
       console.error('birthdays get failed: ', error);
       throw error;
     });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { EmployeeProvider } from './components/Profile/EmployeeContext';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -40,7 +41,11 @@ import OnboardingTask from './components/Profile/OnboardingTask';
 import Register from './pages/Register/Register';
 import Announcements from './pages/announcements/Announcements';
 import BasicDetailsWrapper from './pages/profile/BasicDetailsWrapper';
+import UploadDocument from './components/Profile/UploadDocuments';
+import DocumentsView from './components/Profile/DocumentsView';
 
+import PTRmanagement from './pages/PTRmanagement/PTRmanagement';
+import ManageProject from './pages/PTRmanagement/ManageProject/ManageProject';
 
 const ProtectedRoute = ({ children }) => {
   // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -50,31 +55,34 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
+        <EmployeeProvider >
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/home" />} />
 
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="home" element={<Home />} />
-          <Route path="payroll" element={<Payroll />} />
-          <Route path="attendance" element={<Attendance />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="home" element={<Home />} />
+        <Route path="payroll" element={<Payroll />} />
+        <Route path="attendance" element={<Attendance />} />
 
           {/* Profile routes */}
           <Route path="profile/basic-details" element={<BasicDetailsWrapper />} />
           <Route path="profile/basic-details" element={<BasicDetails />} />
           <Route path="/basic-details" element={<BasicDetails />} />
-          <Route path="/education" element={<EducationDocuments />} />
+          <Route path="/documents-view" element={<DocumentsView />} />
+          <Route path="/upload" element={<UploadDocument />} />
+          {/* <Route path="/education" element={<EducationDocuments />} />
           <Route path="/experiences" element={<Experiences />} />
           <Route path="/bank" element={<BankDetails />} />
           <Route path="/on-board" element={<OnBoarding />} />
-          <Route path="/onboard-task" element={<OnboardingTask />} />
+          <Route path="/onboard-task" element={<OnboardingTask />} /> */}
           <Route path="/success" element={<Success />} />
           <Route path="profile/profilelist" element={<ProfileList />} />
           {/* <Route path="profile/experience" element={<Experience />} /> */}
@@ -82,46 +90,51 @@ function App() {
           {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
           <Route path="profile/reporting" element={<Reporting />} />
 
-          <Route path="/assets/" element={<MyAssets />} />
-          <Route path="/assets/dashboard" element={<AssetDashboard />} />
+        <Route path="/assets/" element={<MyAssets />} />
+        <Route path="/assets/dashboard" element={<AssetDashboard />} />
 
-          {/* Leaves */}
-          <Route path="leaves/dashboard" element={<LeaveDashboard />} />
-          <Route path="leaves/apply" element={<ApplyLeave />} />
-          <Route path="leaves/data" element={<LeaveData />} />
-          <Route path="leaves/list" element={<LeaveList />} />
+        {/* Leaves */}
+        <Route path="leaves/dashboard" element={<LeaveDashboard />} />
+        <Route path="leaves/apply" element={<ApplyLeave />} />
+        <Route path="leaves/data" element={<LeaveData />} />
+        <Route path="leaves/list" element={<LeaveList />} />
 
-          {/* LeaveManagement */}
-          <Route path="leavemanagement/leavemanagement" element={<LeaveManagement />} />
+        {/* LeaveManagement */}
+        <Route path="leavemanagement/leavemanagement" element={<LeaveManagement />} />
 
-          {/* Organization */}
-          <Route path="Organization/OrganizationHierarchy" element={<OrganizationHierarchy />} />
+        {/* Organization */}
+        <Route path="Organization/OrganizationHierarchy" element={<OrganizationHierarchy />} />
 
-          {/* Attendance */}
-          <Route path="Attendance/AttendanceHistory" element={<AttendanceHistory />} />
-          <Route path="attendance/overview" element={<AttendanceOverview />} />
+        {/* Attendance */}
+        <Route path="Attendance/AttendanceHistory" element={<AttendanceHistory />} />
+        <Route path="attendance/overview" element={<AttendanceOverview />} />
 
-          {/* Teams*/}
-          <Route path="teams/myteam" element={<MyTeamForm />} />
-          <Route path="teams/teamperformance" element={<TeamPerformanceForm />} />
-          <Route path="teams/teamrequest" element={<TeamRequestsForm />} />
-          <Route path="teams/teamhierarchy" element={<TeamHierarchy />} />
+        {/* Teams*/}
+        <Route path="teams/myteam" element={<MyTeamForm />} />
+        <Route path="teams/teamperformance" element={<TeamPerformanceForm />} />
+        <Route path="teams/teamrequest" element={<TeamRequestsForm />} />
+        <Route path="teams/teamhierarchy" element={<TeamHierarchy />} />
 
-          {/* Inbox */}
-          <Route path="inbox/announcements" element={<InboxAnnouncementsForm />} />
-          <Route path="inbox/messages" element={<InboxMessagesForm />} />
-          <Route path="inbox/notifications" element={<InboxNotificationsForm />} />
-          <Route path="attendance/daily" element={<Attendance />} />
-          {/* Note:Should be changed */}
-          <Route path="attendance/myTimeSheet" element={<CustomTImeSheet />} />
+        {/* Inbox */}
+        <Route path="inbox/announcements" element={<InboxAnnouncementsForm />} />
+        <Route path="inbox/messages" element={<InboxMessagesForm />} />
+        <Route path="inbox/notifications" element={<InboxNotificationsForm />} />
+        <Route path="attendance/daily" element={<Attendance />} />
+        {/* Note:Should be changed */}
+        <Route path="attendance/myTimeSheet" element={<CustomTImeSheet />} />
 
-          {/* Payroll */}
-          <Route path="payroll/emp/payslips" element={<EmpPayslips />} />
-          <Route path="payroll/hr/payslips" element={<HRPayslips />} />
-          <Route path="announcements" element={<Announcements />} />
-        </Route>
-        <Route path="register" element={<Register />} />
-      </Routes>
+        {/* Payroll */}
+        <Route path="payroll/emp/payslips" element={<EmpPayslips />} />
+        <Route path="payroll/hr/payslips" element={<HRPayslips />} />
+        <Route path="announcements" element={<Announcements />} />
+        <Route path="ptrmanagement" element={<PTRmanagement />} />
+        <Route path="manage-project/:projectId" element={<ManageProject />} />
+
+
+      </Route>
+      <Route path="register" element={<Register />} />
+    </Routes>
+      </ EmployeeProvider >
   );
 }
 

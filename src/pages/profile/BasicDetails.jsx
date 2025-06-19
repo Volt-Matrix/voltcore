@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import "./BasicDetails.css";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useEmployee } from '../../components/Profile/EmployeeContext';
 import ProfileNavbar from '../../components/Profile/ProfileNavbar';
+import "./BasicDetails.css";
 
-const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
+const BasicDetails = () => {
+  const location = useLocation();
+  const passedProfile = location.state?.profile;
+
   const defaultProfileData = {
+    id: null,
     full_name: '',
     employee_id: '',
     date_of_birth: '',
@@ -19,7 +25,16 @@ const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
     country: '',
   };
 
-  const [personalInfo, setPersonalInfo] = useState(profileData || defaultProfileData);
+  const { profile, setProfile } = useEmployee();
+
+  const [personalInfo, setPersonalInfo] = useState(passedProfile || profile || defaultProfileData);
+
+  useEffect(() => {
+    if (passedProfile) {
+      setPersonalInfo(passedProfile);
+      setProfile(passedProfile); // sync to context
+    }
+  }, [passedProfile]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,21 +43,23 @@ const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
 
   const handleSave = async () => {
     try {
-      const { id, profile_picture, ...payload } = personalInfo;
+      const { id, ...payload } = personalInfo;
+      const method = id ? 'PUT' : 'POST';
+      const url = id
+        ? `http://127.0.0.1:8000/profiles/${id}/`
+        : 'http://127.0.0.1:8000/profiles/';
 
-      const response = await fetch('http://127.0.0.1:8000/profiles/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
         const savedProfile = await response.json();
-        alert(`Profile saved successfully! ID: ${savedProfile.id}`);
-        setPersonalInfo(defaultProfileData); 
-        if (onSaveSuccess) onSaveSuccess(savedProfile);
+        alert(`Profile ${id ? 'updated' : 'created'} successfully!`);
+        setProfile(savedProfile);
+        setPersonalInfo(savedProfile);
       } else {
         const errorData = await response.json();
         alert('Error saving profile: ' + JSON.stringify(errorData));
@@ -55,7 +72,6 @@ const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
   return (
     <div className="employee-profile">
       <ProfileNavbar />
-
       <div className="profile-header">
         <img
           src={"https://placehold.co/100x100"}
@@ -63,12 +79,11 @@ const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
           className="profile-image"
         />
         <div className="profile-info">
-          <div className="name-and-upload">
-            <h2 className="employee-name">
-              {personalInfo.full_name || 'New Employee'} {personalInfo.id && `(ID: ${personalInfo.id})`}
-            </h2>
-          
-          </div>
+          <h2 className="employee-name">
+            {personalInfo.full_name || 'New Employee'}{' '}
+            {personalInfo.id && `(ID: ${personalInfo.id})`}
+          </h2>
+          <p>Employee ID: {personalInfo.employee_id || 'N/A'}</p>
         </div>
       </div>
 
@@ -79,123 +94,39 @@ const BasicDetails = ({ profileData = null, onSaveSuccess }) => {
           </div>
 
           <div className="info-grid">
-            <div>
-              <label><strong>Full Name</strong></label>
-              <input
-                type="text"
-                name="full_name"
-                value={personalInfo.full_name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Employee ID</strong></label>
-              <input
-                type="text"
-                name="employee_id"
-                value={personalInfo.employee_id}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Date of Birth</strong></label>
-              <input
-                type="date"
-                name="date_of_birth"
-                value={personalInfo.date_of_birth}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Gender</strong></label>
-              <select name="gender" value={personalInfo.gender} onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label><strong>Email</strong></label>
-              <input
-                type="email"
-                name="email"
-                value={personalInfo.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Phone</strong></label>
-              <input
-                type="text"
-                name="phone"
-                value={personalInfo.phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Alt Phone</strong></label>
-              <input
-                type="text"
-                name="alt_phone"
-                value={personalInfo.alt_phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Current Address</strong></label>
-              <input
-                type="text"
-                name="current_address"
-                value={personalInfo.current_address}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Permanent Address</strong></label>
-              <input
-                type="text"
-                name="permanent_address"
-                value={personalInfo.permanent_address}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>City</strong></label>
-              <input
-                type="text"
-                name="city"
-                value={personalInfo.city}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>State</strong></label>
-              <input
-                type="text"
-                name="state"
-                value={personalInfo.state}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Zip Code</strong></label>
-              <input
-                type="text"
-                name="zip_code"
-                value={personalInfo.zip_code}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label><strong>Country</strong></label>
-              <input
-                type="text"
-                name="country"
-                value={personalInfo.country}
-                onChange={handleChange}
-              />
-            </div>
+            {/* All form fields (same as before) */}
+            {[
+              { label: "Full Name", name: "full_name" },
+              { label: "Employee ID", name: "employee_id" },
+              { label: "Date of Birth", name: "date_of_birth", type: "date" },
+              { label: "Gender", name: "gender", type: "select", options: ["Male", "Female", "Other"] },
+              { label: "Email", name: "email" },
+              { label: "Phone", name: "phone" },
+              { label: "Alt Phone", name: "alt_phone" },
+              { label: "Current Address", name: "current_address" },
+              { label: "Permanent Address", name: "permanent_address" },
+              { label: "City", name: "city" },
+              { label: "State", name: "state" },
+              { label: "Zip Code", name: "zip_code" },
+              { label: "Country", name: "country" },
+            ].map(({ label, name, type = "text", options }) => (
+              <div key={name}>
+                <label><strong>{label}</strong></label>
+                {type === "select" ? (
+                  <select name={name} value={personalInfo[name]} onChange={handleChange}>
+                    <option value="">Select</option>
+                    {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    type={type}
+                    name={name}
+                    value={personalInfo[name]}
+                    onChange={handleChange}
+                  />
+                )}
+              </div>
+            ))}
           </div>
 
           <div className="save-btn-container">
