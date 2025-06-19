@@ -1,4 +1,5 @@
 import React from 'react';
+import { EmployeeProvider } from './components/Profile/EmployeeContext';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -40,6 +41,9 @@ import OnboardingTask from './components/Profile/OnboardingTask';
 import Register from './pages/Register/Register';
 import Announcements from './pages/announcements/Announcements';
 import BasicDetailsWrapper from './pages/profile/BasicDetailsWrapper';
+import UploadDocument from './components/Profile/UploadDocuments';
+import DocumentsView from './components/Profile/DocumentsView';
+
 import PTRmanagement from './pages/PTRmanagement/PTRmanagement';
 import ManageProject from './pages/PTRmanagement/ManageProject/ManageProject';
 
@@ -51,9 +55,10 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Navigate to="/home" />} />
+        <EmployeeProvider >
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/home" />} />
 
       <Route
         path="/"
@@ -67,21 +72,23 @@ function App() {
         <Route path="payroll" element={<Payroll />} />
         <Route path="attendance" element={<Attendance />} />
 
-        {/* Profile routes */}
-        <Route path="profile/basic-details" element={<BasicDetailsWrapper />} />
-        <Route path="profile/basic-details" element={<BasicDetails />} />
-        <Route path="/basic-details" element={<BasicDetails />} />
-        <Route path="/education" element={<EducationDocuments />} />
-        <Route path="/experiences" element={<Experiences />} />
-        <Route path="/bank" element={<BankDetails />} />
-        <Route path="/on-board" element={<OnBoarding />} />
-        <Route path="/onboard-task" element={<OnboardingTask />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="profile/profilelist" element={<ProfileList />} />
-        {/* <Route path="profile/experience" element={<Experience />} /> */}
-        <Route path="profile/contracts" element={<Contracts />} />
-        {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
-        <Route path="profile/reporting" element={<Reporting />} />
+          {/* Profile routes */}
+          <Route path="profile/basic-details" element={<BasicDetailsWrapper />} />
+          <Route path="profile/basic-details" element={<BasicDetails />} />
+          <Route path="/basic-details" element={<BasicDetails />} />
+          <Route path="/documents-view" element={<DocumentsView />} />
+          <Route path="/upload" element={<UploadDocument />} />
+          {/* <Route path="/education" element={<EducationDocuments />} />
+          <Route path="/experiences" element={<Experiences />} />
+          <Route path="/bank" element={<BankDetails />} />
+          <Route path="/on-board" element={<OnBoarding />} />
+          <Route path="/onboard-task" element={<OnboardingTask />} /> */}
+          <Route path="/success" element={<Success />} />
+          <Route path="profile/profilelist" element={<ProfileList />} />
+          {/* <Route path="profile/experience" element={<Experience />} /> */}
+          <Route path="profile/contracts" element={<Contracts />} />
+          {/* <Route path="profile/documents" element={<DocumentsForm />} /> */}
+          <Route path="profile/reporting" element={<Reporting />} />
 
         <Route path="/assets/" element={<MyAssets />} />
         <Route path="/assets/dashboard" element={<AssetDashboard />} />
@@ -127,6 +134,7 @@ function App() {
       </Route>
       <Route path="register" element={<Register />} />
     </Routes>
+      </ EmployeeProvider >
   );
 }
 
