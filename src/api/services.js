@@ -444,3 +444,217 @@ export const submitTimeSheet = async (sessionId) => {
     });
   return status;
 };
+
+
+// --- Project Management ---
+export const getAllProjects = async () => {
+  try {
+    const response = await api.get('management/projects/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching projects:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const createProject = async (projectData) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.post('management/projects/', projectData, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating project:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateProject = async (projectId, projectData) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.put(`management/projects/${projectId}/`, projectData, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating project:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const deleteProject = async (projectId) => {
+  const csrf = await getCsrfToken();
+  try {
+    await api.delete(`management/projects/${projectId}/`, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+  } catch (error) {
+    console.error('Error deleting project:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const addProjectEmployee = async (projectId, employeeId, type = 'member') => { // type can be 'member' or 'manager'
+  const csrf = await getCsrfToken();
+  const urlPath = type === 'manager' ? 'add-manager' : 'add-member';
+  try {
+    const response = await api.post(`management/projects/${projectId}/${urlPath}/`, { employee_id: employeeId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error)
+ {
+    console.error(`Error adding ${type} to project:`, error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const removeProjectEmployee = async (projectId, employeeId, type = 'member') => {
+  const csrf = await getCsrfToken();
+  const urlPath = type === 'manager' ? 'remove-manager' : 'remove-member';
+  try {
+    const response = await api.post(`management/projects/${projectId}/${urlPath}/`, { employee_id: employeeId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing ${type} from project:`, error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// --- Team Management ---
+export const getAllTeams = async () => {
+  try {
+    const response = await api.get('management/teams/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching teams:', error.response?.data || error.message);
+    // throw error; // Already handled by getTeams in services.js, if this is a duplicate, remove one
+    // For now, assuming this is the primary one for the management module
+    throw error;
+  }
+};
+
+export const createTeam = async (teamData) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.post('management/teams/', teamData, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating team:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateTeam = async (teamId, teamData) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.put(`management/teams/${teamId}/`, teamData, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating team:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const deleteTeam = async (teamId) => {
+  const csrf = await getCsrfToken();
+  try {
+    await api.delete(`management/teams/${teamId}/`, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+  } catch (error) {
+    console.error('Error deleting team:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const setTeamManager = async (teamId, employeeId) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.post(`management/teams/${teamId}/set-manager/`, { employee_id: employeeId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error setting team manager:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const addTeamMember = async (teamId, employeeId) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.post(`management/teams/${teamId}/add-member/`, { employee_id: employeeId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding team member:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const removeTeamMember = async (teamId, employeeId) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.post(`management/teams/${teamId}/remove-member/`, { employee_id: employeeId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error removing team member:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// --- Role Management ---
+export const getAllSystemRoles = async () => {
+  try {
+    const response = await api.get('management/roles/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching system roles:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getEmployeesWithRoles = async () => {
+  try {
+    const response = await api.get('management/employees-roles/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching employees with roles:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateEmployeeRole = async (employeeId, roleId) => {
+  const csrf = await getCsrfToken();
+  try {
+    const response = await api.patch(`management/employees/${employeeId}/update-role/`, { role_id: roleId }, {
+      headers: { 'X-CSRFToken': csrf },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating employee role:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Utility to get all employees for dropdowns
+export const getAllEmployeesSimple = async () => {
+  try {
+    const response = await api.get('management/all-employees/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching all employees:', error.response?.data || error.message);
+    throw error;
+  }
+};
