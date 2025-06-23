@@ -11,7 +11,7 @@ export const getCsrfToken = async () => {
     const res = await axios.get('http://localhost:8000/csrf/', {
       withCredentials: true,
     });
-    return res.data.csrftoken;
+    return res.data.csrftoken
   } catch (error) {
     console.log(error);
   }
@@ -66,9 +66,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    // if(loginData.isLoggedIn){
-    //   return
-    // }
+   console.log('AuthContext UseEffect')
+   !loginData.isLoggedIn ?  navigate('/login'):navigate('/', { replace: true })
   }, []);
   return (
     <AuthContext.Provider value={{ ...loginData, login, logout }}>{children}</AuthContext.Provider>
