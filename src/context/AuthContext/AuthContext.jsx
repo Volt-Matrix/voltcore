@@ -2,7 +2,7 @@ import { interpolate } from 'd3';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { set } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 const initialState = { firstName: '', email: '', isLoggedIn: false, id: '' };
 export const AuthContext = createContext();
 
@@ -20,6 +20,8 @@ export const getCsrfToken = async () => {
 export const AuthProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(initialState);
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
   const login = async (loginData) => {
     console.log(loginData);
     const csrf = await getCsrfToken();
@@ -67,6 +69,7 @@ export const AuthProvider = ({ children }) => {
   };
   useEffect(() => {
    console.log('AuthContext UseEffect')
+   if(location.pathname === '/login' || location.pathname === '/register') return;
    !loginData.isLoggedIn ?  navigate('/login'):navigate('/', { replace: true })
   }, []);
   return (
