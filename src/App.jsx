@@ -47,6 +47,10 @@ import DocumentsView from './components/Profile/DocumentsView';
 import PTRmanagement from './pages/PTRmanagement/PTRmanagement';
 import ManageProject from './pages/PTRmanagement/ManageProject/ManageProject';
 
+import ProjectManagement from './pages/SiteManagement/ProjectManagement';
+import TeamManagement from './pages/SiteManagement/TeamManagement';
+import RoleManagement from './pages/SiteManagement/RoleManagement';
+
 const ProtectedRoute = ({ children }) => {
   // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const isLoggedIn = 'true';
@@ -127,10 +131,13 @@ function App() {
         <Route path="payroll/emp/payslips" element={<EmpPayslips />} />
         <Route path="payroll/hr/payslips" element={<HRPayslips />} />
         <Route path="announcements" element={<Announcements />} />
-        <Route path="ptrmanagement" element={<PTRmanagement />} />
-        <Route path="manage-project/:projectId" element={<ManageProject />} />
-
-
+        {/* <Route path="ptrmanagement" element={<PTRmanagement />} />
+        <Route path="manage-project/:projectId" element={<ManageProject />} /> */}
+        
+        {/* site management */}
+        <Route path="management/projects" element={<ProjectManagement />} />
+        <Route path="management/teams" element={<TeamManagement />} />
+        <Route path="management/roles" element={<RoleManagement />} />
       </Route>
       <Route path="register" element={<Register />} />
     </Routes>

@@ -417,21 +417,21 @@ export const NavigationPaths = [
       },
     ],
   },
-  {
-    mainPath: {
-      icon: 'Building',
-      className: 'organization',
-      Name: 'Org',
-      accessList: ['hradmin', 'employee', 'manager'],
-    },
-    subPath: [
-      {
-        to: '/organization/chart',
-        Name: 'Org Chart',
-        accessList: ['hradmin', 'employee', 'manager'],
-      },
-    ],
-  },
+  // {
+  //   mainPath: {
+  //     icon: 'Building',
+  //     className: 'organization',
+  //     Name: 'Org',
+  //     accessList: ['hradmin', 'employee', 'manager'],
+  //   },
+  //   subPath: [
+  //     {
+  //       to: '/organization/chart',
+  //       Name: 'Org Chart',
+  //       accessList: ['hradmin', 'employee', 'manager'],
+  //     },
+  //   ],
+  // },
   {
     mainPath: {
       icon: 'CalendarDays',
@@ -494,22 +494,26 @@ export const NavigationPaths = [
   },
   {
     mainPath: {
-      icon: 'NotebookTabs',
+      icon: 'ShieldCheck',
       className: 'ptrmanagement',
-      Name: 'Management',
-      accessList: ['hradmin', 'employee', 'manager'],
-      to: '/ptrmanagement',
+      Name: 'Site Admin',
+      accessList: ['hradmin', 'manager'],
     },
     subPath: [
       {
-        to: '/leaves/dashboard',
-        Name: 'Project Management&Team Managemnt',
-        accessList: ['hradmin', 'employee', 'manager'],
+        to: '/management/projects',
+        Name: 'Projects',
+        accessList: ['hradmin', 'manager'],
       },
       {
-        to: '/leavemanagement/leavemanagement',
-        Name: 'Role Management',
-        accessList: ['hradmin', 'employee', 'manager'],
+        to: '/management/teams',
+        Name: 'Teams',
+        accessList: ['hradmin', 'manager'],
+      },
+      {
+        to: '/management/roles',
+        Name: 'Roles',
+        accessList: ['hradmin', 'manager'],
       },
     ],
   },
