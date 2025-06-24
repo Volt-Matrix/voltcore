@@ -6,6 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
 import './AttandanceMarker.css';
 import { getMySessions } from '../../api/services';
+import { timeToHours } from '../../lib/utils/timetohours';
 
 const attendanceData = [
   { date: '4/29/2025', status: 1, checkIn: '9:00AM', checkOut: '5:00PM', totalHours: 8 },
@@ -41,7 +42,7 @@ const AttendanceCalendar = () => {
                   <div>Check-out: {data.clock_out ? format(data.clock_out, 'HH:mm:ss') : ''}</div>
                   <div>
                     Hours:{' '}
-                    {data.total_work_time ? timeToSeconds(data.total_work_time).toFixed(2) : ''}
+                    {data.total_work_time ? timeToHours(data.total_work_time).toFixed(2) : ''}
                   </div>
                 </>
               ) : (

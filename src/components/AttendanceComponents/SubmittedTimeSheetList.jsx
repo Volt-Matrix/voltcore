@@ -60,6 +60,7 @@ const SubmittedTimeSheetList = () => {
       header: 'Logged hours',
       accessorKey: 'total_work_time',
       cell: (info) => {
+        console.log(info.getValue());
         const data = info.getValue() ? timeToHours(info.getValue()).toFixed(2) : '';
         console.log(`tanstack query table--`, data);
         return <span>{data}</span>;
