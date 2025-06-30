@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './MyAssets.css';
+import { getCsrfToken } from "../../context/AuthContext/AuthContext";
+
 
 const MyAssets = () => {
-  const assetData = [
-    {
-      assetType: 'Laptop',
-      serialNumber: 'DLT5420-001',
-      assignedDate: '2025-04-15',
-      status: 'working',
-    },
-    {
-      assetType: 'Monitor',
-      serialNumber: 'HP-MON-124',
-      assignedDate: '2025-03-22',
-      status: 'damaged',
-    },
-    {
-      assetType: 'Keyboard',
-      serialNumber: 'LOG-KB-776',
-      assignedDate: '2025-04-01',
-      status: 'returned',
-    },
-  ];
-
+  const [assetData, setAssetData] = useState([]);
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [showRequestForm, setShowRequestForm] = useState(false);
+  const [assetTypes, setAssetTypes] = useState([]);
+
   const [formData, setFormData] = useState({
-    userName: '',
-    category: '',
+    asset_type: '',
+    customCategory: '',
     description: '',
   });
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/my-assets/', {
+          withCredentials: true,
+        });
+        setAssetData(response.data);
+      } catch (error) {
+        console.error('Error fetching assets:', error);
+      }
+    };
+
+      const fetchAssetTypes = async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/api/assets/");  // or a new endpoint
+          setAssetTypes(response.data);
+        } catch (error) {
+          console.error("Error fetching asset types:", error);
+        }
+    };
+    fetchAssets();
+    fetchAssetTypes();
+    
+  }, []);
 
   const toggleDropdown = (index) => {
     setDropdownIndex(dropdownIndex === index ? null : index);
@@ -50,11 +60,32 @@ const MyAssets = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    alert(`Asset Request Submitted:\n${JSON.stringify(formData, null, 2)}`);
-    setFormData({ userName: '', category: '', description: '' });
-    setShowRequestForm(false);
+    try {
+      const csrfToken = await getCsrfToken();
+      await axios.post(
+        'http://localhost:8000/asset-request/',
+        {
+          asset_type: formData.asset_type,  
+          description: formData.description,
+        },
+        
+        {
+           headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': csrfToken,  
+        },
+          withCredentials: true,
+        }
+      );
+      alert('Asset Request Submitted');
+      setFormData({ category: '', description: '' });
+      setShowRequestForm(false);
+    } catch (error) {
+      console.error('Asset request failed:', error);
+      alert('Asset Request Failed');
+    }
   };
 
   return (
@@ -67,51 +98,56 @@ const MyAssets = () => {
       </div>
 
       {showRequestForm && (
-  <div className="overlay">
-    <div className="request-popup-card">
-      <form className="request-form" onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          name="userName"
-          placeholder="Request User Name"
-          value={formData.userName}
-          onChange={handleInputChange}
-          required
-        />
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleInputChange}
-          required
-        >
-          <option value="">Select Asset Category</option>
-          <option value="Laptop">Laptop</option>
-          <option value="Monitor">Monitor</option>
-          <option value="Keyboard">Keyboard</option>
-          <option value="Other">Other</option>
-        </select>
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleInputChange}
-          required
-        />
-        <div className="form-buttons">
-          <button type="submit">Submit</button>
-          <button type="button" className="cancel-btn" onClick={() => setShowRequestForm(false)}>Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
+        <div className="overlay">
+          <div className="request-popup-card">
+            <form className="request-form" onSubmit={handleFormSubmit}>
+              <select
+                name="asset_type"
+                value={formData.asset_type}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select Asset Type</option>
+                {assetTypes.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.assetName}
+                  </option>
+                ))}
+              </select>
 
+              {formData.category === 'other' && (
+                <input
+                  type="text"
+                  name="customCategory"
+                  placeholder="Enter custom asset category"
+                  value={formData.customCategory || ''}
+                  onChange={handleInputChange}
+                  required
+                  
+                />
+              )}
+
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleInputChange}
+                required
+              />
+              <div className="form-buttons">
+                <button type="submit">Submit</button>
+                <button type="button" className="cancel-btn" onClick={() => setShowRequestForm(false)}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div className="asset-card">
         <table className="table-style1">
           <thead>
             <tr>
-              <th> Asset Type</th>
+              <th>Asset Type</th>
               <th>Asset ID</th>
               <th>Assigned Date</th>
               <th>Status</th>
@@ -121,9 +157,9 @@ const MyAssets = () => {
           <tbody>
             {assetData.map((asset, index) => (
               <tr key={index}>
-                <td>{asset.assetType}</td>
-                <td>{asset.serialNumber}</td>
-                <td>{asset.assignedDate}</td>
+                <td>{asset.asset_type}</td>
+                <td>{asset.serial_number}</td>
+                <td>{asset.assigned_date}</td>
                 <td>{asset.status}</td>
                 <td className="actions-cell">
                   <div className="actions-dropdown">

@@ -1,45 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './AssetPR.css';
+import { getCsrfToken } from "../../context/AuthContext/AuthContext";
 
 const AssetPR = () => {
-  const [assetRequests, setAssetRequests] = useState([
-    {
-      userName: 'John Doe',
-      category: 'Laptop',
-      description: 'Need a new laptop for development work.',
-      status: 'Pending',
-    },
-    {
-      userName: 'Jane Smith',
-      category: 'Monitor',
-      description: 'Requesting an extra monitor for better productivity.',
-      status: 'Pending',
-    },
-    {
-      userName: 'Michael Brown',
-      category: 'Keyboard',
-      description: 'Replace my old keyboard, keys are malfunctioning.',
-      status: 'Pending',
-    },
-  ]);
+  const [assetRequests, setAssetRequests] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleApproveRequest = (index) => {
-    const updatedRequests = [...assetRequests];
-    updatedRequests[index].status = 'Approved';
-    setAssetRequests(updatedRequests);
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const fetchRequests = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/asset-request/', {
+        withCredentials: true,
+      });
+      setAssetRequests(response.data);
+    } catch (error) {
+      console.error('Error fetching asset requests:', error);
+    }
   };
 
-  const handleRejectRequest = (index) => {
-    const updatedRequests = [...assetRequests];
-    updatedRequests[index].status = 'Rejected';
-    setAssetRequests(updatedRequests);
+  const updateRequestStatus = async (id, newStatus) => {
+    try {
+      const csrf = await getCsrfToken();
+      await axios.patch(
+        `http://localhost:8000/asset-request/${id}/`,
+        { status: newStatus },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrf,
+          },
+          withCredentials: true,
+        }
+      );
+      fetchRequests(); 
+    } catch (error) {
+        const errorMsg = error.response?.data?.error || "Something went wrong";
+        setErrorMessage(errorMsg);  // 👈 Set the error message
+      }
+
   };
 
   return (
     <div className="asset-pr-container">
       <h2>Asset Purchase Requests (PR)</h2>
-
-      {/* Card wrapper */}
       <div className="asset-card">
         <table className="table-style1">
           <thead>
@@ -52,25 +60,19 @@ const AssetPR = () => {
             </tr>
           </thead>
           <tbody>
-            {assetRequests.map((request, index) => (
-              <tr key={index}>
-                <td>{request.userName}</td>
+            {assetRequests.map((request) => (
+              <tr key={request.id}>
+                <td>{request.user_name}</td>
                 <td>{request.category}</td>
                 <td>{request.description}</td>
                 <td>{request.status}</td>
                 <td>
                   {request.status === 'Pending' ? (
                     <>
-                      <button
-                        className="approve-btn"
-                        onClick={() => handleApproveRequest(index)}
-                      >
+                      <button className="approve-btn" onClick={() => updateRequestStatus(request.id, 'Approved')}>
                         Approve
                       </button>
-                      <button
-                        className="reject-btn"
-                        onClick={() => handleRejectRequest(index)}
-                      >
+                      <button className="reject-btn" onClick={() => updateRequestStatus(request.id, 'Rejected')}>
                         Reject
                       </button>
                     </>
@@ -80,6 +82,12 @@ const AssetPR = () => {
                 </td>
               </tr>
             ))}
+            {errorMessage && (
+              <div className="error-banner">
+                {errorMessage}
+              </div>
+            )}
+
           </tbody>
         </table>
       </div>

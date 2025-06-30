@@ -198,5 +198,78 @@
   .asset-card-container thead {
     font-size: 0.9em;
   }
+
+
+  .asset-form-container {
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-field input,
+.form-field select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.selected-category-text {
+  padding: 8px;
+  background: #e1f5fe;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.required {
+  color: red;
+  margin-left: 4px;
+}
+
+.form-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-Cancel {
+  background-color: #ec2b2b;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
   
   
