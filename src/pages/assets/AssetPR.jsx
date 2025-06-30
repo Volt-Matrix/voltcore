@@ -40,7 +40,7 @@ const AssetPR = () => {
       fetchRequests(); 
     } catch (error) {
         const errorMsg = error.response?.data?.error || "Something went wrong";
-        setErrorMessage(errorMsg);  // 👈 Set the error message
+        setErrorMessage(errorMsg);  
       }
 
   };

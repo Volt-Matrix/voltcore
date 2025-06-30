@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AssetDashboard.css";
 import AssetCategorySection from "./AssetCategorySection";
 import AssetPR from "./AssetPR";
-import axios from "axios"; // ✅ Import axios
+import axios from "axios"; 
 import {
   FaCheckCircle,
   FaHourglass,
@@ -36,7 +36,7 @@ const AssetDashboard = () => {
   const warrantyDue = 0;
   const warrantyUpcoming = 0;
 
-  // ✅ Fetch live asset status counts from backend
+  
   useEffect(() => {
     const fetchAssetStatusCounts = async () => {
       try {
@@ -122,7 +122,7 @@ const AssetDashboard = () => {
             </div>
           </div>
 
-          {/* Toggle Asset Status */}
+          
           <div className="status-section">
             <div className="status-header" onClick={() => setShowStatus(!showStatus)}>
               <h3>Assets Status</h3>

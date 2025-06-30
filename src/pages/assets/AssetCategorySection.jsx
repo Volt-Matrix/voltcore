@@ -242,7 +242,7 @@ const AssetCategorySection = () => {
             }}>
               Add Asset Type
             </button>
-          )}
+          )} 
         </div>
 
         {showAssetFormFor === selectedCategory && editingAssetIndex === null && (
