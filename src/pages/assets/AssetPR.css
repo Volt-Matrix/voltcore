@@ -44,4 +44,16 @@
   .reject-btn:hover {
     background-color:transparent;
   }
+
+  .error-banner {
+  background-color: #ffe5e5;
+  color: #b30000;
+  padding: 10px;
+  border: 1px solid #b30000;
+  margin: 10px 0;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
   
